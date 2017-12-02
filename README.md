@@ -1,6 +1,7 @@
 # deepblu-tools
 Deepblu API tools
 
+A set of tools to get the most out of [Deepblu](https://deepblu.com), export your dive logs into ODDF format, automatically like posts, and copy another user's followers.
 
 ## backupdives.py
 Retrieves dive logs from Deepblu and exports them in [ODDF](http://oddf.org) format.
