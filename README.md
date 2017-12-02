@@ -2,6 +2,9 @@
 Deepblu API tools
 
 
+## backupdives.py
+Retrieves dive logs from Deepblu and exports them in [ODDF](http://oddf.org) format.
+
 ## autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
 

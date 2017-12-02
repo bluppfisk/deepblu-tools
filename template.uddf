@@ -1,0 +1,61 @@
+<uddf version="3.2.0">
+    <!-- the <generator> section has to appear in every UDDF file -->
+    <generator>
+        <!-- description of the program generating the UDDF file -->
+        <name>{{ generator.name }}</name>
+        <manufacturer>
+            <name>{{ generator.creator }}</name>
+        </manufacturer>
+        <version>{{ generator.version }}</version>
+        <datetime>{{ generator.date }}</datetime>
+    </generator>
+    <divesite>
+        {% for log in logs %}
+        <site id="{{ log.diveSpot.id }}">
+            <geography>
+                <longitude>
+                    {{ log.diveSpot.lng }}
+                </longitude>
+                <latitude>
+                    {{ log.diveSpot.lat }}
+                </latitude>
+                <location>{{ log.diveSpot.name }}</location>
+            </geography>
+        </site>
+        {% endfor %}
+    </divesite>
+    <profiledata>
+        <!-- in the following one recorded dive profile is shown examplarily -->
+        <repetitiongroup>
+            {% for log in logs %}
+            <dive id="{{ log.id }}">
+                <informationbeforedive>
+                    <datetime>{{ log.divedate }}</datetime>
+                    <tankdata>
+                        <link ref="air"/>
+                        <tankvolume>0.015</tankvolume>
+                        <tankpressurebegin>20000000.0</tankpressurebegin>
+                        <breathingconsumptionvolume>0.0002</breathingconsumptionvolume>       <!-- [m^3/s] ^= 12 litres/min -->
+                    </tankdata>
+                </informationbeforedive>
+                <informationafterdive>
+                    <!-- temperature is of no importance in "Tausim", but the greatest depth -->
+                    <!-- reached during a (simulated) dive is written into the UDDF output   -->
+                    <greatestdepth>{{ log.diveMaxDepth }}</greatestdepth>
+                </informationafterdive>
+                <samples>
+                    {% for waypoint in log.diveProfile.waypoints %}
+                    <waypoint>
+                        <depth>{{ waypoint.depth }}</depth>
+                        <divetime>{{ waypoint.time }}</divetime>
+                    </waypoint>
+                    {% endfor %}
+                </samples>
+            </dive>
+            {% endfor %}
+            <!-- here more <dive> sections can be inserted -->
+        </repetitiongroup>
+        <!-- here more <repetitiongroup> sections can be inserted -->
+    </profiledata>
+</uddf>
+                
