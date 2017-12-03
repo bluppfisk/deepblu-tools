@@ -18,8 +18,8 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - find the newly generated file called **backup.uddf** in the same folder
 
 ### Tracked data
-- Dive profile: Deepblu keeps a waypoint with temperature and depth every 20 seconds
-- Visibility, average depth, maximum depth, minimum temperature, dive duration
+- Dive profile: Deepblu provides a waypoint with temperature and depth every 20 seconds
+- Date and time, visibility, average depth, maximum depth, minimum temperature, dive duration
 - Media: url, captions and timestamps of video and images
 - Tank: volume, gas, pressure at start and end
 - Divespot: name, latitude and longitude
