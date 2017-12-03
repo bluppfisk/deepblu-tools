@@ -1,0 +1,4 @@
+{
+	'user': 'test',
+	'pass': 'test'
+}
