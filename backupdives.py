@@ -99,8 +99,10 @@ class DeepbluLogBook(object):
 	def getUniqueGasDefinitions(self):
 		self.gasDefinitions = []
 		for log in self.logs:
-			if not self.findGasDefinitionById(log.diveGear.gasDefinition.id):
-				self.gasDefinitions.append(log.diveGear.gasDefinition)
+			if hasattr(log.diveGear, 'gasDefinition'):
+				if hasattr(log.diveGear.gasDefinition, 'id'):
+					if not self.findGasDefinitionById(log.diveGear.gasDefinition.id):
+						self.gasDefinitions.append(log.diveGear.gasDefinition)
 
 	def getUniqueMedia(self):
 		self.media = []
