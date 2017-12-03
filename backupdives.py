@@ -1,6 +1,20 @@
-import requests, json, time, jinja2
+###
+# Deepblu Backup Tool
+# by Sander Van de Moortel
+# 
+# https://github.com/bluppfisk/deepblu-tools
+# 
+# Connects to Deepblu and backs up dives in UDDF format
+# See http://uddf.org for more information on the format
+# 
+# Requirements: Python <= 3.3, requests, json and jinja2 packages
+# Usage: - fill in your login details in the separate login file
+#        - then run this script: python3 backupdives.py
+#        - find the 
+#        
 
-DEEPBLUAPI = "https://prodcdn.tritondive.co/apis/discover/v0/post/search?postType=divelog&userId=5823faa12e577e38554e8e13&limit=20&skip=0"
+import requests, json, time, jinja2
+from datetime import datetime
 
 CHUNKSIZE = 20
 
@@ -18,15 +32,16 @@ class DeepbluUser(object):
 		    "email": email,
 		    "password": password
 		}
+		print("Connecting to Deepblu...")
 		res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
 		response = json.loads(res.text)
 
 		if response['statusCode'] == 200:
 			self.userId = response['result']['userInfo']['ownerId']
 			self.authCode = response['result']['accessToken']
-			# print("Obtained token for " + email + '!')
+			print("Logged in as " + email + '!')
 		else:
-			print("Account " + email + " could not log in, error code: " + str(response['statusCode']))
+			print("Could not log in " + email + ", error code: " + str(response['statusCode']))
 			self.authCode = None
 
 		return self
@@ -40,17 +55,31 @@ class Deepblu(object):
 		}
 
 		skip = 0
-		
-		res = requests.get(DEEPBLU_DIVES_API + deepbluUser.userId + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
-		response = json.loads(res.text)
+		posts = []
 
-		if response['statusCode'] == 200:
-			return DeepbluLogBook(response['result']['posts'])
-		else:
-			print("Error obtaining dive logs, error code: " + str(response['statusCode']))
+		print("Loading first " + str(CHUNKSIZE) + " logs from Deepblu API...")
+		while skip >= 0:
+			res = requests.get(DEEPBLU_DIVES_API + deepbluUser.userId + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
+			response = json.loads(res.text)
+			if response['statusCode'] == 200:
+				if len(response['result']['posts']) > 0:
+					if skip > 0:
+						print("Loading next " + str(CHUNKSIZE) + " logs...")
+
+					posts += response['result']['posts']
+					skip += CHUNKSIZE
+				else:
+					print("Found all the logs!")
+					skip = -1
+			else:
+				print("Error obtaining dive logs, error code: " + str(response['statusCode']))
+				return False
+			
+		return DeepbluLogBook(posts)
 
 class DeepbluLogBook(object):
 	def __init__(self, logs):
+		print ("Parsing...")
 		self.logs = []
 		for log in logs:
 			self.logs.append(DeepbluLog(log['diveLog']))
@@ -70,47 +99,59 @@ class DeepbluLogBook(object):
 
 		return False
 
-	def output(self):
-		print("Here is the love: \n")
-		print(self.logBook)
-
 
 class DeepbluLog(object):
 	def __init__(self, jsonLog):
 		self.id = 'deepblu_dl_' + jsonLog['divelogId']
-		self.diveDate = jsonLog['diveDT']
-		self.airPressure = jsonLog['airPressure']
-		self.waterType = jsonLog['waterType']
-		self.diveDuration = jsonLog['diveDuration']
-		self.minTemp = (jsonLog['diveMinTemperature']/10) + 273.15
-		self.averageDepth = DeepbluTools().getDepth(jsonLog['_DiveCondition']['averageDepth'], self.airPressure, self.waterType)
-		self.maxDepth = DeepbluTools().getDepth(jsonLog['diveMaxDepth'], self.airPressure, self.waterType)
-		# self.diveGear = diveGear(jsonLog['diveGear'])
+		if 'diveDT' in jsonLog: self.diveDate = jsonLog['diveDT']
+		if 'airPressure' in jsonLog: self.airPressure = jsonLog['airPressure']
+		if 'waterType' in jsonLog: self.waterType = jsonLog['waterType']
+		if 'notes' in jsonLog: self.notes = jsonLog['notes']
+		if 'diveDuration' in jsonLog: self.diveDuration = jsonLog['diveDuration']
+		if 'diveMinTemperature' in jsonLog: self.minTemp = DeepbluTools().convertTemp(jsonLog['diveMinTemperature'])
+		if 'diveMaxDepth' in jsonLog: self.maxDepth = DeepbluTools().getDepth(jsonLog['diveMaxDepth'], self.airPressure, self.waterType)
+		if '_DiveGear' in jsonLog: self.diveGear = diveGear(jsonLog['_DiveGear'])
 		self.diveProfile = diveProfile(jsonLog['_diveProfile'], self)
-		self.diveSpot = diveSpot(jsonLog['divespot'])
+		if 'divespot' in jsonLog: self.diveSpot = diveSpot(jsonLog['divespot'])
+		if '_DiveCondition' in jsonLog:
+			if 'visibility' in jsonLog['_DiveCondition']: self.visibility = jsonLog['_DiveCondition']['visibility']
+			if 'averageDepth' in jsonLog['_DiveCondition']: self.averageDepth = DeepbluTools().getDepth(jsonLog['_DiveCondition']['averageDepth'], self.airPressure, self.waterType)
+
+class diveGear(object):
+	def __init__(self, diveGear):
+		if 'airMix' in diveGear: self.airMix = diveGear['airMix']
+		if 'endBar' in diveGear: self.endBar = diveGear['endBar']
+		if 'startedBar' in diveGear: self.startBar = diveGear['startedBar']
+		if 'suitType' in diveGear: self.suitType = diveGear['suitType']
 
 class diveProfile(object):
-	def __init__(self, diveprofile, deepbluLog):
-		airPressure = deepbluLog.airPressure
-		waterType = deepbluLog.waterType
+	def __init__(self, diveprofile, root):
+		self.time = 0
 		self.waypoints = []
-
-		time = 0
 		for waypoint in diveprofile:
-			depth = DeepbluTools().getDepth(waypoint['pressure'], airPressure, waterType)
-			if 'time' in waypoint and waypoint['time']:
-				time = waypoint['time']
-			else:
-				time += 20
-
-			self.waypoints.append(wayPoint(depth, time))
+			self.waypoints.append(wayPoint(waypoint, root, self))
 
 class wayPoint(object):
-	def __init__(self, depth, time):
+	def __init__(self, waypoint, root, parent):
+		airPressure = root.airPressure
+		waterType = root.waterType
+		depth = DeepbluTools().getDepth(waypoint['pressure'], airPressure, waterType)
+
+		if 'time' in waypoint and waypoint['time']:
+			parent.time = waypoint['time']
+		else:
+			parent.time += 20
+		
 		self.depth = depth
-		self.time = time
+		self.time = parent.time
+		if 'temperature' in waypoint:
+			self.temp = DeepbluTools().convertTemp(waypoint['temperature'])
 
 class DeepbluTools:
+	# Gets depth in metres. Formula looks wrong but it
+	# is actually compensating for values incorrectly
+	# stored by Deepblu
+
 	def getDepth(self, press, airpress, fresh):
 		if not press: return -1
 		r = 1.025 if fresh and fresh == 1 else 1.0
@@ -120,13 +161,18 @@ class DeepbluTools:
 		if airpress and airpress in range(400, 1100):
 			return ((press-airpress) / r / 100)
 
+	# Deepblu reports temperature values in decicelsius
+	# Let's store them in Kelvin
+	def convertTemp(self, decicelsius):
+		return (decicelsius / 10) + 273.15 # Decicelsius to Kelvin
+
 class diveSpot(object):
 	def __init__(self, divespot):
-		self.name = divespot['divespot']
-		self.lat = divespot['gpsLocation']['lat']
-		self.lon = divespot['gpsLocation']['lng']
-		self.id = 'deepblu_ds_' + divespot['_id']
-
+		if '_id' in divespot: self.id = 'deepblu_ds_' + divespot['_id']
+		if 'divespot' in divespot: self.name = divespot['divespot']
+		if 'gpsLocation' in divespot:
+			if 'lat' in divespot['gpsLocation']: self.lat = divespot['gpsLocation']['lat']
+			if 'lng' in divespot['gpsLocation']: self.lon = divespot['gpsLocation']['lng']
 
 class UDDFWriter(object):
 	def __init__(self, logBook):
@@ -134,8 +180,8 @@ class UDDFWriter(object):
 			'name': 'Deepblu Backup Tool',
 			'creator': 'Sander Van de Moortel',
 			'contact': 'https://github.com/bluppfisk/deepblu-tools',
-			'version': '0.1',
-			'date': '3 December 2017'
+			'version': '0.2',
+			'date': str(datetime.now())
 		}
 
 		self.data = {
@@ -144,53 +190,23 @@ class UDDFWriter(object):
 			'generator': generator
 		}
 
+	def toFile(self, filename):
+		print("Writing to '" + filename + "'")
+		f = open(filename, 'w')
+		f.write(self.output())
+		f.close()
+		print("Done!")
+
 	def output(self):
 		templateLoader = jinja2.FileSystemLoader(searchpath="./")
 		templateEnv = jinja2.Environment(loader=templateLoader)
 		TEMPLATE_FILE = "template.uddf"
 		template = templateEnv.get_template(TEMPLATE_FILE)
-		print(template.render(self.data))
+		return template.render(self.data)
 
 with open('login','r') as loginfile:
     logindata = eval(loginfile.read())
 
 deepbluUser = DeepbluUser().login(logindata['user'], logindata['pass'])
 deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser)
-UDDFWriter(deepbluLogBook).output()
-
-					 # "diveLog": {
-      #     "_DiveCondition": {
-      #       "averageDepth": 2544.0785714285716,
-      #       "minWaterTemperature": 277,
-      #       "weather": -1
-      #     },
-      #     "_DiveGear": {
-      #       "BCD": [],
-      #       "airMix": 21,
-      #       "camera": [],
-      #       "cameraHousing": [],
-      #       "cameraLens": [],
-      #       "cameraLight": [],
-      #       "cameraStrobe": [],
-      #       "diveComputer": [
-      #         {
-      #           "_id": "00000-00000",
-      #           "brand": "Deepblu",
-      #           "btName": "COSMIQ",
-      #           "officialModel": "COSMIQ"
-      #         }
-      #       ],
-      #       "fins": [],
-      #       "lightTorch": [],
-      #       "regulator": {
-      #         "firstStage": [],
-      #         "secondStage": []
-      #       }
-      #     },
-      #     "_diveProfile": [
-      #       {
-      #         "id": "0",
-      #         "pressure": 1349,
-      #         "temperature": 290,
-      #         "time": 20
-      #       },
+UDDFWriter(deepbluLogBook).toFile('backup.uddf')

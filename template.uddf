@@ -28,24 +28,32 @@
         <repetitiongroup>
             {% for log in logs %}
             <dive id="{{ log.id }}">
+                {% if log.diveGear.startBar or log.diveGear.endBar %}
+                <tankdata>
+                    {% if log.diveGear.startBar %}<tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>{% endif %}
+                    {% if log.diveGear.startBar %}<tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>{% endif %}
+                </tankdata>
+                {% endif %}
                 <informationbeforedive>
                     <link ref="{{ log.diveSpot.id }}" />
                     <datetime>{{ log.diveDate }}</datetime>
-                    <tankdata />
                 </informationbeforedive>
                 <samples>
                     {% for waypoint in log.diveProfile.waypoints %}
                     <waypoint>
                         <depth>{{ waypoint.depth }}</depth>
                         <divetime>{{ waypoint.time }}</divetime>
+                        <temperature>{{ waypoint.temp }}</temperature>
                     </waypoint>
                     {% endfor %}
                 </samples>
                 <informationafterdive>
+                    <notes><para>{{ log.notes }}</para></notes>
                     <greatestdepth>{{ log.maxDepth }}</greatestdepth>
                     <averagedepth>{{ log.averageDepth }}</averagedepth>
                     <diveduration>{{ log.diveDuration }}</diveduration>
                     <lowesttemperature>{{ log.minTemp }}</lowesttemperature>
+                    <visibility>{{ log.visibility }}</visibility>
                 </informationafterdive>
             </dive>
             {% endfor %}
