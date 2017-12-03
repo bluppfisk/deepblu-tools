@@ -1,49 +1,38 @@
-<uddf version="3.2.0">
-    <!-- the <generator> section has to appear in every UDDF file -->
+<?xml version="1.0" encoding="utf-8"?>
+<uddf xmlns="http://www.streit.cc/uddf/3.2/" version="3.2.0">
     <generator>
-        <!-- description of the program generating the UDDF file -->
         <name>{{ generator.name }}</name>
         <manufacturer>
             <name>{{ generator.creator }}</name>
+            <contact>{{ generator.contact }}</contact>
         </manufacturer>
         <version>{{ generator.version }}</version>
         <datetime>{{ generator.date }}</datetime>
     </generator>
+    <mediadata/>
+    <diver />
     <divesite>
-        {% for log in logs %}
-        <site id="{{ log.diveSpot.id }}">
+        {% for diveSpot in diveSpots %}
+        <site id="{{ diveSpot.id }}">
+            <name>{{ diveSpot.name }}</name>
             <geography>
-                <longitude>
-                    {{ log.diveSpot.lon }}
-                </longitude>
-                <latitude>
-                    {{ log.diveSpot.lat }}
-                </latitude>
-                <location>{{ log.diveSpot.name }}</location>
+                <longitude>{{ diveSpot.lon }}</longitude>
+                <latitude>{{ diveSpot.lat }}</latitude>
+                <location>{{ diveSpot.name }}</location>
             </geography>
         </site>
         {% endfor %}
     </divesite>
+    <gasdefinitions />
     <profiledata>
-        <!-- in the following one recorded dive profile is shown examplarily -->
         <repetitiongroup>
             {% for log in logs %}
             <dive id="{{ log.id }}">
                 <informationbeforedive>
-                    <link rel="{{ log.diveSpot.id }}">
+                    <link ref="{{ log.diveSpot.id }}" />
                     <datetime>{{ log.diveDate }}</datetime>
-                    <tankdata>
-                        <link ref="air"/>
-                        <tankvolume>0.015</tankvolume>
-                        <tankpressurebegin>20000000.0</tankpressurebegin>
-                        <breathingconsumptionvolume>0.0002</breathingconsumptionvolume>       <!-- [m^3/s] ^= 12 litres/min -->
-                    </tankdata>
+                    <tankdata />
                 </informationbeforedive>
-                <informationafterdive>
-                    <!-- temperature is of no importance in "Tausim", but the greatest depth -->
-                    <!-- reached during a (simulated) dive is written into the UDDF output   -->
-                    <greatestdepth>{{ log.diveMaxDepth }}</greatestdepth>
-                </informationafterdive>
                 <samples>
                     {% for waypoint in log.diveProfile.waypoints %}
                     <waypoint>
@@ -52,11 +41,16 @@
                     </waypoint>
                     {% endfor %}
                 </samples>
+                <informationafterdive>
+                    <greatestdepth>{{ log.maxDepth }}</greatestdepth>
+                    <averagedepth>{{ log.averageDepth }}</averagedepth>
+                    <diveduration>{{ log.diveDuration }}</diveduration>
+                    <lowesttemperature>{{ log.minTemp }}</lowesttemperature>
+                </informationafterdive>
             </dive>
             {% endfor %}
-            <!-- here more <dive> sections can be inserted -->
         </repetitiongroup>
-        <!-- here more <repetitiongroup> sections can be inserted -->
     </profiledata>
+    <divetrip />
 </uddf>
                 
