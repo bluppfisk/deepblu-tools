@@ -17,6 +17,14 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - then run this script: `python3 backupdives.py`
 - find the newly generated file called **backup.uddf** in the same folder
 
+### Tracked data
+- Dive profile: Deepblu keeps a waypoint with temperature and depth every 20 seconds
+- Average depth, maximum depth, minimum temperature, dive duration
+- Media: url, captions and timestamps of video and images
+- Tank: volume, gas, pressure at start and end
+- Divespot: name, latitude and longitude
+- Notes
+
 ### Known issues
 - If you're not in the UTC timezone, you may notice that your dive times are off if you're using Subsurface. The Deepblu Backup Tool copies UTC times from the Deepblu API. I believe that it is up to Subsurface to correctly identify the user's timezone and adjust accordingly. I've [reported this](https://github.com/Subsurface-divelog/subsurface/issues/907) and will see what they say.
 - Not all data is currently being backed up. I will add more items in the future.
