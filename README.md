@@ -10,7 +10,7 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 
 ### Requirements
 - Make sure you have Python 3 and pip3 installed
-- run `pip3 install requests, jinja2` to install the required dependencies
+- run `pip3 install requests jinja2` to install the required dependencies
 
 ### Usage
 - fill in your login details in the separate **login** file
