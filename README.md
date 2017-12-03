@@ -4,7 +4,7 @@ Deepblu API tools
 A set of tools to get the most out of [Deepblu](https://deepblu.com), export your dive logs into ODDF format, automatically like posts, and copy another user's followers.
 
 ## backupdives.py
-Retrieves dive logs from Deepblu and exports them in [ODDF](http://oddf.org) format.
+Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF).
 
 ## autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
