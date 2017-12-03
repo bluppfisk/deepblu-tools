@@ -80,10 +80,10 @@ class Deepblu(object):
 
 class DeepbluLogBook(object):
 	def __init__(self, logs):
-		print ("Parsing...")
+		print ("Parse all the things!")
 		self.logs = []
 		for log in logs:
-			self.logs.append(DeepbluLog(log['diveLog']))
+			self.logs.append(DeepbluLog(log.get('diveLog')))
 
 		self.getUniqueDiveSpots()
 
@@ -100,37 +100,28 @@ class DeepbluLogBook(object):
 
 		return False
 
-
 class DeepbluLog(object):
 	def __init__(self, jsonLog):
-		self.id = 'deepblu_dl_' + jsonLog['divelogId']
-		if 'diveDT' in jsonLog: self.diveDate = jsonLog['diveDT']
-		if 'airPressure' in jsonLog:
-			self.airPressure = jsonLog['airPressure']
-		else:
-			self.airPressure = 1000
-			
-		if 'waterType' in jsonLog:
-			self.waterType = jsonLog['waterType']
-		else:
-			self.waterType = 0
-		if 'notes' in jsonLog: self.notes = jsonLog['notes']
-		if 'diveDuration' in jsonLog: self.diveDuration = jsonLog['diveDuration']
-		if 'diveMinTemperature' in jsonLog: self.minTemp = DeepbluTools().convertTemp(jsonLog['diveMinTemperature'])
-		if 'diveMaxDepth' in jsonLog: self.maxDepth = DeepbluTools().getDepth(jsonLog['diveMaxDepth'], self.airPressure, self.waterType)
-		if '_DiveGear' in jsonLog: self.diveGear = diveGear(jsonLog['_DiveGear'])
-		self.diveProfile = diveProfile(jsonLog['_diveProfile'], self)
-		if 'divespot' in jsonLog: self.diveSpot = diveSpot(jsonLog['divespot'])
-		if '_DiveCondition' in jsonLog:
-			if 'visibility' in jsonLog['_DiveCondition']: self.visibility = jsonLog['_DiveCondition']['visibility']
-			if 'averageDepth' in jsonLog['_DiveCondition']: self.averageDepth = DeepbluTools().getDepth(jsonLog['_DiveCondition']['averageDepth'], self.airPressure, self.waterType)
+		self.id = 'deepblu_dl_' + jsonLog.get('divelogId')
+		self.diveDate = jsonLog.get('diveDT')
+		self.airPressure = jsonLog.get('airPressure', 1000)
+		self.waterType = jsonLog.get('waterType', 0)
+		self.notes = jsonLog.get('notes', '')
+		self.diveDuration = jsonLog.get('diveDuration', '')
+		self.minTemp = DeepbluTools.convertTemp(jsonLog.get('diveMinTemperature', None))
+		self.maxDepth = DeepbluTools.getDepth(jsonLog.get('diveMaxDepth', None), self.airPressure, self.waterType)
+		self.diveGear = diveGear(jsonLog.get('_DiveGear', {}))
+		self.diveProfile = diveProfile(jsonLog.get('_diveProfile'), self)
+		self.diveSpot = diveSpot(jsonLog.get('divespot'))
+		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
+		self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
 
 class diveGear(object):
 	def __init__(self, diveGear):
-		if 'airMix' in diveGear: self.airMix = diveGear['airMix']
-		if 'endBar' in diveGear: self.endBar = diveGear['endBar']
-		if 'startedBar' in diveGear: self.startBar = diveGear['startedBar']
-		if 'suitType' in diveGear: self.suitType = diveGear['suitType']
+		self.airMix = diveGear.get('airMix')
+		self.endBar = diveGear.get('endBar')
+		self.startBar = diveGear.get('startedBar')
+		self.suitType = diveGear.get('suitType')
 
 class diveProfile(object):
 	def __init__(self, diveprofile, root):
@@ -143,25 +134,22 @@ class wayPoint(object):
 	def __init__(self, waypoint, root, parent):
 		airPressure = root.airPressure
 		waterType = root.waterType
-		depth = DeepbluTools().getDepth(waypoint['pressure'], airPressure, waterType)
+		depth = DeepbluTools.getDepth(waypoint.get('pressure'), airPressure, waterType)
 
-		if 'time' in waypoint and waypoint['time']:
-			parent.time = waypoint['time']
-		else:
-			parent.time += 20
+		parent.time = waypoint.get('time') if waypoint.get('time') else parent.time + 20
 		
 		self.depth = depth
 		self.time = parent.time
-		if 'temperature' in waypoint:
-			self.temp = DeepbluTools().convertTemp(waypoint['temperature'])
+		self.temp = DeepbluTools.convertTemp(waypoint.get('temperature'))
 
+# Toolbox class, does not get instantiated and therefore
+# does not pass self as an argument to its functions
 class DeepbluTools:
 	# Gets depth in metres. Formula looks wrong but it
 	# is actually compensating for values incorrectly
 	# stored by Deepblu
-
-	def getDepth(self, press, airpress, fresh):
-		if not press: return -1
+	def getDepth(press, airpress, fresh):
+		if not press: return None
 		r = 1.025 if fresh and fresh == 1 else 1.0
 
 		if not airpress: airpress = 1000
@@ -171,16 +159,18 @@ class DeepbluTools:
 
 	# Deepblu reports temperature values in decicelsius
 	# Let's store them in Kelvin
-	def convertTemp(self, decicelsius):
+	def convertTemp(decicelsius):
+		if decicelsius == None:
+			return None
+
 		return (decicelsius / 10) + 273.15 # Decicelsius to Kelvin
 
 class diveSpot(object):
 	def __init__(self, divespot):
-		if '_id' in divespot: self.id = 'deepblu_ds_' + divespot['_id']
-		if 'divespot' in divespot: self.name = divespot['divespot']
-		if 'gpsLocation' in divespot:
-			if 'lat' in divespot['gpsLocation']: self.lat = divespot['gpsLocation']['lat']
-			if 'lng' in divespot['gpsLocation']: self.lon = divespot['gpsLocation']['lng']
+		self.id = 'deepblu_ds_' + divespot.get('_id')
+		self.name = divespot.get('divespot')
+		self.lat = divespot.get('gpsLocation', {}).get('lat')
+		self.lon = divespot.get('gpsLocation', {}).get('lng')
 
 class UDDFWriter(object):
 	def __init__(self, logBook):

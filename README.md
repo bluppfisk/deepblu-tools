@@ -3,7 +3,7 @@ Deepblu API tools
 
 A set of tools to get the most out of [Deepblu](https://deepblu.com).
 
-## backupdives.py
+## Deepblu Backup Tool - backupdives.py
 Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF), which can be imported into other applications that support it, including [Subsurface Divelog](https://subsurface-divelog.org/).
 
 ![Deepblu logs imported into Subsurface](/images/imported_into_subsurface.jpg)
@@ -17,8 +17,12 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - then run this script: `python3 backupdives.py`
 - find the newly generated file called **backup.uddf** in the same folder
 
-## autoliker.py
+### Known issues
+- If you're not in the UTC timezone, you may notice that your dive times are off if you're using Subsurface. The Deepblu Backup Tool copies UTC times from the Deepblu API. I believe that it is up to Subsurface to correctly identify the user's timezone and adjust accordingly. I've [reported this](https://github.com/Subsurface-divelog/subsurface/issues/907) and will see what they say.
+- Not all data is currently being backed up. I will add more items in the future.
+
+## Deepblu Autoliker - autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
 
-## autofollow.js
+## Deepblu Autofollow - autofollow.js
 Console JS script to copy automatically add a series of Deepblu users in **userIds** to the following list of a logged-in account with token **authToken**.
