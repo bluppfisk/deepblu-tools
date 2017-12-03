@@ -28,11 +28,13 @@
         <repetitiongroup>
             {% for log in logs %}
             <dive id="{{ log.id }}">
+                {% if log.diveGear %}
                 {% if log.diveGear.startBar or log.diveGear.endBar %}
                 <tankdata>
                     {% if log.diveGear.startBar %}<tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>{% endif %}
                     {% if log.diveGear.startBar %}<tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>{% endif %}
                 </tankdata>
+                {% endif %}
                 {% endif %}
                 <informationbeforedive>
                     <link ref="{{ log.diveSpot.id }}" />

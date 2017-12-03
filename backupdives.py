@@ -39,10 +39,11 @@ class DeepbluUser(object):
 		if response['statusCode'] == 200:
 			self.userId = response['result']['userInfo']['ownerId']
 			self.authCode = response['result']['accessToken']
+			self.loggedIn = True
 			print("Logged in as " + email + '!')
 		else:
 			print("Could not log in " + email + ", error code: " + str(response['statusCode']))
-			self.authCode = None
+			self.loggedIn = False
 
 		return self
 
@@ -104,8 +105,15 @@ class DeepbluLog(object):
 	def __init__(self, jsonLog):
 		self.id = 'deepblu_dl_' + jsonLog['divelogId']
 		if 'diveDT' in jsonLog: self.diveDate = jsonLog['diveDT']
-		if 'airPressure' in jsonLog: self.airPressure = jsonLog['airPressure']
-		if 'waterType' in jsonLog: self.waterType = jsonLog['waterType']
+		if 'airPressure' in jsonLog:
+			self.airPressure = jsonLog['airPressure']
+		else:
+			self.airPressure = 1000
+			
+		if 'waterType' in jsonLog:
+			self.waterType = jsonLog['waterType']
+		else:
+			self.waterType = 0
 		if 'notes' in jsonLog: self.notes = jsonLog['notes']
 		if 'diveDuration' in jsonLog: self.diveDuration = jsonLog['diveDuration']
 		if 'diveMinTemperature' in jsonLog: self.minTemp = DeepbluTools().convertTemp(jsonLog['diveMinTemperature'])
@@ -208,5 +216,6 @@ with open('login','r') as loginfile:
     logindata = eval(loginfile.read())
 
 deepbluUser = DeepbluUser().login(logindata['user'], logindata['pass'])
-deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser)
-UDDFWriter(deepbluLogBook).toFile('backup.uddf')
+if deepbluUser.loggedIn:
+	deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser)
+	UDDFWriter(deepbluLogBook).toFile('backup.uddf')
