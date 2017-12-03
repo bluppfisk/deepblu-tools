@@ -79,19 +79,36 @@ class Deepblu(object):
 		return DeepbluLogBook(posts)
 
 class DeepbluLogBook(object):
-	def __init__(self, logs):
+	def __init__(self, posts):
 		print ("Parse all the things!")
 		self.logs = []
-		for log in logs:
-			self.logs.append(DeepbluLog(log.get('diveLog')))
 
+		for post in posts:
+			self.logs.append(DeepbluLog(post.get('diveLog'), post.get('medias')))
+
+		self.getUniqueMedia()
 		self.getUniqueDiveSpots()
+		self.getUniqueGasDefinitions()
 
 	def getUniqueDiveSpots(self):
 		self.diveSpots = []
 		for log in self.logs:
 			if not self.findDiveSpotById(log.diveSpot.id):
 				self.diveSpots.append(log.diveSpot)
+
+	def getUniqueGasDefinitions(self):
+		self.gasDefinitions = []
+		for log in self.logs:
+			if not self.findGasDefinitionById(log.diveGear.gasDefinition.id):
+				self.gasDefinitions.append(log.diveGear.gasDefinition)
+
+	def getUniqueMedia(self):
+		self.media = []
+		for log in self.logs:
+			for medium in log.media:
+				if not self.findMediumById(medium.id):
+					self.media.append(medium)
+
 
 	def findDiveSpotById(self, diveSpotId):
 		for diveSpot in self.diveSpots:
@@ -100,8 +117,22 @@ class DeepbluLogBook(object):
 
 		return False
 
+	def findGasDefinitionById(self, gasDefinitionId):
+		for gasDefinition in self.gasDefinitions:
+			if gasDefinitionId == gasDefinition.id:
+				return gasDefinition
+
+		return False
+
+	def findMediumById(self, mediumId):
+		for medium in self.media:
+			if mediumId == medium.id:
+				return medium
+
+		return False
+
 class DeepbluLog(object):
-	def __init__(self, jsonLog):
+	def __init__(self, jsonLog, media):
 		self.id = 'deepblu_dl_' + jsonLog.get('divelogId')
 		self.diveDate = jsonLog.get('diveDT')
 		self.airPressure = jsonLog.get('airPressure', 1000)
@@ -116,12 +147,38 @@ class DeepbluLog(object):
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
 		self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
 
+		self.media = []
+		for medium in media:
+			self.media.append(Medium(medium))
+
+class Medium(object):
+	def __init__(self, medium):
+		self.id = 'deepblu_md_' + medium.get('_id')
+		self.url = medium.get('url')
+		self.caption = medium.get('caption', '')
+		self.datetime = datetime.fromtimestamp(medium.get('timestamp')).isoformat()
+		if medium.get('type') == "Video":
+			self.type = 'video'
+		else:
+			self.type = 'image'
+
 class diveGear(object):
 	def __init__(self, diveGear):
-		self.airMix = diveGear.get('airMix')
+		self.gasDefinition = gasDefinition(diveGear.get('airMix'))
+		self.tank = diveGear.get('airTank', {}).get('volume')
 		self.endBar = diveGear.get('endBar')
 		self.startBar = diveGear.get('startedBar')
 		self.suitType = diveGear.get('suitType')
+
+class gasDefinition(object):
+	def __init__(self, airmix):
+		if not airmix:
+			return None
+
+		self.o2 = airmix / 100
+		self.n2 = (100 - airmix) / 100
+		self.id = "mix" + str(airmix)
+		self.name = str(airmix) + "/" + str(100 - airmix)
 
 class diveProfile(object):
 	def __init__(self, diveprofile, root):
@@ -185,6 +242,8 @@ class UDDFWriter(object):
 		self.data = {
 			'logs': logBook.logs,
 			'diveSpots': logBook.diveSpots,
+			'gasDefinitions': logBook.gasDefinitions,
+			'media': logBook.media,
 			'generator': generator
 		}
 

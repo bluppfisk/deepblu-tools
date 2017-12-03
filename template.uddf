@@ -9,7 +9,15 @@
         <version>{{ generator.version }}</version>
         <datetime>{{ generator.date }}</datetime>
     </generator>
-    <mediadata/>
+    <mediadata>
+        {% for medium in media %}
+        <{{ medium.type }} id="{{ medium.id }}">
+          <objectname>{{ medium.url }}</objectname>
+          <imagedata><datetime>{{ medium.datetime }}</datetime></imagedata>
+          <title>{{ medium.caption }}</title>
+        </{{ medium.type }}>
+        {% endfor %}
+    </mediadata>
     <diver />
     <divesite>
         {% for diveSpot in diveSpots %}
@@ -23,19 +31,25 @@
         </site>
         {% endfor %}
     </divesite>
-    <gasdefinitions />
+    <gasdefinitions>
+        {% for gasDefinition in gasDefinitions %}
+        <mix id="{{ gasDefinition.id }}">
+            <name>{{ gasDefinition.name }}</name>
+            <o2>{{ gasDefinition.o2 }}</o2>
+            <n2>{{ gasDefinition.n2 }}</n2>
+        </mix>
+        {% endfor %}
+    </gasdefinitions>
     <profiledata>
         <repetitiongroup>
             {% for log in logs %}
             <dive id="{{ log.id }}">
-                {% if log.diveGear %}
-                {% if log.diveGear.startBar or log.diveGear.endBar %}
                 <tankdata>
-                    {% if log.diveGear.startBar %}<tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>{% endif %}
-                    {% if log.diveGear.startBar %}<tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>{% endif %}
+                    <link ref="{{ log.diveGear.gasDefinition.id }}" />
+                    <tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>
+                    <tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>
+                    <tankvolume>{{ log.diveGear.tank }}</tankvolume>
                 </tankdata>
-                {% endif %}
-                {% endif %}
                 <informationbeforedive>
                     <link ref="{{ log.diveSpot.id }}" />
                     <datetime>{{ log.diveDate }}</datetime>
@@ -50,7 +64,14 @@
                     {% endfor %}
                 </samples>
                 <informationafterdive>
-                    <notes><para>{{ log.notes }}</para></notes>
+                    <notes>
+                        <para>
+                            {{ log.notes }}
+                        </para>
+                        {% for medium in log.media %}
+                        <link ref="{{ medium.id }}"/>
+                        {% endfor %}
+                    </notes>
                     <greatestdepth>{{ log.maxDepth }}</greatestdepth>
                     <averagedepth>{{ log.averageDepth }}</averagedepth>
                     <diveduration>{{ log.diveDuration }}</diveduration>
