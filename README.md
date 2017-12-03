@@ -1,10 +1,12 @@
 # deepblu-tools
 Deepblu API tools
 
-A set of tools to get the most out of [Deepblu](https://deepblu.com), export your dive logs into ODDF format, automatically like posts, and copy another user's followers.
+A set of tools to get the most out of [Deepblu](https://deepblu.com).
 
 ## backupdives.py
-Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF).
+Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF), which can be imported into other applications that support it, including [Subsurface Divelog](https://subsurface-divelog.org/).
+
+![Deepblu logs imported into Subsurface](/images/imported_into_subsurface.jpg)
 
 ### Requirements
 - Make sure you have Python 3 and pip3 installed
