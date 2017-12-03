@@ -79,8 +79,14 @@ class diveProfile(object):
 		self.waypoints = []
 		for waypoint in diveprofile:
 			print(waypoint)
+			time = 0
+			
 			depth = DeepbluTools().getDepth(waypoint['pressure'], deepbluLog.airPressure, deepbluLog.waterType)
-			time = waypoint['time'] if 'time' in waypoint else None
+			if 'time' in waypoint and waypoint['time']:
+				time = waypoint['time'] if 'time'
+			else:
+				time += 20
+
 			self.waypoints.append(wayPoint(depth, time))
 
 class wayPoint(object):

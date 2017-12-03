@@ -14,7 +14,7 @@
         <site id="{{ log.diveSpot.id }}">
             <geography>
                 <longitude>
-                    {{ log.diveSpot.lng }}
+                    {{ log.diveSpot.lon }}
                 </longitude>
                 <latitude>
                     {{ log.diveSpot.lat }}
@@ -30,7 +30,8 @@
             {% for log in logs %}
             <dive id="{{ log.id }}">
                 <informationbeforedive>
-                    <datetime>{{ log.divedate }}</datetime>
+                    <link rel="{{ log.diveSpot.id }}">
+                    <datetime>{{ log.diveDate }}</datetime>
                     <tankdata>
                         <link ref="air"/>
                         <tankvolume>0.015</tankvolume>
