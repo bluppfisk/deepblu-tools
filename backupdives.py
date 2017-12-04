@@ -136,7 +136,7 @@ class DeepbluLogBook(object):
 class DeepbluLog(object):
 	def __init__(self, jsonLog, media):
 		self.id = 'deepblu_dl_' + jsonLog.get('divelogId')
-		self.diveDate = jsonLog.get('diveDT')
+		self.diveDate = datetime.strptime(jsonLog.get('diveDTRaw'), "%Y,%m,%d,%H,%M,%S")
 		self.airPressure = jsonLog.get('airPressure', 1000)
 		self.waterType = jsonLog.get('waterType', 0)
 		self.notes = jsonLog.get('notes', '')
