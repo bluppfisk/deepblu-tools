@@ -26,7 +26,6 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - Notes
 
 ### Known issues
-- If you're not in the UTC timezone, you may notice that your dive times are off if you're using Subsurface. The Deepblu Backup Tool copies UTC times from the Deepblu API. I believe that it is up to Subsurface to correctly identify the user's timezone and adjust accordingly. I've [reported this](https://github.com/Subsurface-divelog/subsurface/issues/907) and will see what they say.
 - Not all data is currently being backed up. I will add more items in the future.
 
 ## Deepblu Autoliker - autoliker.py
