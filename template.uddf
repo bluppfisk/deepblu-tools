@@ -37,6 +37,14 @@
             <contact>
                 <email>{{ divers.owner.email }}</email>
             </contact>
+            <equipment>
+                {% for equipment in gear %}
+                <{{ equipment.type }} id="{{ equipment.id }}">
+                    <manufacturer>{{ equipment.manufacturer }}</manufacturer>
+                    <model>{{ equipment.model }}</model>
+                </{{ equipment.type }}>
+                {% endfor %}
+            </equipment>
         </owner>
         {% for buddy in divers.buddies %}
         <buddy id="{{ buddy.id }}">

@@ -13,7 +13,7 @@
 #        - find the file called backup.uddf in the same folder
 #        
 
-import requests, json, time, jinja2
+import requests, json, time, jinja2, hashlib
 from datetime import datetime
 
 CHUNKSIZE = 20
@@ -107,6 +107,14 @@ class DeepbluLogBook(object):
 		self.getUniqueDiveSpots()
 		self.getUniqueGasDefinitions()
 		self.getUniqueBuddies()
+		self.getUniqueEquipment()
+
+	def getUniqueEquipment(self):
+		self.equipment = []
+		for log in self.logs:
+			for item in log.diveGear.equipment:
+				if not self.findEquipmentById(item.id):
+					self.equipment.append(item)
 
 	def getUniqueBuddies(self):
 		self.buddies = []
@@ -154,6 +162,13 @@ class DeepbluLogBook(object):
 		for medium in self.media:
 			if mediumId == medium.id:
 				return medium
+
+		return False
+
+	def findEquipmentById(self, equipmentId):
+		for item in self.equipment:
+			if equipmentId == item.id:
+				return item
 
 		return False
 
@@ -212,7 +227,17 @@ class diveGear(object):
 			self.endBar = int(diveGear.get('endBar')) * 10**5
 		if diveGear.get('startedBar'):
 			self.startBar = int(diveGear.get('startedBar')) * 10**5
-		self.suitType = diveGear.get('suitType')
+		self.suit = diveGear.get('suitType')
+		self.equipment = []
+		for divecomputer in diveGear.get('diveComputer', {}):
+			self.equipment.append(Equipment('divecomputer', divecomputer))
+
+class Equipment(object):
+	def __init__(self, kind, brandModel):
+		self.type = kind
+		self.brand = brandModel.get('brand')
+		self.model = brandModel.get('officialModel')
+		self.id = 'eq_' + hashlib.sha1((self.brand + self.model).encode('UTF-8')).hexdigest()[0:8]
 
 class gasDefinition(object):
 	def __init__(self, airmix):
