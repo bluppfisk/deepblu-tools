@@ -13,7 +13,7 @@
 #        - find the file called backup.uddf in the same folder
 #        
 
-import requests, json, time, jinja2, hashlib
+import sys, requests, json, time, jinja2, hashlib
 from datetime import datetime
 
 CHUNKSIZE = 20
@@ -64,7 +64,7 @@ class DeepbluUser(object):
 			)
 
 class Deepblu(object):
-	def loadDivesFromAPI(self, deepbluUser):
+	def loadDivesFromAPI(self, deepbluUser = None):
 		headers = {
 			"content-type": "application/json; charset=utf-8",
 			"authorization": deepbluUser.authCode,
@@ -334,13 +334,22 @@ class UDDFWriter(object):
 		template = templateEnv.get_template(TEMPLATE_FILE)
 		return template.render(self.data)
 
-with open('login','r') as loginfile:
-    logindata = eval(loginfile.read())
+if len(sys.argv) > 0:
+	user = str(sys.argv[1])
+	pwd = str(sys.argv[2])
+	targetfile = 'backup_' + hashlib.sha1(user.encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
-deepbluUser = DeepbluUser().login(logindata['user'], logindata['pass'])
+else:
+	with open('login','r') as loginfile:
+	    logindata = eval(loginfile.read())
+	    user = logindata.get('user')
+	    pwd = logindata.get('pwd')
+	    targetfile = 'backup.uddf'
+
+deepbluUser = DeepbluUser().login(user, pwd)
 if deepbluUser.loggedIn:
 	deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser)
-	UDDFWriter(deepbluLogBook).toFile('backup.uddf')
+	UDDFWriter(deepbluLogBook).toFile(targetfile)
 else:
 	print("Attempting to access API without logging in... (experimental)") # may very well fail
 	deepbluLogBook = Deepblu().loadDivesFromAPI()
