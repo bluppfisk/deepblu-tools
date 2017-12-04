@@ -353,4 +353,6 @@ if deepbluUser.loggedIn:
 else:
 	print("Attempting to access API without logging in... (experimental)") # may very well fail
 	deepbluLogBook = Deepblu().loadDivesFromAPI()
-	UDDFWriter(deepbluLogBook).toFile('backup.uddf')
+	UDDFWriter(deepbluLogBook).toFile(targetfile)
+
+print(targetfile)
