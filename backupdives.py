@@ -337,7 +337,7 @@ class UDDFWriter(object):
 if len(sys.argv) > 0:
 	user = str(sys.argv[1])
 	pwd = str(sys.argv[2])
-	targetfile = 'backup_' + hashlib.sha1(user.encode('UTF-8')).hexdigest()[0:10] + '.uddf'
+	targetfile = './done/backup_' + hashlib.sha1(user.encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
 else:
 	with open('login','r') as loginfile:
