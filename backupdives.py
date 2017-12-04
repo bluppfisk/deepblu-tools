@@ -7,7 +7,7 @@
 # Connects to Deepblu and backs up dives in UDDF format
 # See http://uddf.org for more information on the format
 # 
-# Requirements: Python <= 3.3, requests and jinja2 packages
+# Requirements: Python >= 3.3, requests and jinja2 packages
 # Usage: - fill in your login details in the separate login file
 #        - then run this script: python3 backupdives.py
 #        - find the file called backup.uddf in the same folder
@@ -36,16 +36,32 @@ class DeepbluUser(object):
 		res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
 		response = json.loads(res.text)
 
-		if response['statusCode'] == 200:
-			self.userId = response['result']['userInfo']['ownerId']
-			self.authCode = response['result']['accessToken']
+		if response.get('statusCode') == 200:
+			userData = response.get('result', {}).get('userInfo', {})
+			self.setDataFromJSON(userData)
+
+			self.authCode = response.get('result', {}).get('accessToken')
 			self.loggedIn = True
 			print("Logged in as " + email + '!')
 		else:
-			print("Could not log in " + email + ", error code: " + str(response['statusCode']))
+			print("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
 			self.loggedIn = False
 
 		return self
+
+	def setDataFromJSON(self, userData):
+		self.userId = userData.get('ownerId')
+		self.firstName = userData.get('firstName')
+		self.lastName = userData.get('lastName')
+		self.email = userData.get('email')
+		birthday = userData.get('Birthday', {})
+
+		if birthday:
+			self.birthday = datetime(
+				int(birthday.get('Year')),
+				int(birthday.get('Month')),
+				int(birthday.get('Day'))
+			)
 
 class Deepblu(object):
 	def loadDivesFromAPI(self, deepbluUser):
@@ -62,26 +78,27 @@ class Deepblu(object):
 		while skip >= 0:
 			res = requests.get(DEEPBLU_DIVES_API + deepbluUser.userId + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
 			response = json.loads(res.text)
-			if response['statusCode'] == 200:
-				if len(response['result']['posts']) > 0:
+			if response.get('statusCode') == 200:
+				if len(response.get('result', {}).get('posts')) > 0:
 					if skip > 0:
 						print("Loading next " + str(CHUNKSIZE) + " logs...")
 
-					posts += response['result']['posts']
+					posts += response.get('result', {}).get('posts')
 					skip += CHUNKSIZE
 				else:
 					print("Found all the logs!")
 					skip = -1
 			else:
-				print("Error obtaining dive logs, error code: " + str(response['statusCode']))
+				print("Error obtaining dive logs, error code: " + str(response.get('statusCode')))
 				return False
 			
-		return DeepbluLogBook(posts)
+		return DeepbluLogBook(posts, deepbluUser)
 
 class DeepbluLogBook(object):
-	def __init__(self, posts):
+	def __init__(self, posts, deepbluUser):
 		print ("Parse all the things!")
 		self.logs = []
+		self.owner = deepbluUser
 
 		for post in posts:
 			self.logs.append(DeepbluLog(post.get('diveLog'), post.get('medias')))
@@ -89,6 +106,14 @@ class DeepbluLogBook(object):
 		self.getUniqueMedia()
 		self.getUniqueDiveSpots()
 		self.getUniqueGasDefinitions()
+		self.getUniqueBuddies()
+
+	def getUniqueBuddies(self):
+		self.buddies = []
+		for log in self.logs:
+			for buddy in log.buddies:
+				if not self.findBuddyById(buddy.id):
+					self.buddies.append(buddy)
 
 	def getUniqueDiveSpots(self):
 		self.diveSpots = []
@@ -111,7 +136,6 @@ class DeepbluLogBook(object):
 				if not self.findMediumById(medium.id):
 					self.media.append(medium)
 
-
 	def findDiveSpotById(self, diveSpotId):
 		for diveSpot in self.diveSpots:
 			if diveSpotId == diveSpot.id:
@@ -133,6 +157,13 @@ class DeepbluLogBook(object):
 
 		return False
 
+	def findBuddyById(self, buddyId):
+		for buddy in self.buddies:
+			if buddyId == buddy.id:
+				return buddy
+
+		return False
+
 class DeepbluLog(object):
 	def __init__(self, jsonLog, media):
 		self.id = 'deepblu_dl_' + jsonLog.get('divelogId')
@@ -148,10 +179,19 @@ class DeepbluLog(object):
 		self.diveSpot = diveSpot(jsonLog.get('divespot'))
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
 		self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
+		
+		self.buddies = []
+		for buddy in jsonLog.get('diveBuddiesObj', {}):
+			self.buddies.append(Diver(buddy))
 
 		self.media = []
 		for medium in media:
 			self.media.append(Medium(medium))
+
+class Diver(object):
+	def __init__(self, diver):
+		self.id = diver.get('diveBuddyUserId')
+		self.name = diver.get('diveBuddyUserName')
 
 class Medium(object):
 	def __init__(self, medium):
@@ -168,8 +208,10 @@ class diveGear(object):
 	def __init__(self, diveGear):
 		self.gasDefinition = gasDefinition(diveGear.get('airMix'))
 		self.tank = diveGear.get('airTank', {}).get('volume')
-		self.endBar = diveGear.get('endBar')
-		self.startBar = diveGear.get('startedBar')
+		if diveGear.get('endBar'):
+			self.endBar = int(diveGear.get('endBar')) * 10**5
+		if diveGear.get('startedBar'):
+			self.startBar = int(diveGear.get('startedBar')) * 10**5
 		self.suitType = diveGear.get('suitType')
 
 class gasDefinition(object):
@@ -243,6 +285,10 @@ class UDDFWriter(object):
 
 		self.data = {
 			'logs': logBook.logs,
+			'divers': {
+				'owner': logBook.owner,
+				'buddies': logBook.buddies
+			},
 			'diveSpots': logBook.diveSpots,
 			'gasDefinitions': logBook.gasDefinitions,
 			'media': logBook.media,
@@ -269,4 +315,8 @@ with open('login','r') as loginfile:
 deepbluUser = DeepbluUser().login(logindata['user'], logindata['pass'])
 if deepbluUser.loggedIn:
 	deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser)
+	UDDFWriter(deepbluLogBook).toFile('backup.uddf')
+else:
+	print("Attempting to access API without logging in... (experimental)") # may very well fail
+	deepbluLogBook = Deepblu().loadDivesFromAPI()
 	UDDFWriter(deepbluLogBook).toFile('backup.uddf')

@@ -18,7 +18,34 @@
         </{{ medium.type }}>
         {% endfor %}
     </mediadata>
-    <diver />
+    <diver>
+        <owner id="{{ divers.owner.userId }}">
+            <personal>
+                <firstname>{{ divers.owner.firstName }}</firstname>
+                <lastname>{{ divers.owner.lastName }}</lastname>
+                <sex>{{ divers.owner.gender }}</sex>
+                <birthdate>
+                    <datetime>{{ divers.owner.birthday }}</datetime>
+                </birthdate>
+            </personal>
+            <address>
+                <street>{{ divers.owner.street }}</street>
+                <city>{{ divers.owner.city }}</city>
+                <postcode>{{ divers.owner.zip }}</postcode>
+                <country>{{ divers.owner.country }}</country>
+            </address>
+            <contact>
+                <email>{{ divers.owner.email }}</email>
+            </contact>
+        </owner>
+        {% for buddy in divers.buddies %}
+        <buddy id="{{ buddy.id }}">
+            <personal>
+                <firstname>{{ buddy.name }}</firstname>
+            </personal>
+        </buddy>
+        {% endfor %}
+    </diver>
     <divesite>
         {% for diveSpot in diveSpots %}
         <site id="{{ diveSpot.id }}">
@@ -51,6 +78,9 @@
                     <tankvolume>{{ log.diveGear.tank }}</tankvolume>
                 </tankdata>
                 <informationbeforedive>
+                    {% for buddy in log.buddies %}
+                        <link ref="{{ buddy.id }}" />
+                    {% endfor %}
                     <link ref="{{ log.diveSpot.id }}" />
                     <datetime>{{ log.diveDate }}</datetime>
                 </informationbeforedive>
