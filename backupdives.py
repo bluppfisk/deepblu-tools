@@ -304,7 +304,7 @@ class UDDFWriter(object):
 			'name': 'Deepblu Backup Tool',
 			'creator': 'Sander Van de Moortel',
 			'contact': 'https://github.com/bluppfisk/deepblu-tools',
-			'version': '0.3',
+			'version': '0.4',
 			'date': str(datetime.now())
 		}
 

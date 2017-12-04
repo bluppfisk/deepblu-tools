@@ -22,11 +22,15 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - Date and time, visibility, average depth, maximum depth, minimum temperature, dive duration
 - Media: url, captions and timestamps of video and images
 - Tank: volume, gas, pressure at start and end
+- Dive computer brand and model
+- Diver details
+- Buddies
 - Divespot: name, latitude and longitude
 - Notes
 
 ### Known issues
-- Not all data is currently being backed up. I will add more items in the future.
+- Not all data is currently being backed up. I may add more items in the future.
+- The UDDF format does not currently seem to support apnea (freediving)
 
 ## Deepblu Autoliker - autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
