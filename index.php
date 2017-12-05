@@ -1,4 +1,13 @@
 <html>
+<head>
+	<meta property="description" content="Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format.">
+	<meta property="og:title" content="Deepblu Backup Tool">
+	<meta property="og:description" content="Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format.">
+	<meta property="og:image" content="./images/imported_into_subsurface.jpg">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="http://worldofnonging.com/deepblu-tools">
+	<meta name="twitter:card" content="summary_large_image">
+</head>
 <body>
 	<h1>Deepblu Backup Tool</h1>
 	<span>by Sander Van de Moortel (<a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a>)</span>
