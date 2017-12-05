@@ -13,9 +13,11 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - run `pip3 install requests jinja2` to install the required dependencies
 
 ### Usage
-- fill in your login details in the separate **login** file
-- then run this script: `python3 backupdives.py`
-- find the newly generated file called **backup.uddf** in the same folder
+- run `python3 backupdives.py email password`
+- or run `python3 backupdives.py userId` or
+- or fill in your login details in the separate **login** file, then run this script: `python3 backupdives.py`
+- or use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
+- find the newly generated backup file in the `done` folder
 
 ### Tracked data
 - Dive profile: Deepblu provides a waypoint with temperature and depth every 20 seconds

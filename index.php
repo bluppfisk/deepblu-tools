@@ -36,7 +36,8 @@
 				<ul>
 					<li>Click the link to download your backup in UDDF format.</li>
 					<li>Import this file into your favourite divelog software (I like <a href="https://subsurface-divelog.org">Subsurface</a>)</li>
-					<li><strong>Before you go...</strong> This took a few days of my life to develop. Consider supporting me with a <a href="https://www.paypal.me/sandervdm">small donation through PayPal</a>.</li>
+					
+					<li><strong>Before you go...</strong> This took a few days of my life to develop. Consider supporting me with a <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE">small donation through PayPal</a>.</li>
 
 			<?php
 	        echo('</div>');
