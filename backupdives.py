@@ -14,7 +14,7 @@
 #        - find the file called backup.uddf in the same folder
 #        
 
-import sys, requests, json, time, jinja2, hashlib
+import sys, requests, json, time, jinja2, hashlib, logging
 from datetime import datetime
 
 CHUNKSIZE = 20 # Don't load everything at once
@@ -37,7 +37,7 @@ class DeepbluUser(object):
 		    "email": email,
 		    "password": password
 		}
-		print("Connecting to Deepblu...")
+		logging.info("Connecting to Deepblu...")
 		res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
 		response = json.loads(res.text)
 
@@ -47,9 +47,9 @@ class DeepbluUser(object):
 
 			self.authCode = response.get('result', {}).get('accessToken')
 			self.loggedIn = True
-			print("Logged in as " + email + '!')
+			logging.info("Logged in as " + email + '!')
 		else:
-			print("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
+			logging.info("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
 			self.loggedIn = False
 			self.authCode = None
 			self.userId = email
@@ -114,7 +114,11 @@ class Deepblu(object):
 					skip = -1
 			else:
 				# API call failed
-				print("Error obtaining dive logs, error code: " + str(response.get('statusCode')))
+				if deepbluUser.loggedIn:
+					print(str(response.get('statusCode')) + ",API Error. God knows what happened at Deepblu.")
+				else:
+					print(str(response.get('statusCode')) + ",Incorrect user + password combination or user id.")
+				exit()
 				skip = -1
 				return False
 			
@@ -377,7 +381,7 @@ class UDDFWriter(object):
 			'name': 'Deepblu Backup Tool',
 			'creator': 'Sander Van de Moortel',
 			'contact': 'https://github.com/bluppfisk/deepblu-tools',
-			'version': '0.5',
+			'version': '0.6',
 			'date': str(datetime.now())
 		}
 
@@ -437,7 +441,10 @@ if not deepbluUser.loggedIn: # not logged in, get data from API without logging 
 	print("Attempting to access API without logging in... (experimental)") # may fail if they ever restrict access
 
 deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser) # call API and get data
+
 if deepbluLogBook:
 	UDDFWriter(deepbluLogBook).toFile(targetfile) # print to templating engine
+	print("0,"+targetfile) # output for caller
+else:
+	print("1,Unexpected error occurred. Useful info, huh!")
 
-print(targetfile) # output for caller

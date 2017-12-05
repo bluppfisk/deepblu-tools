@@ -27,16 +27,18 @@
 	        $password = $_POST['password'];
 	        $command = escapeshellcmd('./backupdives.py '.$user.' '.$password);
 	        echo('<h2>Result!</h2><div class="result">');
-			$result=exec('/usr/bin/python3 backupdives.py '.$user.' '.$password);
-			if ($result) {
-				printf("<span>I think that worked. Here's your backup: <a href='done/%s'>%s</a></span>",$result,$result);
+			$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$user.' '.$password));
+			if($result[0]!=='0') {
+				printf("<span>Sometheeng ees wrong, officeur. Error message: %s</span>", $result[1]);
+			} else {
+				printf("<span>That worked! Here's your backup: <a href='done/%s'>%s</a></span>",$result[1], $result[1]);
 			}
 			?>
 				<h2>What's next</h2>
 				<ul>
 					<li>Click the link to download your backup in UDDF format.</li>
 					<li>Import this file into your favourite divelog software (I like <a href="https://subsurface-divelog.org">Subsurface</a>)</li>
-					
+
 					<li><strong>Before you go...</strong> This took a few days of my life to develop. Consider supporting me with a <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE">small donation through PayPal</a>.</li>
 
 			<?php
