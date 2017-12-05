@@ -57,10 +57,10 @@
 		</div>
 		<div class="container">
 			<h2>Instructions</h2>
-			<p>Enter your Deepblu username (email address) and password below.</p>
+			<p>Enter your Deepblu username (email address) and password in the fields above.</p>
 			<ul>
-				<li>If you signed up through Facebook, just enter your user id instead.</li>
-				<li>To find your user id, visit your profile page on Deepblu, look at the address bar, and copy the text between <code>/user/</code> and <code>/profile/</code>
+				<li>If you signed up through Facebook, just enter your <em>user id</em> instead.</li>
+				<li>To find your <em>user id</em>: visit your Deepblu profile page and look at the address bar. It's the text between <code>/user/</code> and <code>/profile/</code>.
 				<li><strong>I will not store your username and password</strong>, but you'll have to take my word for it.</li>
 				<li>If you don't trust me, enter only your user id or download <a href="https://github.com/bluppfisk/deepblu-tools">Deepblu Backup Tool source code</a> and run it yourself.</li>
 			</ul>
@@ -70,7 +70,7 @@
 		</div>
 	</main>
 	<footer class="container">
-		<p class="small">Questions to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a></p>
+		<p class="small">Inquiries to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a></p>
 	</footer>
 </body>
 </html>
