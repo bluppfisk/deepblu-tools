@@ -396,9 +396,10 @@ class UDDFWriter(object):
 
 	# Takes templating engine output and writes to file
 	def toFile(self, filename):
+		filename = './done/' + filename
 		print("Writing to '" + filename + "'")
 		f = open(filename, 'w')
-		f.write('./done' + self.output())
+		f.write(self.output())
 		f.close()
 		print("Done!")
 
