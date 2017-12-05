@@ -398,7 +398,7 @@ class UDDFWriter(object):
 	def toFile(self, filename):
 		filename = './done/' + filename
 		print("Writing to '" + filename + "'")
-		f = open(filename, 'w')
+		f = open(filename, 'wb')
 		f.write(self.output().encode('UTF-8'))
 		f.close()
 		print("Done!")
