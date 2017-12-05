@@ -420,9 +420,9 @@ if len(sys.argv) > 1: # shell arguments given
 	if len(sys.argv) == 3: # ooh, a password too, we can log in
 		pwd = str(sys.argv[2])
 	else: # no password; we'll try accessing the API without
-		pwd = None
+		pwd = ''
 
-	targetfile = 'backup_' + hashlib.sha1(user.encode('UTF-8')).hexdigest()[0:10] + '.uddf'
+	targetfile = 'backup_' + hashlib.sha1((user+pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
 else: # no shell arguments, read login data from file
 	with open('login','r') as loginfile:
