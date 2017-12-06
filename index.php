@@ -21,9 +21,9 @@
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
 					if ($_POST['submit'] && !empty($_POST['user'])) {
-				        $user = $_POST['user'];
-				        $password = $_POST['password'];
-				        $command = escapeshellcmd('./backupdives.py '.$user.' '.$password);
+				        $user = escapeshellarg($_POST['user']);
+				        $password = escapeshellarg($_POST['password']);
+				        $command = './backupdives.py '.$user.' '.$password;
 						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$user.' '.$password));
 						if($result[0]!=='0') {
 							printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
