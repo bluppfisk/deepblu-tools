@@ -62,7 +62,8 @@
 				<li>If you signed up through Facebook, just enter your <em>user id</em> instead.</li>
 				<li>To find your <em>user id</em>: visit your Deepblu profile page and look at the address bar. It's the text between <code>/user/</code> and <code>/profile/</code>.
 				<li><strong>I will not store your username and password</strong>, but by using this service you'll have to take my word for it.</li>
-				<li>If you don't trust it, enter only your user id or download the <a href="https://github.com/bluppfisk/deepblu-tools">Deepblu Backup Tool source code</a> and run it yourself.</li>
+				<li>If you don't trust it, enter only your <em>user id</em> or download the <a href="https://github.com/bluppfisk/deepblu-tools">Deepblu Backup Tool source code</a> and run it yourself.</li>
+				<li><strong>Note: </strong>If you only use your <em>user id</em>, your 'private' dive logs will not be backed up and the backup will not contain any personal information.</li>
 			</ul>
 			<?php
 			}
