@@ -20,6 +20,7 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - find the newly generated backup file in the `done` folder
 
 ### Tracked data
+- Dive type: Freediving (apnea) or Scuba (open circuit)
 - Dive profile: Deepblu provides a waypoint with temperature and depth every 20 seconds
 - Date and time, visibility, average depth, maximum depth, minimum temperature, dive duration
 - Media: url, captions and timestamps of video and images
