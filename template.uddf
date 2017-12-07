@@ -83,7 +83,7 @@
                     <link ref="{{ log.diveGear.gasDefinition.id }}" />
                     <tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>
                     <tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>
-                    <tankvolume>{{ log.diveGear.tank }}</tankvolume>
+                    <tankvolume>{{ log.diveGear.tankVolume }}</tankvolume>
                 </tankdata>
                 <informationbeforedive>
                     {% for buddy in log.buddies %}

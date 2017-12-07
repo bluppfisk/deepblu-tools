@@ -279,7 +279,7 @@ class Medium(object):
 class diveGear(object):
 	def __init__(self, diveGear):
 		self.gasDefinition = gasDefinition(diveGear.get('airMix'))
-		self.tank = diveGear.get('airTank', {}).get('volume')
+		self.tankVolume = diveGear.get('airTank', {}).get('volume')
 		if diveGear.get('endBar'):
 			self.endBar = int(diveGear.get('endBar')) * 10**5
 		if diveGear.get('startedBar'):
