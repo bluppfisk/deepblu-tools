@@ -14,7 +14,7 @@
 #        - find the file called backup.uddf in the same folder
 #        
 
-import sys, requests, json, time, jinja2, hashlib, logging
+import sys, requests, json, time, jinja2, hashlib
 from datetime import datetime
 
 CHUNKSIZE = 20 # Don't load everything at once
@@ -37,7 +37,7 @@ class DeepbluUser(object):
 		    "email": email,
 		    "password": password
 		}
-		logging.info("Connecting to Deepblu...")
+		print("Connecting to Deepblu...")
 		res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
 		response = json.loads(res.text)
 
@@ -47,9 +47,9 @@ class DeepbluUser(object):
 
 			self.authCode = response.get('result', {}).get('accessToken')
 			self.loggedIn = True
-			logging.info("Logged in as " + email + '!')
+			print("Logged in as " + email + '!')
 		else:
-			logging.info("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
+			print("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
 			self.loggedIn = False
 			self.authCode = None
 			self.userId = email
@@ -232,6 +232,9 @@ class DeepbluLog(object):
 		self.minTemp = DeepbluTools.convertTemp(jsonLog.get('diveMinTemperature', None))
 		self.maxDepth = DeepbluTools.getDepth(jsonLog.get('diveMaxDepth', None), self.airPressure, self.waterType)
 		self.diveGear = diveGear(jsonLog.get('_DiveGear', {}))
+		# UDDF scheme prescribes for dive mode (i.e. apnea or scuba) to be included at waypoint level
+		# as it is technically possible to change diving mode while diving		
+		self.diveMode = 'apnea' if jsonLog.get('diveType') == 'Free' else 'opencircuit'
 		self.diveProfile = diveProfile(jsonLog.get('_diveProfile'), self)
 		self.diveSpot = diveSpot(jsonLog.get('divespot'))
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
@@ -314,6 +317,7 @@ class gasDefinition(object):
 
 ###
 # diveProfile consists of wayPoints
+# 'root' refers to dive log
 # 
 class diveProfile(object):
 	def __init__(self, diveprofile, root):
@@ -321,9 +325,11 @@ class diveProfile(object):
 		self.waypoints = []
 		for waypoint in diveprofile:
 			self.waypoints.append(wayPoint(waypoint, root, self))
+
 ###
 # wayPoint contains depth, temperature and time
 # think of it as a dive computer sample point
+# 'parent' refers to diveProfile; 'root' to DeepbluLog
 # 
 class wayPoint(object):
 	def __init__(self, waypoint, root, parent):
@@ -338,10 +344,13 @@ class wayPoint(object):
 		
 		self.depth = depth
 		self.time = parent.time
+		self.diveMode = root.diveMode # 'apnea' for freediving; 'opencircuit' for scuba
 		self.temp = DeepbluTools.convertTemp(waypoint.get('temperature')) # convert to Kelvin
 
+###
 # Toolbox class, does not get instantiated and therefore
 # does not pass self as an argument to its functions
+# 
 class DeepbluTools:
 	# Gets depth in metres. Formula looks wrong but it
 	# is actually compensating for values incorrectly

@@ -98,6 +98,7 @@
                         <depth>{{ waypoint.depth }}</depth>
                         <divetime>{{ waypoint.time }}</divetime>
                         <temperature>{{ waypoint.temp }}</temperature>
+                        <divemode type="{{ waypoint.diveMode }}" />
                     </waypoint>
                     {% endfor %}
                 </samples>
