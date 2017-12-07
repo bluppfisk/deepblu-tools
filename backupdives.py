@@ -9,9 +9,6 @@
 # See http://uddf.org for more information on the format
 # 
 # Requirements: Python >= 3.3, requests and jinja2 packages
-# Usage: - fill in your login details in the separate login file
-#        - then run this script: python3 backupdives.py
-#        - find the file called backup.uddf in the same folder
 #        
 
 import sys, requests, json, time, jinja2, hashlib
