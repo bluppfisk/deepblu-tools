@@ -230,8 +230,9 @@ class DeepbluLog(object):
 		self.maxDepth = DeepbluTools.getDepth(jsonLog.get('diveMaxDepth', None), self.airPressure, self.waterType)
 		self.diveGear = diveGear(jsonLog.get('_DiveGear', {}))
 		# UDDF scheme prescribes for dive mode (i.e. apnea or scuba) to be included at waypoint level
-		# as it is technically possible to change diving mode while diving		
-		self.diveMode = 'apnea' if jsonLog.get('diveType') == 'Free' else 'opencircuit'
+		# as it is technically possible to change diving mode while diving
+		# 'apnoe' is the German keyword used in UDDF < 3.2.2; using this for compatibility reasons
+		self.diveMode = 'apnoe' if jsonLog.get('diveType') == 'Free' else 'opencircuit'
 		self.diveProfile = diveProfile(jsonLog.get('_diveProfile'), self)
 		self.diveSpot = diveSpot(jsonLog.get('divespot'))
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
@@ -341,7 +342,7 @@ class wayPoint(object):
 		
 		self.depth = depth
 		self.time = parent.time
-		self.diveMode = root.diveMode # 'apnea' for freediving; 'opencircuit' for scuba
+		self.diveMode = root.diveMode # 'apnoe' for freediving; 'opencircuit' for scuba
 		self.temp = DeepbluTools.convertTemp(waypoint.get('temperature')) # convert to Kelvin
 
 ###
