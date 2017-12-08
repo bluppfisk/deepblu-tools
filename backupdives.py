@@ -267,7 +267,9 @@ class Medium(object):
 		self.id = 'deepblu_md_' + medium.get('_id')
 		self.url = medium.get('url')
 		self.caption = medium.get('caption', '')
-		self.datetime = datetime.fromtimestamp(medium.get('timestamp')).isoformat()
+		timestamp = medium.get('timestamp')
+		if timestamp:
+			self.datetime = datetime.fromtimestamp(timestamp).isoformat()
 		if medium.get('type') == "Video":
 			self.type = 'video'
 		else:
