@@ -32,8 +32,7 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - Notes
 
 ### Known issues
-- Not all data is currently being backed up. I may add more items in the future.
-- ~~Subsurface does not seem to honour the UDDF definition for apnea (freediving) divelogs~~ fixed, see [922](https://github.com/Subsurface-divelog/subsurface/issues/922)
+- Not all data is currently being backed up (some equipment data isn't). I may add more items in the future.
 
 ## Deepblu Autoliker - autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
