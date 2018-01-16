@@ -13,6 +13,7 @@
 
 import sys, requests, json, time, jinja2, hashlib
 from datetime import datetime
+from xml.sax.saxutils import escape, quoteattr
 
 CHUNKSIZE = 20 # Don't load everything at once
 
@@ -224,7 +225,7 @@ class DeepbluLog(object):
 		self.diveDate = datetime.strptime(jsonLog.get('diveDTRaw'), "%Y,%m,%d,%H,%M,%S")
 		self.airPressure = jsonLog.get('airPressure', 1000)
 		self.waterType = jsonLog.get('waterType', 0)
-		self.notes = jsonLog.get('notes', '')
+		self.notes = quoteattr(escape(jsonLog.get('notes', '')))
 		self.diveDuration = jsonLog.get('diveDuration', '')
 		self.minTemp = DeepbluTools.convertTemp(jsonLog.get('diveMinTemperature', None))
 		self.maxDepth = DeepbluTools.getDepth(jsonLog.get('diveMaxDepth', None), self.airPressure, self.waterType)
