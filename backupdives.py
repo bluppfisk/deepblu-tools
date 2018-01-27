@@ -256,7 +256,7 @@ class DeepbluLog(object):
 class Diver(object):
 	def __init__(self, diver):
 		self.id = diver.get('diveBuddyUserId')
-		self.name = diver.get('diveBuddyUserName')
+		self.name = quoteattr(diver.get('diveBuddyUserName'))
 
 ###
 # Singular of media, i.c. videos and photos
@@ -267,7 +267,7 @@ class Medium(object):
 	def __init__(self, medium):
 		self.id = 'deepblu_md_' + medium.get('_id')
 		self.url = medium.get('url')
-		self.caption = medium.get('caption', '')
+		self.caption = quoteattr(medium.get('caption', ''))
 		timestamp = medium.get('timestamp')
 		if timestamp:
 			self.datetime = datetime.fromtimestamp(timestamp).isoformat()
@@ -299,9 +299,9 @@ class diveGear(object):
 class Equipment(object):
 	def __init__(self, kind, brandModel):
 		self.type = kind
-		self.brand = brandModel.get('brand')
-		self.model = brandModel.get('officialModel')
-		self.id = 'eq_' + hashlib.sha1((str(self.brand) + str(self.model)).encode('UTF-8')).hexdigest()[0:8]
+		self.brand = quoteattr(str(brandModel.get('brand')))
+		self.model = quoteattr(str(brandModel.get('officialModel')))
+		self.id = 'eq_' + hashlib.sha1((self.brand + self.model).encode('UTF-8')).hexdigest()[0:8]
 
 ###
 # Deepblu only saves nitrogen and oxygen values for air mixes
@@ -376,7 +376,7 @@ class DeepbluTools:
 class diveSpot(object):
 	def __init__(self, divespot):
 		self.id = 'deepblu_ds_' + divespot.get('_id')
-		self.name = divespot.get('divespot')
+		self.name = quoteattr(divespot.get('divespot'))
 		self.lat = divespot.get('gpsLocation', {}).get('lat')
 		self.lon = divespot.get('gpsLocation', {}).get('lng')
 
@@ -391,7 +391,7 @@ class UDDFWriter(object):
 			'name': 'Deepblu Backup Tool',
 			'creator': 'Sander Van de Moortel',
 			'contact': 'https://github.com/bluppfisk/deepblu-tools',
-			'version': '0.6',
+			'version': '0.7',
 			'date': str(datetime.now())
 		}
 
