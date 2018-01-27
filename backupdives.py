@@ -13,7 +13,7 @@
 
 import sys, requests, json, time, jinja2, hashlib
 from datetime import datetime
-from xml.sax.saxutils import quoteattr
+from xml.sax.saxutils import escape
 
 CHUNKSIZE = 20 # Don't load everything at once
 
@@ -225,7 +225,7 @@ class DeepbluLog(object):
 		self.diveDate = datetime.strptime(jsonLog.get('diveDTRaw'), "%Y,%m,%d,%H,%M,%S")
 		self.airPressure = jsonLog.get('airPressure', 1000)
 		self.waterType = jsonLog.get('waterType', 0)
-		self.notes = quoteattr(jsonLog.get('notes', ''))
+		self.notes = escape(jsonLog.get('notes', ''))
 		self.diveDuration = jsonLog.get('diveDuration', '')
 		self.minTemp = DeepbluTools.convertTemp(jsonLog.get('diveMinTemperature', None))
 		self.maxDepth = DeepbluTools.getDepth(jsonLog.get('diveMaxDepth', None), self.airPressure, self.waterType)
@@ -256,7 +256,7 @@ class DeepbluLog(object):
 class Diver(object):
 	def __init__(self, diver):
 		self.id = diver.get('diveBuddyUserId')
-		self.name = quoteattr(diver.get('diveBuddyUserName'))
+		self.name = escape(diver.get('diveBuddyUserName'))
 
 ###
 # Singular of media, i.c. videos and photos
@@ -267,7 +267,7 @@ class Medium(object):
 	def __init__(self, medium):
 		self.id = 'deepblu_md_' + medium.get('_id')
 		self.url = medium.get('url')
-		self.caption = quoteattr(medium.get('caption', ''))
+		self.caption = escape(medium.get('caption', ''))
 		timestamp = medium.get('timestamp')
 		if timestamp:
 			self.datetime = datetime.fromtimestamp(timestamp).isoformat()
@@ -299,8 +299,8 @@ class diveGear(object):
 class Equipment(object):
 	def __init__(self, kind, brandModel):
 		self.type = kind
-		self.brand = quoteattr(str(brandModel.get('brand')))
-		self.model = quoteattr(str(brandModel.get('officialModel')))
+		self.brand = escape(str(brandModel.get('brand')))
+		self.model = escape(str(brandModel.get('officialModel')))
 		self.id = 'eq_' + hashlib.sha1((self.brand + self.model).encode('UTF-8')).hexdigest()[0:8]
 
 ###
@@ -376,7 +376,7 @@ class DeepbluTools:
 class diveSpot(object):
 	def __init__(self, divespot):
 		self.id = 'deepblu_ds_' + divespot.get('_id')
-		self.name = quoteattr(divespot.get('divespot'))
+		self.name = escape(divespot.get('divespot'))
 		self.lat = divespot.get('gpsLocation', {}).get('lat')
 		self.lon = divespot.get('gpsLocation', {}).get('lng')
 
