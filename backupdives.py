@@ -301,7 +301,7 @@ class Equipment(object):
 		self.type = kind
 		self.brand = brandModel.get('brand')
 		self.model = brandModel.get('officialModel')
-		self.id = 'eq_' + hashlib.sha1((self.brand + self.model).encode('UTF-8')).hexdigest()[0:8]
+		self.id = 'eq_' + hashlib.sha1((str(self.brand) + str(self.model)).encode('UTF-8')).hexdigest()[0:8]
 
 ###
 # Deepblu only saves nitrogen and oxygen values for air mixes
