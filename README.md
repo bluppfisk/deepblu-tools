@@ -6,6 +6,8 @@ A set of tools to get the most out of [Deepblu](https://deepblu.com).
 ## Deepblu Backup Tool - backupdives.py
 Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF), which can be imported into other applications that support it, including [Subsurface Divelog](https://subsurface-divelog.org/).
 
+[Diving Log](http://www.divinglog.de/), a commercial dive log application for Windows, based its Deepblu import tool on this project.
+
 ![Deepblu logs imported into Subsurface](/images/imported_into_subsurface.jpg)
 
 ### Requirements
