@@ -16,6 +16,7 @@ from datetime import datetime
 from xml.sax.saxutils import escape
 
 CHUNKSIZE = 20 # Don't load everything at once
+VERSION = '0.8'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
@@ -146,6 +147,20 @@ class DeepbluLogBook(object):
 	# Below functions eliminate duplicates from the summaries
 	# of equipment, buddies, divespots, etc
 	# 
+	def getUniqueProperty(self, property):
+		properties = []
+		for log in self.logs:
+			for item in getattr(property, log):
+				if not self.findPropertyById(item.id, property):
+					properties.append(item)
+
+		return properties
+
+	def findPropertyById(self, propertyId, property):
+		for item in getattr(self, property):
+			if propertyId == item.id:
+				return item
+
 	def getUniqueEquipment(self):
 		self.equipment = []
 		for log in self.logs:
@@ -235,7 +250,7 @@ class DeepbluLog(object):
 		# 'apnoe' is the German keyword used in UDDF < 3.2.2; using this for compatibility reasons
 		self.diveMode = 'apnoe' if jsonLog.get('diveType') == 'Free' else 'opencircuit'
 		self.diveProfile = diveProfile(jsonLog.get('_diveProfile'), self)
-		self.diveSpot = diveSpot(jsonLog.get('divespot'))
+		self.diveSpot = diveSpot(jsonLog.get('divespot', {}))
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
 		self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
 		
@@ -248,7 +263,7 @@ class DeepbluLog(object):
 			self.media.append(Medium(medium))
 
 ###
-# This is a diver (person). For now this is only buddies
+# This is a diver (person). For now this is only buddies.
 # Owner should probably extend or implement this class
 # But since we're only setting properties and this is Python,
 # it doesn't really matter?
@@ -375,8 +390,8 @@ class DeepbluTools:
 
 class diveSpot(object):
 	def __init__(self, divespot):
-		self.id = 'deepblu_ds_' + divespot.get('_id')
-		self.name = escape(divespot.get('divespot'))
+		self.id = 'deepblu_ds_' + str(divespot.get('_id'))
+		self.name = escape(str(divespot.get('divespot')))
 		self.lat = divespot.get('gpsLocation', {}).get('lat')
 		self.lon = divespot.get('gpsLocation', {}).get('lng')
 
@@ -391,7 +406,7 @@ class UDDFWriter(object):
 			'name': 'Deepblu Backup Tool',
 			'creator': 'Sander Van de Moortel',
 			'contact': 'https://github.com/bluppfisk/deepblu-tools',
-			'version': '0.7',
+			'version': VERSION,
 			'date': str(datetime.now())
 		}
 
@@ -429,6 +444,11 @@ class UDDFWriter(object):
 ###
 # This part controls the flow of the program
 # 
+print('##############################################')
+print('# Deepblu Backup Tool v' + VERSION + '                   #')
+print('# https://github.com/bluppfisk/deepblu-tools #')
+print('##############################################')
+
 if len(sys.argv) > 1: # shell arguments given
 	user = str(sys.argv[1])
 	if len(sys.argv) == 3: # ooh, a password too, we can log in

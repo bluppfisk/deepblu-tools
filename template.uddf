@@ -89,7 +89,9 @@
                     {% for buddy in log.buddies %}
                         <link ref="{{ buddy.id }}" />
                     {% endfor %}
-                    <link ref="{{ log.diveSpot.id }}" />
+                    {% if log.diveSpot %}
+                        <link ref="{{ log.diveSpot.id }}" />
+                    {% endif %}
                     <datetime>{{ log.diveDate }}</datetime>
                 </informationbeforedive>
                 <samples>
