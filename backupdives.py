@@ -147,20 +147,6 @@ class DeepbluLogBook(object):
 	# Below functions eliminate duplicates from the summaries
 	# of equipment, buddies, divespots, etc
 	# 
-	def getUniqueProperty(self, property):
-		properties = []
-		for log in self.logs:
-			for item in getattr(property, log):
-				if not self.findPropertyById(item.id, property):
-					properties.append(item)
-
-		return properties
-
-	def findPropertyById(self, propertyId, property):
-		for item in getattr(self, property):
-			if propertyId == item.id:
-				return item
-
 	def getUniqueEquipment(self):
 		self.equipment = []
 		for log in self.logs:
