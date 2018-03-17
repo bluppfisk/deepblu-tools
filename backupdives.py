@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+
 ###
 # Deepblu Backup Tool
 # by Sander Van de Moortel
@@ -15,12 +16,13 @@ import sys, requests, json, time, jinja2, hashlib
 from datetime import datetime
 from xml.sax.saxutils import escape
 
-CHUNKSIZE = 20 # Don't load everything at once
-VERSION = '0.8'
+CHUNKSIZE = 100 # Don't load everything at once
+VERSION = '0.9'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
 DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/search?postType=divelog&userId="
+DEEPBLU_DRAFT_DIVES_API = DEEPBLU_API + "divelog/v0/getRawLogs?hide=0&type=1" # &limit=20&skip=20
 DEEPBLU_PROFILE_API = DEEPBLU_API + "user/v0/profile/"
 
 ###
@@ -81,7 +83,18 @@ class Deepblu(object):
 	###
 	# Load divelogs from Deepblu API
 	# 
-	def loadDivesFromAPI(self, deepbluUser):
+	def getAllLogsFromAPI(self, deepbluUser):
+		print("Getting published logs")
+		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published')
+		if deepbluUser.loggedIn:
+			print("Getting draft logs for logged in user")
+			draftPosts = self.loadDivesFromAPI(deepbluUser, type='draft')
+		else:
+			print("Cannot get drafts if user is not logged in")
+
+		return DeepbluLogBook(publishedPosts + draftPosts, deepbluUser)
+
+	def loadDivesFromAPI(self, deepbluUser, type):
 		headers = {
 			"content-type": "application/json; charset=utf-8",
 			"authorization": deepbluUser.authCode,
@@ -90,27 +103,36 @@ class Deepblu(object):
 
 		skip = 0
 		posts = []
+		result_index_name = 'posts' if type == 'published' else 'logs'
 
-		print("Loading first " + str(CHUNKSIZE) + " logs from Deepblu API...")
+		print("Loading first {} {} logs from Deepblu API...".format(str(CHUNKSIZE), type))
 
 		###
 		# This will load chunks from the API until there are no more logs or
 		# until the API call fails, in which case we'll set skip to -1
 		# 
 		while skip >= 0:
-			res = requests.get(DEEPBLU_DIVES_API + deepbluUser.userId + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
+			res = requests.get((DEEPBLU_DIVES_API + deepbluUser.userId if type=='published' else DEEPBLU_DRAFT_DIVES_API) + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
 			response = json.loads(res.text)
 			if response.get('statusCode') == 200: # result!
-				if len(response.get('result', {}).get('posts')) > 0:
+				if len(response.get('result', {}).get(result_index_name)) > 0:
 					if skip > 0:
-						print("Loading next " + str(CHUNKSIZE) + " logs...")
+						print("Loading next {} {} logs...".format(str(CHUNKSIZE), type))
 
-					posts += response.get('result', {}).get('posts')
+					new_posts = response.get('result', {}).get(result_index_name)
+					if type == 'published':
+						posts += new_posts
+					else:
+						for post in new_posts:
+							new_post = {'diveLog': post, 'medias': {}}
+							posts.append(new_post)
+
 					skip += CHUNKSIZE # next chunk
 				else:
 					# we're done here
-					print("Found all the logs!")
+					print("Found all the {} logs!".format(type))
 					skip = -1
+
 			else:
 				# API call failed
 				if deepbluUser.loggedIn:
@@ -120,8 +142,8 @@ class Deepblu(object):
 				exit()
 				skip = -1
 				return False
-			
-		return DeepbluLogBook(posts, deepbluUser)
+		
+		return posts
 
 ###
 # A logbook containing all logs as well summaries for
@@ -222,7 +244,7 @@ class DeepbluLogBook(object):
 #
 class DeepbluLog(object):
 	def __init__(self, jsonLog, media):
-		self.id = 'deepblu_dl_' + jsonLog.get('divelogId')
+		self.id = 'deepblu_dl_' + jsonLog.get('_id')
 		self.diveDate = datetime.strptime(jsonLog.get('diveDTRaw'), "%Y,%m,%d,%H,%M,%S")
 		self.airPressure = jsonLog.get('airPressure', 1000)
 		self.waterType = jsonLog.get('waterType', 0)
@@ -456,7 +478,7 @@ deepbluUser = DeepbluUser().login(user, pwd) # login user
 if not deepbluUser.loggedIn: # not logged in, get data from API without logging in
 	print("Attempting to access API without logging in... (experimental)") # may fail if they ever restrict access
 
-deepbluLogBook = Deepblu().loadDivesFromAPI(deepbluUser) # call API and get data
+deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser) # call API and get data
 
 if deepbluLogBook:
 	UDDFWriter(deepbluLogBook).toFile(targetfile) # print to templating engine
