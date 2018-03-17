@@ -12,12 +12,12 @@
 # Requirements: Python >= 3.3, requests and jinja2 packages
 #        
 
-import sys, requests, json, time, jinja2, hashlib
+import sys, requests, json, time, jinja2, hashlib, argparse
 from datetime import datetime
 from xml.sax.saxutils import escape
 
 CHUNKSIZE = 100 # Don't load everything at once
-VERSION = '0.9'
+VERSION = '0.9.2'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
@@ -83,14 +83,16 @@ class Deepblu(object):
 	###
 	# Load divelogs from Deepblu API
 	# 
-	def getAllLogsFromAPI(self, deepbluUser):
+	def getAllLogsFromAPI(self, deepbluUser, drafts):
 		print("Getting published logs")
 		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published')
-		if deepbluUser.loggedIn:
-			print("Getting draft logs for logged in user")
-			draftPosts = self.loadDivesFromAPI(deepbluUser, type='draft')
-		else:
-			print("Cannot get drafts if user is not logged in")
+		draftPosts = []
+		if drafts:
+			if deepbluUser.loggedIn:
+				print("Getting draft logs for logged in user")
+				draftPosts = self.loadDivesFromAPI(deepbluUser, type='draft')
+			else:
+				print("Cannot get drafts if user is not logged in")
 
 		return DeepbluLogBook(publishedPosts + draftPosts, deepbluUser)
 
@@ -260,6 +262,10 @@ class DeepbluLog(object):
 		self.diveProfile = diveProfile(jsonLog.get('_diveProfile'), self)
 		self.diveSpot = diveSpot(jsonLog.get('divespot', {}))
 		self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
+		self.airTemperature = jsonLog.get('_DiveCondition', {}).get('avgTemperature', None)
+		if self.airTemperature:
+			# for some obscure reason, this is not in decicelsius like elsewhere
+			self.airTemperature = DeepbluTools.convertTemp(self.airTemperature*10)
 		self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
 		
 		self.buddies = []
@@ -453,36 +459,31 @@ class UDDFWriter(object):
 # This part controls the flow of the program
 # 
 print('##############################################')
-print('# Deepblu Backup Tool v' + VERSION + '                   #')
+print('# Deepblu Backup Tool v' + VERSION + '                 #')
 print('# https://github.com/bluppfisk/deepblu-tools #')
 print('##############################################')
 
-if len(sys.argv) > 1: # shell arguments given
-	user = str(sys.argv[1])
-	if len(sys.argv) == 3: # ooh, a password too, we can log in
-		pwd = str(sys.argv[2])
-	else: # no password; we'll try accessing the API without
-		pwd = ''
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('-d', '--with-drafts', help='Also download draft logs', action='store_true')
+parser.add_argument('-u', '--username', help='Specify username', action='store', required=True)
+parser.add_argument('-p', '--password', help='Specify password', action='store', default='', required=False)
+args = parser.parse_args()
 
-	targetfile = 'backup_' + hashlib.sha1((user+pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
+user = args.username
+pwd = args.password
+drafts = args.with_drafts
 
-else: # no shell arguments, read login data from file
-	with open('login','r') as loginfile:
-	    logindata = eval(loginfile.read())
-	    user = logindata.get('user')
-	    pwd = logindata.get('pwd')
-	    targetfile = 'backup.uddf'
+targetfile = 'backup_' + hashlib.sha1((user+pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
 deepbluUser = DeepbluUser().login(user, pwd) # login user
 
 if not deepbluUser.loggedIn: # not logged in, get data from API without logging in
 	print("Attempting to access API without logging in... (experimental)") # may fail if they ever restrict access
 
-deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser) # call API and get data
+deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser, drafts=drafts) # call API and get data
 
 if deepbluLogBook:
 	UDDFWriter(deepbluLogBook).toFile(targetfile) # print to templating engine
 	print("0,"+targetfile) # output for caller
 else:
 	print("1,Unexpected error occurred. Useful info, huh!")
-

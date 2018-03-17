@@ -20,11 +20,12 @@
 				<h1 class="display-4">Deepblu Backup Tool</h1>
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
-					if ($_POST['submit'] && !empty($_POST['user'])) {
+					if (isset($_POST['submit']) && !empty($_POST['user'])) {
+						$drafts = isset($_POST['with_drafts']) ? '-d' : '';
 				        $user = escapeshellarg($_POST['user']);
 				        $password = escapeshellarg($_POST['password']);
 				        $command = './backupdives.py '.$user.' '.$password;
-						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$user.' '.$password));
+						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$drafts.' -u '.$user.' -p '.$password));
 						if($result[0]!=='0') {
 							printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
 						} else {
@@ -50,6 +51,7 @@
 					<form method="POST" action="index.php">
 						<input type="text" name="user" placeholder="Deepblu userID or email" />
 						<input type="password" name="password" placeholder="Password or blank" />
+						<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
 						<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
 					</form>
 				</p>

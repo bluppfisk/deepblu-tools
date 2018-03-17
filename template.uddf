@@ -93,6 +93,7 @@
                         <link ref="{{ log.diveSpot.id }}" />
                     {% endif %}
                     <datetime>{{ log.diveDate }}</datetime>
+                    <airtemperature>{{ log.airTemperature }}</airtemperature>
                 </informationbeforedive>
                 <samples>
                     {% for waypoint in log.diveProfile.waypoints %}
