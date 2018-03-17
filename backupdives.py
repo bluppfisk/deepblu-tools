@@ -17,7 +17,7 @@ from datetime import datetime
 from xml.sax.saxutils import escape
 
 CHUNKSIZE = 100 # Don't load everything at once
-VERSION = '0.9.2'
+VERSION = '0.9.3'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"

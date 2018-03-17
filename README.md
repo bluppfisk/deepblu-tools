@@ -13,18 +13,22 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 ### Requirements
 - Make sure you have Python 3 and pip3 installed
 - run `pip3 install requests jinja2` to install the required dependencies
+- make sure `backupdives.py` is executable by running `chmod u+x backupdives.py` in the directory
 
 ### Usage
-- run `python3 backupdives.py email password`
-- or run `python3 backupdives.py userId` or
-- or fill in your login details in the separate **login** file, then run this script: `python3 backupdives.py`
+- run `./backupdives.py -u email -p password`
+- or run `./backupdives.py --with-drafts -u email -p password` if you want to include your draft dives too
+- or run `./backupdives.py -u userId` or
+- or fill in your login details in the separate **login** file, then run this script: `./backupdives.py`
 - or use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
 - find the newly generated backup file in the `done` folder
+
+in the above commands, make sure you replace `email` and `password` with the information associated with your deepblu account, and mind that `userId` is not your username but the id as found in the URL when visiting your own profile at Deepblu.
 
 ### Tracked data
 - Dive type: Freediving (apnea) or Scuba (open circuit)
 - Dive profile: Deepblu provides a waypoint with temperature and depth every 20 seconds
-- Date and time, visibility, average depth, maximum depth, minimum temperature, dive duration
+- Date and time, visibility, average depth, maximum depth, minimum temperature, dive duration, air temperature
 - Media: url, captions and timestamps of video and images
 - Tank: volume, gas, pressure at start and end
 - Dive computer brand and model
