@@ -21,11 +21,16 @@
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
 					if (isset($_POST['submit']) && !empty($_POST['user'])) {
+						if (isset($_POST['max_logs'])) {
+							$max_logs = '-m '.int(escapeshellarg($_POST['max_logs']));
+						} else {
+							$max_logs = '';
+						}
 						$drafts = isset($_POST['with_drafts']) ? '-d' : '';
 				        $user = escapeshellarg($_POST['user']);
 				        $password = escapeshellarg($_POST['password']);
 				        $command = './backupdives.py '.$user.' '.$password;
-						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$drafts.' -u '.$user.' -p '.$password));
+						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
 						if($result[0]!=='0') {
 							printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
 						} else {
@@ -49,9 +54,14 @@
 				?>
 				<p>
 					<form method="POST" action="index.php">
-						<input type="text" name="user" placeholder="Deepblu userID or email" />
-						<input type="password" name="password" placeholder="Password or blank" />
-						<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
+						<div style="max-width: 200px; display: inline-block;">
+							<input type="text" name="user" placeholder="Deepblu userID or email" />
+							<input type="password" name="password" placeholder="Password or blank" />
+						</div>
+						<div style="max-width: 200px; display: inline-block;">
+							<input type="text" name="max_logs" placeholder="# logs"><label for="max_logs">Only download latest x</label>
+							<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
+						</div>
 						<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
 					</form>
 				</p>

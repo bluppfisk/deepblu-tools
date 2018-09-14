@@ -17,7 +17,7 @@ from datetime import datetime
 from xml.sax.saxutils import escape
 
 CHUNKSIZE = 100 # Don't load everything at once
-VERSION = '0.9.3'
+VERSION = '0.9.5'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
@@ -83,9 +83,9 @@ class Deepblu(object):
 	###
 	# Load divelogs from Deepblu API
 	# 
-	def getAllLogsFromAPI(self, deepbluUser, drafts):
+	def getAllLogsFromAPI(self, deepbluUser, drafts, max_logs):
 		print("Getting published logs")
-		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published')
+		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published', max_logs=max_logs)
 		draftPosts = []
 		if drafts:
 			if deepbluUser.loggedIn:
@@ -96,7 +96,7 @@ class Deepblu(object):
 
 		return DeepbluLogBook(publishedPosts + draftPosts, deepbluUser)
 
-	def loadDivesFromAPI(self, deepbluUser, type):
+	def loadDivesFromAPI(self, deepbluUser, type, max_logs):
 		headers = {
 			"content-type": "application/json; charset=utf-8",
 			"authorization": deepbluUser.authCode,
@@ -104,22 +104,32 @@ class Deepblu(object):
 		}
 
 		skip = 0
+		if max_logs:
+			logs_to_get = max_logs if max_logs < CHUNKSIZE else CHUNKSIZE
+		else:
+			logs_to_get = CHUNKSIZE
+
 		posts = []
 		result_index_name = 'posts' if type == 'published' else 'logs'
 
-		print("Loading first {} {} logs from Deepblu API...".format(str(CHUNKSIZE), type))
+		print("Loading first {} {} logs from Deepblu API...".format(str(logs_to_get), type))
 
 		###
 		# This will load chunks from the API until there are no more logs or
 		# until the API call fails, in which case we'll set skip to -1
 		# 
 		while skip >= 0:
-			res = requests.get((DEEPBLU_DIVES_API + deepbluUser.userId if type=='published' else DEEPBLU_DRAFT_DIVES_API) + "&limit=" + str(CHUNKSIZE) + "&skip=" + str(skip), headers=headers)
+			res = requests.get((DEEPBLU_DIVES_API + deepbluUser.userId if type=='published' else DEEPBLU_DRAFT_DIVES_API) + "&limit=" + str(logs_to_get) + "&skip=" + str(skip), headers=headers)
 			response = json.loads(res.text)
-			if response.get('statusCode') == 200: # result!
+			if response.get('statusCode') == 200:  # result!
 				if len(response.get('result', {}).get(result_index_name)) > 0:
 					if skip > 0:
-						print("Loading next {} {} logs...".format(str(CHUNKSIZE), type))
+						if max_logs:
+							max_logs -= skip
+							logs_to_get = max_logs if max_logs < CHUNKSIZE else CHUNKSIZE
+						else:
+							logs_to_get = CHUNKSIZE
+						print("Loading next {} {} logs...".format(str(logs_to_get), type))
 
 					new_posts = response.get('result', {}).get(result_index_name)
 					if type == 'published':
@@ -144,7 +154,7 @@ class Deepblu(object):
 				exit()
 				skip = -1
 				return False
-		
+
 		return posts
 
 ###
@@ -246,6 +256,7 @@ class DeepbluLogBook(object):
 #
 class DeepbluLog(object):
 	def __init__(self, jsonLog, media):
+		self._start_epoch = None
 		self.id = 'deepblu_dl_' + jsonLog.get('_id')
 		self.diveDate = datetime.strptime(jsonLog.get('diveDTRaw'), "%Y,%m,%d,%H,%M,%S")
 		self.airPressure = jsonLog.get('airPressure', 1000)
@@ -351,7 +362,7 @@ class gasDefinition(object):
 # 
 class diveProfile(object):
 	def __init__(self, diveprofile, root):
-		self.time = 0 # keeps track of time for waypoints
+		self.time = 0  # keeps track of time for waypoints
 		self.waypoints = []
 		for waypoint in diveprofile:
 			self.waypoints.append(wayPoint(waypoint, root, self))
@@ -368,9 +379,15 @@ class wayPoint(object):
 		waterType = root.waterType
 		depth = DeepbluTools.getDepth(waypoint.get('pressure'), airPressure, waterType)
 
+		# A quirk of Deepblu is that, for some logs, it saves the dive time of waypoints
+		# in Unix epoch time. This is why we keep track of the first waypoint time
+		# and subtract it later from each following waypoint's time
+		if root._start_epoch == None:
+			root._start_epoch = waypoint.get('time') if waypoint.get('time') else 0
 		# For some logs, Deepblu does not save time correctly, however Deepblu
 		# always keeps a waypoint every 20 seconds. So if no time is set, add 20 s
 		parent.time = waypoint.get('time') if waypoint.get('time') else parent.time + 20
+		parent.time -= root._start_epoch  # subtract 0 or unix time from each waypoint
 		
 		self.depth = depth
 		self.time = parent.time
@@ -385,6 +402,7 @@ class DeepbluTools:
 	# Gets depth in metres. Formula looks wrong but it
 	# is actually compensating for values incorrectly
 	# stored by Deepblu
+	@staticmethod
 	def getDepth(press, airpress, fresh):
 		if not press: return None
 		r = 1.025 if fresh and fresh == 1 else 1.0
@@ -396,6 +414,7 @@ class DeepbluTools:
 
 	# Deepblu reports temperature values in decicelsius
 	# Let's store them in Kelvin
+	@staticmethod
 	def convertTemp(decicelsius):
 		if decicelsius == None:
 			return None
@@ -465,12 +484,14 @@ print('##############################################')
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('-d', '--with-drafts', help='Also download draft logs', action='store_true')
+parser.add_argument('-m', '--max', help='Max number of logs to parse', type=int, required=False)
 parser.add_argument('-u', '--username', help='Specify username', action='store', required=True)
 parser.add_argument('-p', '--password', help='Specify password', action='store', default='', required=False)
 args = parser.parse_args()
 
 user = args.username
 pwd = args.password
+max_logs = args.max
 drafts = args.with_drafts
 
 targetfile = 'backup_' + hashlib.sha1((user+pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
@@ -480,7 +501,7 @@ deepbluUser = DeepbluUser().login(user, pwd) # login user
 if not deepbluUser.loggedIn: # not logged in, get data from API without logging in
 	print("Attempting to access API without logging in... (experimental)") # may fail if they ever restrict access
 
-deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser, drafts=drafts) # call API and get data
+deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser, drafts=drafts, max_logs=max_logs) # call API and get data
 
 if deepbluLogBook:
 	UDDFWriter(deepbluLogBook).toFile(targetfile) # print to templating engine
