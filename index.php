@@ -22,7 +22,7 @@
 				<?php
 					if (isset($_POST['submit']) && !empty($_POST['user'])) {
 						if (isset($_POST['max_logs'])) {
-							$max_logs = '-m '.int(escapeshellarg($_POST['max_logs']));
+							$max_logs = '-m '.escapeshellarg($_POST['max_logs']);
 						} else {
 							$max_logs = '';
 						}
@@ -54,14 +54,10 @@
 				?>
 				<p>
 					<form method="POST" action="index.php">
-						<div style="max-width: 200px; display: inline-block;">
-							<input type="text" name="user" placeholder="Deepblu userID or email" />
-							<input type="password" name="password" placeholder="Password or blank" />
-						</div>
-						<div style="max-width: 200px; display: inline-block;">
-							<input type="text" name="max_logs" placeholder="# logs"><label for="max_logs">Only download latest x</label>
-							<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
-						</div>
+						<input type="text" name="user" placeholder="Deepblu userID or email" />
+						<input type="password" name="password" placeholder="Password or blank" /><br />
+						<input type="text" name="max_logs" placeholder="# logs"><label for="max_logs">Only download latest x</label>
+						<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
 						<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
 					</form>
 				</p>
