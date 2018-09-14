@@ -54,10 +54,12 @@
 				?>
 				<p>
 					<form method="POST" action="index.php">
-						<input type="text" name="user" placeholder="Deepblu userID or email" />
-						<input type="password" name="password" placeholder="Password or blank" /><br />
-						<input type="text" name="max_logs" placeholder="# logs"><label for="max_logs">Only download latest x</label>
-						<input type="checkbox" name="with_drafts" id="draftsbox" /><label for="draftsbox">Include drafts?</label>
+						<div style="display: inline-block">
+							<input type="text" tabindex="1" name="user" placeholder="Deepblu userID or email" />
+							<input type="text" tabindex="3" name="max_logs" placeholder="Only download last # logs"><br />
+							<input type="password" tabindex="2" name="password" placeholder="Password or blank" />
+							<input type="checkbox" tabindex="4" name="with_drafts" id="draftsbox" /> <label for="draftsbox">Include drafts?</label>
+						</div>
 						<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
 					</form>
 				</p>
