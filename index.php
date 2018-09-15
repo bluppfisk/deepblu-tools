@@ -26,14 +26,18 @@
 						} else {
 							$max_logs = null;
 						}
-						$drafts = isset($_POST['with_drafts']) ? '-d' : '';
+						$drafts = isset($_POST['with_drafts']) ? '-d' : null;
 				        $user = escapeshellarg($_POST['user']);
-				        $password = escapeshellarg($_POST['password']);
-						$result=explode(",", exec('/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
-						if($result[0]!=='0') {
-							printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
+						$password = escapeshellarg($_POST['password']);
+						if ($drafts && $_POST['password'] === '') {
+							printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
 						} else {
-							printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='done/%s'>Download now</a>", $result[1]);
+							$result=explode(",", exec('/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
+							if($result[0]!=='0') {
+								printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
+							} else {
+								printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='done/%s'>Download now</a>", $result[1]);
+							}
 						}
 				?>
 				<a role='button' class='btn btn-secondary' href='./'>Again?</a>
@@ -72,7 +76,7 @@
 				<li>To find your <em>user id</em>: visit your Deepblu profile page and look at the address bar. It's the text between <code>/user/</code> and <code>/profile/</code>.
 				<li><strong>I will not store your username and password</strong>, but by using this service you'll have to take my word for it.</li>
 				<li>If you don't trust it, enter only your <em>user id</em> or download the <a href="https://github.com/bluppfisk/deepblu-tools">Deepblu Backup Tool source code</a> and run it yourself.</li>
-				<li><strong>Note: </strong>If you only use your <em>user id</em>, your 'private' dive logs will not be backed up and the backup will not contain any personal information.</li>
+				<li><strong>Note: </strong>If you only use your <em>user id</em>, your private and draft dive logs will not be backed up and the backup will not contain any personal information.</li>
 			</ul>
 			<?php
 			}
