@@ -21,10 +21,10 @@
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
 					if (isset($_POST['submit']) && !empty($_POST['user'])) {
-						if (isset($_POST['max_logs'])) {
+						if (isset($_POST['max_logs']) && (int)$_POST['max_logs'] > 0) {
 							$max_logs = '-m '.escapeshellarg($_POST['max_logs']);
 						} else {
-							$max_logs = '';
+							$max_logs = null;
 						}
 						$drafts = isset($_POST['with_drafts']) ? '-d' : '';
 				        $user = escapeshellarg($_POST['user']);
