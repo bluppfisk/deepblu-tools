@@ -16,14 +16,15 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 - make sure `deepblu_backup.py` is executable by running `chmod u+x deepblu_backup.py` in the directory
 
 ### Usage
-- run `./deepblu_backup.py -u email -p password`
-- or run `./deepblu_backup.py --with-drafts -u email -p password` if you want to include your draft dives too
-- or run `./deepblu_backup.py -u userId` or
-- or fill in your login details in the separate **login** file, then run this script: `./deepblu_backup.py`
-- or use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
+- run `./deepblu_backup.py -u userId` to backup all your public logs without personal user information (or if you have no password, e.g. if you created your account using Facebook)
+- run `./deepblu_backup.py -u email -p password` to backup all your private and public logs with personal user information
+- add `--with-drafts` to include drafts (you will need to use email and password)
+- add `--max MAX` to limit the number of logs to the most recent *MAX*
 - find the newly generated backup file in the `done` folder
 
-in the above commands, make sure you replace `email` and `password` with the information associated with your deepblu account, and mind that `userId` is not your username but the id as found in the URL when visiting your own profile at Deepblu.
+Alternatively, you can use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
+
+in the above commands, make sure you replace `email` and `password` with the information associated with your deepblu account, and note that `userId` is not your username but the id as found in the URL when visiting your own profile at Deepblu.
 
 ### Tracked data
 - Dive type: Freediving (apnea) or Scuba (open circuit)
