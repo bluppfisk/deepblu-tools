@@ -17,12 +17,13 @@ from datetime import datetime
 from xml.sax.saxutils import escape
 
 CHUNKSIZE = 100 # Don't load everything at once
-VERSION = '0.9.5'
+VERSION = '0.9.6'
 
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
-DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/search?postType=divelog&userId="
-DEEPBLU_DRAFT_DIVES_API = DEEPBLU_API + "divelog/v0/getRawLogs?hide=0&type=1" # &limit=20&skip=20
+# DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/search?postType=divelog&userId=" # Old Deepblu posts API
+DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/{}/diveLog?limit={}&skip={}"
+DEEPBLU_DRAFT_DIVES_API = DEEPBLU_API + "divelog/v0/getRawLogs?hide=0&type=1&limit={}&skip={}"
 DEEPBLU_PROFILE_API = DEEPBLU_API + "user/v0/profile/"
 
 ###
@@ -83,10 +84,11 @@ class Deepblu(object):
 	###
 	# Load divelogs from Deepblu API
 	# 
-	def getAllLogsFromAPI(self, deepbluUser, drafts, max_logs):
+	def getAllLogsFromAPI(self, deepbluUser, drafts, max_posts=None):
 		print("Getting published logs")
-		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published', max_logs=max_logs)
+		publishedPosts =  self.loadDivesFromAPI(deepbluUser, type='published')
 		draftPosts = []
+
 		if drafts:
 			if deepbluUser.loggedIn:
 				print("Getting draft logs for logged in user")
@@ -94,9 +96,9 @@ class Deepblu(object):
 			else:
 				print("Cannot get drafts if user is not logged in")
 
-		return DeepbluLogBook(publishedPosts + draftPosts, deepbluUser)
+		return DeepbluLogBook(publishedPosts + draftPosts, deepbluUser, max_posts)
 
-	def loadDivesFromAPI(self, deepbluUser, type, max_logs):
+	def loadDivesFromAPI(self, deepbluUser, type):
 		headers = {
 			"content-type": "application/json; charset=utf-8",
 			"authorization": deepbluUser.authCode,
@@ -104,32 +106,26 @@ class Deepblu(object):
 		}
 
 		skip = 0
-		if max_logs:
-			logs_to_get = max_logs if max_logs < CHUNKSIZE else CHUNKSIZE
-		else:
-			logs_to_get = CHUNKSIZE
-
 		posts = []
 		result_index_name = 'posts' if type == 'published' else 'logs'
 
-		print("Loading first {} {} logs from Deepblu API...".format(str(logs_to_get), type))
+		print("Loading first {} {} logs from Deepblu API...".format(CHUNKSIZE, type))
 
 		###
 		# This will load chunks from the API until there are no more logs or
 		# until the API call fails, in which case we'll set skip to -1
 		# 
 		while skip >= 0:
-			res = requests.get((DEEPBLU_DIVES_API + deepbluUser.userId if type=='published' else DEEPBLU_DRAFT_DIVES_API) + "&limit=" + str(logs_to_get) + "&skip=" + str(skip), headers=headers)
+			if type == "published":
+				url = DEEPBLU_DIVES_API.format(deepbluUser.userId, CHUNKSIZE, skip)
+			else:
+				url = DEEPBLU_DRAFT_DIVES_API.format(CHUNKSIZE, skip)
+			res = requests.get(url, headers=headers)
 			response = json.loads(res.text)
 			if response.get('statusCode') == 200:  # result!
 				if len(response.get('result', {}).get(result_index_name)) > 0:
 					if skip > 0:
-						if max_logs:
-							max_logs -= skip
-							logs_to_get = max_logs if max_logs < CHUNKSIZE else CHUNKSIZE
-						else:
-							logs_to_get = CHUNKSIZE
-						print("Loading next {} {} logs...".format(str(logs_to_get), type))
+						print("Loading next {} {} logs...".format(CHUNKSIZE, type))
 
 					new_posts = response.get('result', {}).get(result_index_name)
 					if type == 'published':
@@ -163,12 +159,16 @@ class Deepblu(object):
 # that may be referenced in the individual logs
 # 
 class DeepbluLogBook(object):
-	def __init__(self, posts, deepbluUser):
+	def __init__(self, posts, deepbluUser, max_posts):
 		print ("Parse all the things!")
 		self.logs = []
 		self.owner = deepbluUser
 
+
 		for post in posts:
+			if max_posts is not None and len(self.logs) >= max_posts:  # max posts reached; stop appending
+				break
+
 			self.logs.append(DeepbluLog(post.get('diveLog'), post.get('medias')))
 
 		self.getUniqueMedia()
@@ -491,20 +491,20 @@ args = parser.parse_args()
 
 user = args.username
 pwd = args.password
-max_logs = args.max
+max_posts = args.max
 drafts = args.with_drafts
 
 targetfile = 'backup_' + hashlib.sha1((user+pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
-deepbluUser = DeepbluUser().login(user, pwd) # login user
+deepbluUser = DeepbluUser().login(user, pwd)  # login user
 
-if not deepbluUser.loggedIn: # not logged in, get data from API without logging in
-	print("Attempting to access API without logging in... (experimental)") # may fail if they ever restrict access
+if not deepbluUser.loggedIn:  # not logged in, get data from API without logging in
+	print("Attempting to access API without logging in... (experimental)")  # may fail if they ever restrict access
 
-deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser, drafts=drafts, max_logs=max_logs) # call API and get data
+deepbluLogBook = Deepblu().getAllLogsFromAPI(deepbluUser, drafts=drafts, max_posts=max_posts)  # call API and get data
 
 if deepbluLogBook:
-	UDDFWriter(deepbluLogBook).toFile(targetfile) # print to templating engine
-	print("0,"+targetfile) # output for caller
+	UDDFWriter(deepbluLogBook).toFile(targetfile)  # print to templating engine
+	print("0,"+targetfile)  # output for caller
 else:
 	print("1,Unexpected error occurred. Useful info, huh!")
