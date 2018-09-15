@@ -29,8 +29,7 @@
 						$drafts = isset($_POST['with_drafts']) ? '-d' : '';
 				        $user = escapeshellarg($_POST['user']);
 				        $password = escapeshellarg($_POST['password']);
-				        $command = './backupdives.py '.$user.' '.$password;
-						$result=explode(",", exec('/usr/bin/python3 backupdives.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
+						$result=explode(",", exec('/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
 						if($result[0]!=='0') {
 							printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
 						} else {
