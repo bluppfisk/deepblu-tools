@@ -22,7 +22,7 @@ from deepblu_logbook import DeepbluLogBook
 
 GENERATOR = {
 	'name': 'Deepblu Backup Tool',
-	'version': '0.9.6',
+	'version': '1.0.0',
 	'creator': 'Sander Van de Moortel',
 	'contact': 'https://github.com/bluppfisk/deepblu-tools'
 }
