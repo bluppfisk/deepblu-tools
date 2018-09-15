@@ -5,22 +5,22 @@ from datetime import datetime
 
 
 class UDDFWriter:
-	def __init__(self, logBook, generator):
+	def __init__(self, log_book, generator):
 		self.data = {
 			'date': str(datetime.now()),
-			'logs': logBook.logs,
+			'logs': log_book.logs,
 			'divers': {
-				'owner': logBook.owner,
-				'buddies': logBook.buddies
+				'owner': log_book.owner,
+				'buddies': log_book.buddies
 			},
-			'diveSpots': logBook.diveSpots,
-			'gasDefinitions': logBook.gasDefinitions,
-			'media': logBook.media,
+			'dive_spots': log_book.dive_spots,
+			'gas_definitions': log_book.gas_definitions,
+			'media': log_book.media,
 			'generator': generator
 		}
 
 	# Takes templating engine output and writes to file
-	def toFile(self, filename):
+	def to_file(self, filename):
 		filename = './done/' + filename
 		print("Writing to '" + filename + "'")
 		f = open(filename, 'wb')
@@ -29,8 +29,8 @@ class UDDFWriter:
 
 	# Invokes templating engine and feeds it data
 	def output(self):
-		templateLoader = jinja2.FileSystemLoader(searchpath="./")
-		templateEnv = jinja2.Environment(loader=templateLoader)
+		template_loader = jinja2.FileSystemLoader(searchpath="./")
+		template_env = jinja2.Environment(loader=template_loader)
 		TEMPLATE_FILE = "template.uddf"
-		template = templateEnv.get_template(TEMPLATE_FILE)
+		template = template_env.get_template(TEMPLATE_FILE)
 		return template.render(self.data)

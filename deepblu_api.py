@@ -33,25 +33,25 @@ class DeepbluAPI:
 
         if response.get('statusCode') == 200:
             userData = response.get('result', {}).get('userInfo', {})
-            deepblu_user.setDataFromJSON(userData)
+            deepblu_user.set_data_from_json(userData)
 
-            deepblu_user.authCode = response.get('result', {}).get('accessToken')
-            deepblu_user.loggedIn = True
+            deepblu_user.auth_code = response.get('result', {}).get('accessToken')
+            deepblu_user.logged_in = True
             print("Logged in as " + email + '!')
         else:
             print("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
-            deepblu_user.loggedIn = False
-            deepblu_user.authCode = None
-            deepblu_user.userId = email
+            deepblu_user.logged_in = False
+            deepblu_user.auth_code = None
+            deepblu_user.user_id = email
 
         return deepblu_user
 
     # Loads divelogs from Deepblu API
     @staticmethod
-    def loadDivesFromAPI(deepbluUser: DeepbluUser, type: str):
+    def load_dives_from_api(deepblu_user: DeepbluUser, type: str):
         headers = {
             "content-type": "application/json; charset=utf-8",
-            "authorization": deepbluUser.authCode,
+            "authorization": deepblu_user.auth_code,
             "accept-language": "en"
         }
 
@@ -65,7 +65,7 @@ class DeepbluAPI:
         # until the API call returns no results, in which case we'll set skip to -1
         while skip >= 0:
             if type == "published":
-                url = DEEPBLU_DIVES_API.format(deepbluUser.userId, CHUNKSIZE, skip)
+                url = DEEPBLU_DIVES_API.format(deepblu_user.user_id, CHUNKSIZE, skip)
             else:
                 url = DEEPBLU_DRAFT_DIVES_API.format(CHUNKSIZE, skip)
             res = requests.get(url, headers=headers)
@@ -91,7 +91,7 @@ class DeepbluAPI:
 
             else:
                 # API call yielded no results
-                if deepbluUser.loggedIn:
+                if deepblu_user.logged_in:
                     print(str(response.get('statusCode')) + ",API Error. God knows what happened at Deepblu.")
                 else:
                     print(str(response.get('statusCode')) + ",Incorrect user + password combination or user id.")

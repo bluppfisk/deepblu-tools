@@ -21,8 +21,8 @@
     <diver>
         <owner id="{{ divers.owner.userId }}">
             <personal>
-                <firstname>{{ divers.owner.firstName }}</firstname>
-                <lastname>{{ divers.owner.lastName }}</lastname>
+                <firstname>{{ divers.owner.first_name }}</firstname>
+                <lastname>{{ divers.owner.last_name }}</lastname>
                 <sex>{{ divers.owner.gender }}</sex>
                 <birthdate>
                     <datetime>{{ divers.owner.birthday }}</datetime>
@@ -55,53 +55,53 @@
         {% endfor %}
     </diver>
     <divesite>
-        {% for diveSpot in diveSpots %}
-        <site id="{{ diveSpot.id }}">
-            <name>{{ diveSpot.name }}</name>
+        {% for dive_spot in dive_spots %}
+        <site id="{{ dive_spot.id }}">
+            <name>{{ dive_spot.name }}</name>
             <geography>
-                <longitude>{{ diveSpot.lon }}</longitude>
-                <latitude>{{ diveSpot.lat }}</latitude>
-                <location>{{ diveSpot.name }}</location>
+                <longitude>{{ dive_spot.lon }}</longitude>
+                <latitude>{{ dive_spot.lat }}</latitude>
+                <location>{{ dive_spot.name }}</location>
             </geography>
         </site>
         {% endfor %}
     </divesite>
-    <gasdefinitions>
-        {% for gasDefinition in gasDefinitions %}
-        <mix id="{{ gasDefinition.id }}">
-            <name>{{ gasDefinition.name }}</name>
-            <o2>{{ gasDefinition.o2 }}</o2>
-            <n2>{{ gasDefinition.n2 }}</n2>
+    <gas_definitions>
+        {% for gas_definition in gas_definitions %}
+        <mix id="{{ gas_definition.id }}">
+            <name>{{ gas_definition.name }}</name>
+            <o2>{{ gas_definition.o2 }}</o2>
+            <n2>{{ gas_definition.n2 }}</n2>
         </mix>
         {% endfor %}
-    </gasdefinitions>
+    </gas_definitions>
     <profiledata>
         <repetitiongroup>
             {% for log in logs %}
             <dive id="{{ log.id }}">
                 <tankdata>
-                    <link ref="{{ log.diveGear.gasDefinition.id }}" />
-                    <tankpressurebegin>{{ log.diveGear.startBar }}</tankpressurebegin>
-                    <tankpressureend>{{ log.diveGear.endBar }}</tankpressureend>
-                    <tankvolume>{{ log.diveGear.tankVolume }}</tankvolume>
+                    <link ref="{{ log.dive_gear.gas_definition.id }}" />
+                    <tankpressurebegin>{{ log.dive_gear.start_bar }}</tankpressurebegin>
+                    <tankpressureend>{{ log.dive_gear.end_bar }}</tankpressureend>
+                    <tankvolume>{{ log.dive_gear.tank_volume }}</tankvolume>
                 </tankdata>
                 <informationbeforedive>
                     {% for buddy in log.buddies %}
                         <link ref="{{ buddy.id }}" />
                     {% endfor %}
-                    {% if log.diveSpot %}
-                        <link ref="{{ log.diveSpot.id }}" />
+                    {% if log.dive_spot %}
+                        <link ref="{{ log.dive_spot.id }}" />
                     {% endif %}
-                    <datetime>{{ log.diveDate }}</datetime>
-                    <airtemperature>{{ log.airTemperature }}</airtemperature>
+                    <datetime>{{ log.dive_date }}</datetime>
+                    <airtemperature>{{ log.air_temperature }}</airtemperature>
                 </informationbeforedive>
                 <samples>
-                    {% for waypoint in log.diveProfile.waypoints %}
+                    {% for way_point in log.dive_profile.way_points %}
                     <waypoint>
-                        <depth>{{ waypoint.depth }}</depth>
-                        <divetime>{{ waypoint.time }}</divetime>
-                        <temperature>{{ waypoint.temp }}</temperature>
-                        <divemode type="{{ waypoint.diveMode }}" />
+                        <depth>{{ way_point.depth }}</depth>
+                        <divetime>{{ way_point.time }}</divetime>
+                        <temperature>{{ way_point.temp }}</temperature>
+                        <divemode type="{{ way_point.dive_mode }}" />
                     </waypoint>
                     {% endfor %}
                 </samples>
@@ -114,10 +114,10 @@
                         <link ref="{{ medium.id }}"/>
                         {% endfor %}
                     </notes>
-                    <greatestdepth>{{ log.maxDepth }}</greatestdepth>
-                    <averagedepth>{{ log.averageDepth }}</averagedepth>
-                    <diveduration>{{ log.diveDuration }}</diveduration>
-                    <lowesttemperature>{{ log.minTemp }}</lowesttemperature>
+                    <greatestdepth>{{ log.max_depth }}</greatestdepth>
+                    <averagedepth>{{ log.average_depth }}</averagedepth>
+                    <diveduration>{{ log.dive_duration }}</diveduration>
+                    <lowesttemperature>{{ log.min_temp }}</lowesttemperature>
                     <visibility>{{ log.visibility }}</visibility>
                 </informationafterdive>
             </dive>

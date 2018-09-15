@@ -45,28 +45,28 @@ max_posts = args.max
 drafts = args.with_drafts
 
 # generate unique enough filename for this user and password to avoid (malicious) overwriting on server
-targetfile = 'backup_' + hashlib.sha1((user + pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
+target_file = 'backup_' + hashlib.sha1((user + pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
-deepbluUser = DeepbluAPI.login(user, pwd)  # login user
+deepblu_user = DeepbluAPI.login(user, pwd)  # login user
 
-if not deepbluUser.loggedIn:  # not logged in, get data from API without logging in
+if not deepblu_user.logged_in:  # not logged in, get data from API without logging in
 	print("Attempting to access API without logging in... (experimental)")  # may fail if Deepblu ever restrict access
 
 print("Getting published logs")
-publishedPosts =  DeepbluAPI.loadDivesFromAPI(deepbluUser, type='published')
-draftPosts = []
+published_posts = DeepbluAPI.load_dives_from_api(deepblu_user, type='published')
+draft_posts = []
 
 if drafts:
-	if deepbluUser.loggedIn:
+	if deepblu_user.logged_in:
 		print("Getting draft logs for logged in user")
-		draftPosts = DeepbluAPI.loadDivesFromAPI(deepbluUser, type='draft')
+		draft_posts = DeepbluAPI.load_dives_from_api(deepblu_user, type='draft')
 	else:
 		print("Cannot get drafts if user is not logged in")
 
-deepbluLogBook = DeepbluLogBook(publishedPosts + draftPosts, deepbluUser, max_posts=max_posts)
+deepblu_log_book = DeepbluLogBook(published_posts + draft_posts, deepblu_user, max_posts=max_posts)
 
-if deepbluLogBook:
-	UDDFWriter(deepbluLogBook, GENERATOR).toFile(targetfile)  # print to templating engine
-	print("0," + targetfile)  # output for calling script (web service)
+if deepblu_log_book:
+	UDDFWriter(deepblu_log_book, GENERATOR).to_file(target_file)  # print to templating engine
+	print("0," + target_file)  # output for calling script (web service)
 else:
 	print("1,Unexpected error occurred. Useful info, huh!")

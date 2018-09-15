@@ -4,7 +4,7 @@ class DeepbluTools:
 	# Gets depth in metres. Formula looks wrong but it is actually
 	# compensating for values incorrectly stored by Deepblu
 	@staticmethod
-	def getDepth(press, airpress, fresh):
+	def get_depth(press, airpress, fresh):
 		if not press: return None
 		r = 1.025 if fresh and fresh == 1 else 1.0
 
@@ -16,7 +16,7 @@ class DeepbluTools:
 	# Deepblu reports temperature values in decicelsius
 	# UDDF expects Kelvin
 	@staticmethod
-	def convertTemp(decicelsius):
+	def convert_temp(decicelsius):
 		if decicelsius == None:
 			return None
 
