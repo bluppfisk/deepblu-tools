@@ -1,9 +1,4 @@
-response
-test.uddf
-login
-backup.uddf
-response2.json
-blah.uddfdone
 done/*
 .vscode
 .pytest_cache/
+__pycache__/

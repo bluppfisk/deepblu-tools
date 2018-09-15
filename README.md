@@ -13,13 +13,13 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 ### Requirements
 - Make sure you have Python 3 and pip3 installed
 - run `pip3 install requests jinja2` to install the required dependencies
-- make sure `backupdives.py` is executable by running `chmod u+x backupdives.py` in the directory
+- make sure `deepblu_backup.py` is executable by running `chmod u+x deepblu_backup.py` in the directory
 
 ### Usage
 - run `./backupdives.py -u email -p password`
-- or run `./backupdives.py --with-drafts -u email -p password` if you want to include your draft dives too
-- or run `./backupdives.py -u userId` or
-- or fill in your login details in the separate **login** file, then run this script: `./backupdives.py`
+- or run `./deepblu_backup.py --with-drafts -u email -p password` if you want to include your draft dives too
+- or run `./deepblu_backup.py -u userId` or
+- or fill in your login details in the separate **login** file, then run this script: `./deepblu_backup.py`
 - or use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
 - find the newly generated backup file in the `done` folder
 

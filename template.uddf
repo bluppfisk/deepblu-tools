@@ -7,7 +7,7 @@
             <contact>{{ generator.contact }}</contact>
         </manufacturer>
         <version>{{ generator.version }}</version>
-        <datetime>{{ generator.date }}</datetime>
+        <datetime>{{ date }}</datetime>
     </generator>
     <mediadata>
         {% for medium in media %}
