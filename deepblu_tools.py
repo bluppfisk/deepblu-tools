@@ -1,11 +1,8 @@
-###
-# Toolbox class, does not get instantiated and therefore
-# does not pass self as an argument to its functions
-# 
+# Unit calculation methods
+
 class DeepbluTools:
-	# Gets depth in metres. Formula looks wrong but it
-	# is actually compensating for values incorrectly
-	# stored by Deepblu
+	# Gets depth in metres. Formula looks wrong but it is actually
+	# compensating for values incorrectly stored by Deepblu
 	@staticmethod
 	def getDepth(press, airpress, fresh):
 		if not press: return None
@@ -17,10 +14,10 @@ class DeepbluTools:
 			return ((press-airpress) / r / 100)
 
 	# Deepblu reports temperature values in decicelsius
-	# Let's store them in Kelvin
+	# UDDF expects Kelvin
 	@staticmethod
 	def convertTemp(decicelsius):
 		if decicelsius == None:
 			return None
 
-		return (decicelsius / 10) + 273.15 # Decicelsius to Kelvin
+		return (decicelsius / 10) + 273.15  # Decicelsius to Kelvin

@@ -1,10 +1,9 @@
+# Formats logbook data in UDDF format and writes to file or outputs to screen
+
 import jinja2
 from datetime import datetime
 
-###
-# Pushes the data to Jinja2 templating engine
-# which will create the final UDDF format file
-#  
+
 class UDDFWriter:
 	def __init__(self, logBook, generator):
 		self.data = {

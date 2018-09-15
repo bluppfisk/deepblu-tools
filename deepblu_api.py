@@ -1,24 +1,54 @@
+# Class to interact with the Deepblu API
+
 import requests
 import json
+
+from deepblu_user import DeepbluUser
 
 CHUNKSIZE = 100  # Don't load everything at once
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"
-# DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/search?postType=divelog&userId=" # Old Deepblu posts API
+# DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/search?postType=divelog&userId="  # Old Deepblu posts API
 DEEPBLU_DIVES_API = DEEPBLU_API + "discover/v0/post/{}/diveLog?limit={}&skip={}"
 DEEPBLU_DRAFT_DIVES_API = DEEPBLU_API + "divelog/v0/getRawLogs?hide=0&type=1&limit={}&skip={}"
 DEEPBLU_PROFILE_API = DEEPBLU_API + "user/v0/profile/"
 
 
-###
-# Deepblu API class
-# 
-class DeepbluAPI(object):
-    ###
-    # Load divelogs from Deepblu API
-    # 
+class DeepbluAPI:
+    # Login user
     @staticmethod
-    def loadDivesFromAPI(deepbluUser, type):
+    def login(email, password):
+        deepblu_user = DeepbluUser()
+        headers = {
+            "content-type": "application/json; charset=utf-8",
+            "accept-language": "en"
+        }
+        data = {
+            "email": email,
+            "password": password
+        }
+        print("Connecting to Deepblu...")
+        res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
+        response = json.loads(res.text)
+
+        if response.get('statusCode') == 200:
+            userData = response.get('result', {}).get('userInfo', {})
+            deepblu_user.setDataFromJSON(userData)
+
+            deepblu_user.authCode = response.get('result', {}).get('accessToken')
+            deepblu_user.loggedIn = True
+            print("Logged in as " + email + '!')
+        else:
+            print("Could not log in " + email + ", error code: " + str(response.get('statusCode')))
+            deepblu_user.loggedIn = False
+            deepblu_user.authCode = None
+            deepblu_user.userId = email
+
+        return deepblu_user
+
+    # Loads divelogs from Deepblu API
+    @staticmethod
+    def loadDivesFromAPI(deepbluUser: DeepbluUser, type: str):
         headers = {
             "content-type": "application/json; charset=utf-8",
             "authorization": deepbluUser.authCode,
@@ -31,10 +61,8 @@ class DeepbluAPI(object):
 
         print("Loading first {} {} logs from Deepblu API...".format(CHUNKSIZE, type))
 
-        ###
         # This will load chunks from the API until there are no more logs or
-        # until the API call fails, in which case we'll set skip to -1
-        # 
+        # until the API call returns no results, in which case we'll set skip to -1
         while skip >= 0:
             if type == "published":
                 url = DEEPBLU_DIVES_API.format(deepbluUser.userId, CHUNKSIZE, skip)
@@ -62,7 +90,7 @@ class DeepbluAPI(object):
                     skip = -1
 
             else:
-                # API call failed
+                # API call yielded no results
                 if deepbluUser.loggedIn:
                     print(str(response.get('statusCode')) + ",API Error. God knows what happened at Deepblu.")
                 else:

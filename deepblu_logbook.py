@@ -1,14 +1,14 @@
+# Logic and dataclasses to parse and contain logs as well as summaries
+# for persons, equipment, gas definitions, media and divespots
+# that may be referenced in the individual logs
+
 import hashlib
 from datetime import datetime
 from xml.sax.saxutils import escape
 
 from deepblu_tools import DeepbluTools
 
-###
-# A logbook containing all logs as well summaries for
-# persons, equipment, gas definitions, media and divespots
-# that may be referenced in the individual logs
-# 
+# Logbook (contains multiple logs, media, divespots, gas definitions, buddies, equipment)
 class DeepbluLogBook:
     def __init__(self, posts, deepbluUser, max_posts):
         print ("Parse all the things!")
@@ -31,10 +31,7 @@ class DeepbluLogBook:
     def __len__(self):
         return len(self.logs)
 
-    ###
     # Below functions eliminate duplicates from the summaries
-    # of equipment, buddies, divespots, etc
-    # 
     def getUniqueEquipment(self):
         self.equipment = []
         for log in self.logs:
@@ -105,9 +102,8 @@ class DeepbluLogBook:
 
         return False
 
-###
-# The big Log object with all its properties
-#
+
+# A Deepblu dive log with its properties
 class DeepbluLog:
     def __init__(self, jsonLog, media):
         self._start_epoch = None
@@ -129,7 +125,7 @@ class DeepbluLog:
         self.visibility = jsonLog.get('_DiveCondition', {}).get('visibility', None)
         self.airTemperature = jsonLog.get('_DiveCondition', {}).get('avgTemperature', None)
         if self.airTemperature:
-            # for some obscure reason, this is not in decicelsius like elsewhere
+            # For some obscure reason, this is not in decicelsius like elsewhere
             self.airTemperature = DeepbluTools.convertTemp(self.airTemperature*10)
         self.averageDepth = DeepbluTools.getDepth(jsonLog.get('_DiveCondition', {}).get('averageDepth', None), self.airPressure, self.waterType)
         
@@ -141,22 +137,17 @@ class DeepbluLog:
         for medium in media:
             self.media.append(Medium(medium))
 
-###
+
 # This is a diver (person). For now this is only buddies.
-# Owner should probably extend or implement this class
-# But since we're only setting properties and this is Python,
-# it doesn't really matter?
-# 
 class Diver:
     def __init__(self, diver):
         self.id = diver.get('diveBuddyUserId')
         self.name = escape(diver.get('diveBuddyUserName'))
 
-###
+
 # Singular of media, i.c. videos and photos
 # This program does not download your videos
 # and photos (yet), but it does keep a reference
-# 
 class Medium:
     def __init__(self, medium):
         self.id = 'deepblu_md_' + medium.get('_id')
@@ -170,10 +161,9 @@ class Medium:
         else:
             self.type = 'image'
 
-###
+
 # All gear, including list of equipment
 # Clumsy class, really. My bad
-# 
 class diveGear:
     def __init__(self, diveGear):
         self.gasDefinition = gasDefinition(diveGear.get('airMix'))
@@ -187,9 +177,8 @@ class diveGear:
         for divecomputer in diveGear.get('diveComputer', {}):
             self.equipment.append(Equipment('divecomputer', divecomputer))
 
-###
+
 # Every piece of equipment is of a certain type, and has a manufacturer and model
-# 
 class Equipment:
     def __init__(self, kind, brandModel):
         self.type = kind
@@ -197,9 +186,8 @@ class Equipment:
         self.model = escape(str(brandModel.get('officialModel')))
         self.id = 'eq_' + hashlib.sha1((self.brand + self.model).encode('UTF-8')).hexdigest()[0:8]
 
-###
+
 # Deepblu only saves nitrogen and oxygen values for air mixes
-# 
 class gasDefinition:
     def __init__(self, airmix):
         if not airmix:
@@ -210,10 +198,9 @@ class gasDefinition:
         self.id = "mix" + str(airmix)
         self.name = str(airmix) + "/" + str(100 - airmix)
 
-###
-# diveProfile consists of wayPoints
+
+# The dive profile consists of wayPoints
 # 'root' refers to dive log
-# 
 class diveProfile:
     def __init__(self, diveprofile, root):
         self.time = 0  # keeps track of time for waypoints
@@ -221,11 +208,10 @@ class diveProfile:
         for waypoint in diveprofile:
             self.waypoints.append(wayPoint(waypoint, root, self))
 
-###
+
 # wayPoint contains depth, temperature and time
 # think of it as a dive computer sample point
 # 'parent' refers to diveProfile; 'root' to DeepbluLog
-# 
 class wayPoint:
     def __init__(self, waypoint, root, parent):
         # convert from millibar to water depth
@@ -248,7 +234,7 @@ class wayPoint:
         self.diveMode = root.diveMode # 'apnoe' for freediving; 'opencircuit' for scuba
         self.temp = DeepbluTools.convertTemp(waypoint.get('temperature')) # convert to Kelvin
 
-
+# A dive location
 class diveSpot:
     def __init__(self, divespot):
         self.id = 'deepblu_ds_' + str(divespot.get('_id'))

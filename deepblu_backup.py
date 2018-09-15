@@ -47,19 +47,19 @@ drafts = args.with_drafts
 # generate unique enough filename for this user and password to avoid (malicious) overwriting on server
 targetfile = 'backup_' + hashlib.sha1((user + pwd).encode('UTF-8')).hexdigest()[0:10] + '.uddf'
 
-deepbluUser = DeepbluUser().login(user, pwd)  # login user
+deepbluUser = DeepbluAPI.login(user, pwd)  # login user
 
 if not deepbluUser.loggedIn:  # not logged in, get data from API without logging in
 	print("Attempting to access API without logging in... (experimental)")  # may fail if Deepblu ever restrict access
 
 print("Getting published logs")
-publishedPosts =  DeepbluAPI().loadDivesFromAPI(deepbluUser, type='published')
+publishedPosts =  DeepbluAPI.loadDivesFromAPI(deepbluUser, type='published')
 draftPosts = []
 
 if drafts:
 	if deepbluUser.loggedIn:
 		print("Getting draft logs for logged in user")
-		draftPosts = DeepbluAPI().loadDivesFromAPI(deepbluUser, type='draft')
+		draftPosts = DeepbluAPI.loadDivesFromAPI(deepbluUser, type='draft')
 	else:
 		print("Cannot get drafts if user is not logged in")
 
