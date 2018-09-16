@@ -21,10 +21,9 @@
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
 					if (isset($_POST['submit']) && !empty($_POST['user'])) {
+						$max_logs = null;
 						if (isset($_POST['max_logs']) && (int)$_POST['max_logs'] > 0) {
-							$max_logs = '-m '.escapeshellarg($_POST['max_logs']);
-						} else {
-							$max_logs = null;
+							$max_logs = "-m ".(int)$_POST['max_logs'];
 						}
 						$drafts = isset($_POST['with_drafts']) ? '-d' : null;
 				        $user = escapeshellarg($_POST['user']);
@@ -32,7 +31,8 @@
 						if ($drafts && $_POST['password'] === '') {
 							printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
 						} else {
-							$result=explode(",", exec('/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password));
+							$exec_string = '/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password;
+							$result=explode(",", exec($exec_string));
 							if($result[0]!=='0') {
 								printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
 							} else {
