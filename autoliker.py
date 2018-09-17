@@ -1,11 +1,13 @@
 # Requires Python 3 and the python-requests package
 
-import requests, json, time
+import requests
+import json
+import time
 
-MAX_LIKES = 50 # increments of 10
+MAX_LIKES = 50  # increments of 10
 
 LOGINS = {
-    'email@address.com': 'password', # add as many accounts as you like
+    'email@address.com': 'password',  # add as many accounts as you like
 }
 
 DEEPBLUAPI = "https://prodcdn.tritondive.co/apis/discover/v0/post/"
@@ -14,6 +16,7 @@ DEEPBLULOGIN = "https://prodcdn.tritondive.co/apis/user/v0/login"
 
 LIKEPATH = "/like"
 FEEDPATH = "liveFeed?limit=10&publishTime="
+
 
 class DeepbluPost(object):
     def __init__(self, post, email, authCode):
@@ -38,7 +41,9 @@ class DeepbluPost(object):
             if int(response['result']['doILike']) == 1:
                 print("Post " + self.post + " liked by " + self.email + '!')
         else:
-            print("Account " + self.email + "may not be authorized, error code: " + str(response['statusCode']))
+            print("Account " + self.email +
+                  "may not be authorized, error code: " + str(response['statusCode']))
+
 
 class AutoLiker(object):
     def login(self, email, password):
@@ -50,14 +55,16 @@ class AutoLiker(object):
             "email": email,
             "password": password
         }
-        res = requests.post(DEEPBLULOGIN, data=json.dumps(data), headers=headers)
+        res = requests.post(
+            DEEPBLULOGIN, data=json.dumps(data), headers=headers)
         response = json.loads(res.text)
 
         if response['statusCode'] == 200:
             authCode = response['result']['accessToken']
             print("Obtained token for " + email + '!')
         else:
-            print("Account " + email + " could not log in, error code: " + str(response['statusCode']))
+            print("Account " + email + " could not log in, error code: " +
+                  str(response['statusCode']))
             authCode = None
 
         return authCode
@@ -94,7 +101,8 @@ class AutoLiker(object):
                         break
 
                     print("Found unliked post: " + str(post['postId']))
-                    self.unlikedPosts.append(DeepbluPost(post['postId'], email, authCode))
+                    self.unlikedPosts.append(DeepbluPost(
+                        post['postId'], email, authCode))
                     startTime = post['createTime']
 
     def run(self):
@@ -102,10 +110,12 @@ class AutoLiker(object):
         if len(self.unlikedPosts) == 0:
             quit("No unliked posts found! All done.")
         else:
-            print("Found " + str(len(self.unlikedPosts)) + " unliked posts! Liking...")
+            print("Found " + str(len(self.unlikedPosts)) +
+                  " unliked posts! Liking...")
 
             for unlikedPost in self.unlikedPosts:
                 unlikedPost.like()
+
 
 autoLiker = AutoLiker()
 autoLiker.run()
