@@ -26,16 +26,14 @@ class DeepbluAPI:
         }
         data = {"email": email, "password": password}
         print("Connecting to Deepblu...")
-        res = requests.post(DEEPBLU_LOGIN_API,
-                            data=json.dumps(data), headers=headers)
+        res = requests.post(DEEPBLU_LOGIN_API, data=json.dumps(data), headers=headers)
         response = json.loads(res.text)
 
         if response.get("statusCode") == 200:
             userData = response.get("result", {}).get("userInfo", {})
             deepblu_user.set_data_from_json(userData)
 
-            deepblu_user.auth_code = response.get(
-                "result", {}).get("accessToken")
+            deepblu_user.auth_code = response.get("result", {}).get("accessToken")
             deepblu_user.logged_in = True
             print("Logged in as " + email + "!")
         else:
@@ -70,8 +68,7 @@ class DeepbluAPI:
         # until the API call returns no results, in which case we'll set skip to -1
         while skip >= 0:
             if type == "published":
-                url = DEEPBLU_DIVES_API.format(
-                    deepblu_user.user_id, CHUNKSIZE, skip)
+                url = DEEPBLU_DIVES_API.format(deepblu_user.user_id, CHUNKSIZE, skip)
             else:
                 url = DEEPBLU_DRAFT_DIVES_API.format(CHUNKSIZE, skip)
             res = requests.get(url, headers=headers)
@@ -81,8 +78,7 @@ class DeepbluAPI:
                     if skip > 0:
                         print("Loading next {} {} logs...".format(CHUNKSIZE, type))
 
-                    new_posts = response.get(
-                        "result", {}).get(result_index_name)
+                    new_posts = response.get("result", {}).get(result_index_name)
                     if type == "published":
                         posts += new_posts
                     else:
