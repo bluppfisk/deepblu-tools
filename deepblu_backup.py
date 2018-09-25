@@ -34,8 +34,7 @@ print("# Deepblu Backup Tool v" + GENERATOR.get("version") + "                 #
 print("# " + GENERATOR.get("contact") + " #")
 print("##############################################")
 
-parser = argparse.ArgumentParser(
-    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
     "-d", "--with-drafts", help="Also download draft logs", action="store_true"
 )
@@ -62,8 +61,7 @@ drafts = args.with_drafts
 
 # generate unique enough filename for this user and password to avoid (malicious) overwriting on server
 target_file = (
-    "backup_" + hashlib.sha1((user + pwd).encode("UTF-8")
-                             ).hexdigest()[0:10] + ".uddf"
+    "backup_" + hashlib.sha1((user + pwd).encode("UTF-8")).hexdigest()[0:10] + ".uddf"
 )
 
 deepblu_user = DeepbluAPI.login(user, pwd)  # login user
@@ -74,15 +72,13 @@ if not deepblu_user.logged_in:  # not logged in, get data from API without loggi
     )  # may fail if Deepblu ever restrict access
 
 print("Getting published logs")
-published_posts = DeepbluAPI.load_dives_from_api(
-    deepblu_user, type="published")
+published_posts = DeepbluAPI.load_dives_from_api(deepblu_user, type="published")
 draft_posts = []
 
 if drafts:
     if deepblu_user.logged_in:
         print("Getting draft logs for logged in user")
-        draft_posts = DeepbluAPI.load_dives_from_api(
-            deepblu_user, type="draft")
+        draft_posts = DeepbluAPI.load_dives_from_api(deepblu_user, type="draft")
     else:
         print("Cannot get drafts if user is not logged in")
 
