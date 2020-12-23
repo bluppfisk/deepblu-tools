@@ -84,7 +84,7 @@
 		</div>
 	</main>
 	<footer class="container">
-		<p class="small">Inquiries to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | Buy me a beer --&gt; <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a></p>
+		<p class="small">Inquiries to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | Buy me a beer --&gt; <a href="https://www.paypal.me/s15l?locale.x=en_US"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a></p>
 	</footer>
 </body>
 </html>
