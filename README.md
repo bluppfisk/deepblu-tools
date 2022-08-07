@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/deepblu-tools.svg)](https://pypi.org/project/deepblu-tools/2.0.2/)
+
 # deepblu-tools
 Deepblu API tools
 
@@ -11,15 +13,37 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 ![Deepblu logs imported into Subsurface](/web/img/imported_into_subsurface.jpg)
 
 ### Requirements
-- Make sure you have Python 3 and pip3 installed
-- run `pip3 install deepblu-backup` (do so in a virtual environment if necessary)
+Make sure you have Python 3 and pip3 installed
+
+### Installation
+
+`pip3 install deepblu-backup`
 
 ### Usage
+
+```
+Usage: deepblu-backup [OPTIONS]
+
+
+Options:
+  -u, --user TEXT         Deepblu username or userid
+  -p, --password TEXT     Deepblu password
+  -m, --max-logs INTEGER  Maximum number of logs to parse
+  -d, --with-drafts       Also pull draft logs. Requires valid
+                          credentials
+  -o, --outfile TEXT      Write results to this file
+  -f, --infile TEXT       For debugging purposes: load data 
+                          from JSON file instead of API
+  --help                  Show this message and exit.
+```
+
+#### Examples
+
 - run `deepblu-backup -u userId` to backup all your public logs without personal user information (or if you have no password, e.g. if you created your account using Facebook)
 - run `deepblu_backup -u email -p password` to backup all your private and public logs with personal user information
 - add `--with-drafts` to include drafts (you will need to use email and password)
 - add `--max-logs MAX` to limit the number of logs to the most recent number represented by *MAX*
-- add `--outfile FILENAME` to write the file to *FILENAME*
+- add `--outfile FILENAME` to write the resulting UDDF file to *FILENAME*
 
 Alternatively, you can use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
 
