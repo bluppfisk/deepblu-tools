@@ -69,6 +69,8 @@ def main(
     outfile: str,
     infile: str,
 ):
+    if not user and not infile:
+        raise click.BadArgumentUsage("Specify at least a user id, an infile or an email and password combination")
     try:
         deepblu_user = api.login(user, password)
     except requests.exceptions.HTTPError as e:
@@ -94,13 +96,11 @@ def main(
 
     if not posts:
         if deepblu_user.logged_in:
-            click.echo("No posts found on this account")
+            raise click.ClickException("No posts found on this account")
         else:
-            click.echo(
+            raise click.ClickException(
                 "Either this account has no posts or could not be retrieved anonymously with this user id"
             )
-
-        exit(1)
 
     logbook = dm.DeepbluLogBook(posts, deepblu_user, max_posts=max_logs)
     uddf = logbook.to_uddf()
@@ -119,8 +119,7 @@ def main(
     except BrokenPipeError:
         pass
     except Exception as e:
-        click.echo("Could not write to file", e)
-        exit(1)
+        raise click.ClickException("Could not write to file", e)
 
 
 if __name__ == "__main__":
