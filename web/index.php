@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<title>Deepblu Backup Tool</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -13,6 +14,7 @@
 	<meta property="og:url" content="http://worldofnonging.com/deepblu-tools/">
 	<meta name="twitter:card" content="summary_large_image">
 </head>
+
 <body>
 	<main role="main">
 		<div class="jumbotron">
@@ -20,27 +22,58 @@
 				<h1 class="display-4">Deepblu Backup Tool</h1>
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
-					if (isset($_POST['submit']) && !empty($_POST['user'])) {
-						$max_logs = null;
-						if (isset($_POST['max_logs']) && (int)$_POST['max_logs'] > 0) {
-							$max_logs = "-m ".(int)$_POST['max_logs'];
+
+				function piped_exec($cmd, &$stdout = null, &$stderr = null)
+				{
+					$proc = proc_open($cmd, [
+						1 => ['pipe', 'w'],
+						2 => ['pipe', 'w'],
+					], $pipes);
+					$stdout = stream_get_contents($pipes[1]);
+					fclose($pipes[1]);
+					$stderr = stream_get_contents($pipes[2]);
+					fclose($pipes[2]);
+					return proc_close($proc);
+				}
+
+				if (isset($_POST['submit']) && !empty($_POST['user'])) {
+					$max_logs = null;
+					if (isset($_POST['max_logs']) && (int)$_POST['max_logs'] > 0) {
+						$max_logs = "-m " . (int)$_POST['max_logs'];
+					}
+					$drafts = isset($_POST['with_drafts']) ? '-d' : null;
+					$user = escapeshellarg($_POST['user']);
+					$password = escapeshellarg($_POST['password']);
+					if ($drafts && $_POST['password'] === '') {
+						printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
+					} else {
+						$outfile = "done/deepblu_backup_" . substr(hash("sha1", $user . $password), 0, 10) . ".uddf";
+
+						$exec_string =
+							'/opt/miniconda3/envs/deepblu_tools/bin/deepblu-backup '
+							. $drafts
+							. $max_logs
+							. ' -u ' . $user
+							. ' -p ' . $password
+							. ' -o ' . $outfile;
+
+						$exitCode = 0;
+						$output = [];
+						$stdout = [];
+
+						$exitCode = piped_exec($exec_string, $stdout, $output);
+
+						switch ($exitCode) {
+							case 0:
+								printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='%s'>Download now</a>", $outfile);
+								break;
+							default:
+								printf("Wobble. %s", $output);
+								break;
 						}
-						$drafts = isset($_POST['with_drafts']) ? '-d' : null;
-				        $user = escapeshellarg($_POST['user']);
-						$password = escapeshellarg($_POST['password']);
-						if ($drafts && $_POST['password'] === '') {
-							printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
-						} else {
-							$exec_string = '/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password;
-							$result=explode(",", exec($exec_string), 1);
-							if($result[0]!=='0') {
-								printf("Wobble. Error message: %s", $result[1]);
-							} else {
-								printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='done/%s'>Download now</a>", $result[1]);
-							}
-						}
+					}
 				?>
-				<a role='button' class='btn btn-secondary' href='./'>Again?</a>
+					<a role='button' class='btn btn-secondary' href='./'>Again?</a>
 			</div>
 		</div>
 		<div class="container">
@@ -49,24 +82,24 @@
 				<li>Click the button to download your backup in UDDF format.</li>
 				<li>Import this file into your favourite divelog software, such as <a href="https://subsurface-divelog.org">Subsurface</a>.</li>
 
-				<li><strong>Before you go...</strong> This took a few days of my life to develop. Consider supporting me with a <a href="https://www.paypal.me/sandervdm?locale.x=en_US&country.x=DE">small donation through PayPal</a>.</li>
+				<li><strong>Before you go...</strong> This took a few days of my life to develop. Consider supporting me with a <a href="https://www.paypal.me/s15l?locale.x=en_US&country.x=DE">small donation through PayPal</a>.</li>
 			</ul>
 		</div>
-		<?php
-			} else {
-				?>
-				<p>
-					<form method="POST" action="index.php">
-						<div style="display: inline-block">
-							<input type="text" tabindex="1" name="user" placeholder="Deepblu userID or email" />
-							<input type="text" tabindex="3" name="max_logs" placeholder="Only download last # logs"><br />
-							<input type="password" tabindex="2" name="password" placeholder="Password or blank" />
-							<input type="checkbox" tabindex="4" name="with_drafts" id="draftsbox" /> <label for="draftsbox">Include drafts?</label>
-						</div>
-						<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
-					</form>
-				</p>
+	<?php
+				} else {
+	?>
+		<p>
+		<form method="POST" action="index.php">
+			<div style="display: inline-block">
+				<input type="text" tabindex="1" name="user" placeholder="Deepblu userID or email" />
+				<input type="text" tabindex="3" name="max_logs" placeholder="Only download last # logs"><br />
+				<input type="password" tabindex="2" name="password" placeholder="Password or blank" />
+				<input type="checkbox" tabindex="4" name="with_drafts" id="draftsbox" /> <label for="draftsbox">Include drafts?</label>
 			</div>
+			<input type="submit" name="submit" value="Get backup" class="btn btn-primary" />
+		</form>
+		</p>
+		</div>
 		</div>
 		<div class="container">
 			<h2>Instructions</h2>
@@ -78,13 +111,14 @@
 				<li>If you don't trust it, enter only your <em>user id</em> or download the <a href="https://github.com/bluppfisk/deepblu-tools">Deepblu Backup Tool source code</a> and run it yourself.</li>
 				<li><strong>Note: </strong>If you only use your <em>user id</em>, your private and draft dive logs will not be backed up and the backup will not contain any personal information.</li>
 			</ul>
-			<?php
-			}
-			?>
+		<?php
+				}
+		?>
 		</div>
 	</main>
 	<footer class="container">
-		<p class="small">Inquiries to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | Buy me a beer --&gt; <a href="https://www.paypal.me/s15l?locale.x=en_US"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"/></a></p>
+		<p class="small">Inquiries to <a href="mailto:sander.vandemoortel@gmail.com">sander.vandemoortel@gmail.com</a> | <a href="https://github.com/bluppfisk/deepblu-tools">View source code at Github</a> | Buy me a beer --&gt; <a href="https://www.paypal.me/s15l?locale.x=en_US"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" /></a></p>
 	</footer>
 </body>
+
 </html>
