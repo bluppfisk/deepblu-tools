@@ -3,7 +3,7 @@ Deepblu API tools
 
 A set of tools to get the most out of [Deepblu](https://deepblu.com).
 
-## Deepblu Backup Tool - backupdives.py
+## Deepblu Backup Tool
 Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format](http://uddf.org) (UDDF), which can be imported into other applications that support it, including [Subsurface Divelog](https://subsurface-divelog.org/).
 
 [Diving Log](http://www.divinglog.de/), a commercial dive log application for Windows, based its Deepblu import tool on this project.
@@ -12,15 +12,14 @@ Retrieves dive logs from Deepblu and exports them in [Universal Dive Data Format
 
 ### Requirements
 - Make sure you have Python 3 and pip3 installed
-- run `pip3 install requests jinja2` to install the required dependencies (do so in a virtual environment if necessary)
-- make sure `deepblu_backup.py` is executable by running `chmod u+x deepblu_backup.py` in the directory
+- run `pip3 install deepblu-backup` (do so in a virtual environment if necessary)
 
 ### Usage
-- run `./deepblu_backup.py -u userId` to backup all your public logs without personal user information (or if you have no password, e.g. if you created your account using Facebook)
-- run `./deepblu_backup.py -u email -p password` to backup all your private and public logs with personal user information
+- run `deepblu-backup -u userId` to backup all your public logs without personal user information (or if you have no password, e.g. if you created your account using Facebook)
+- run `deepblu_backup -u email -p password` to backup all your private and public logs with personal user information
 - add `--with-drafts` to include drafts (you will need to use email and password)
-- add `--max MAX` to limit the number of logs to the most recent *MAX*
-- find the newly generated backup file in the `done` folder
+- add `--max-logs MAX` to limit the number of logs to the most recent number represented by *MAX*
+- add `--outfile FILENAME` to write the file to *FILENAME*
 
 Alternatively, you can use the [Deepblu Backup Tool web service](http://worldofnonging.com/deepblu-tools/index.php)
 
@@ -36,13 +35,14 @@ in the above commands, make sure you replace `email` and `password` with the inf
 - Diver details
 - Buddies
 - Divespot: name, latitude and longitude
+- Divebase: name
 - Notes
 
 ### Known issues
 - Not all data is currently being backed up (some equipment data isn't). I may add more items in the future.
 
-## Deepblu Autoliker - autoliker.py
+## Deepblu Autoliker - extra/autoliker.py
 Logs you in with a set of accounts defined in **LOGINS** and automatically likes every post, beginning with the most recent one, until **MAX_LIKES** is reached or an earlier like is found.
 
-## Deepblu Autofollow - autofollow.js
+## Deepblu Autofollow - extra/autofollow.js
 Console JS script to automatically add a series of Deepblu users in **userIds** to the following list of a logged-in account with token **authToken**.
