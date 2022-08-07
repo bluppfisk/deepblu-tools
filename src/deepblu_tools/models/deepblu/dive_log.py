@@ -6,7 +6,7 @@ from deepblu_tools.models import uddf as um
 class DeepbluLog:
     def __init__(self, json_log: dict, media: dict):
         self._start_epoch = None
-        self.id = "deepblu_dl_" + json_log.get("_id")
+        self.id = "deepblu_divelog_" + json_log.get("_id")
         self.dive_date = json_log.get("diveDT")
         self.air_pressure = json_log.get("airPressure", 1000)
         self.water_type = json_log.get("waterType", 0)
@@ -25,6 +25,7 @@ class DeepbluLog:
         )
         self.dive_profile = dm.DiveProfile(json_log.get("_diveProfile"), self)
         self.dive_spot = dm.DiveSpot(json_log.get("divespot", {}))
+        self.dive_base = self.dive_spot.dive_base
         self.visibility = json_log.get("_DiveCondition", {}).get("visibility", None)
         self.air_temperature = json_log.get("_DiveCondition", {}).get(
             "avgTemperature", None

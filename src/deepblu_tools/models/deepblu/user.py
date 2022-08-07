@@ -30,7 +30,7 @@ class DeepbluUser:
             return None
 
         return um.PersonType(
-            id=f"deepblu_{ self.user_id }",
+            id=f"deepblu_user_{ self.user_id }",
             personal=um.PersonalType(
                 firstname=self.first_name,
                 lastname=self.last_name,

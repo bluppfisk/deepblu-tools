@@ -1,4 +1,5 @@
 from .buddy import Buddy
+from .dive_base import DiveBase
 from .dive_gear import DiveGear
 from .dive_log import DeepbluLog
 from .dive_profile import DiveProfile

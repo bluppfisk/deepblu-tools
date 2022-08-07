@@ -7,7 +7,7 @@ import datetime
 # and photos (yet), but it does keep a reference
 class Medium:
     def __init__(self, medium: dict):
-        self.id = "deepblu_md_" + medium.get("_id")
+        self.id = "deepblu_medium_" + medium.get("_id")
         self.url = medium.get("url")
         self.caption = medium.get("caption", "")
         timestamp = medium.get("timestamp")
