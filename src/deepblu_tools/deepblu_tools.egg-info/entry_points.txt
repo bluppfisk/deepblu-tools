@@ -1,0 +1,2 @@
+[console_scripts]
+deepblu-backup = backup:main

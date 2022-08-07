@@ -1,3 +1,19 @@
+Metadata-Version: 2.1
+Name: deepblu-tools
+Version: 0.0.post1.dev114+g67fb981.d20220807
+Summary: Deepblu Tools
+Home-page: https://github.com/bluppfisk/deepblu-tools/
+Author: Sander Van de Moortel
+Author-email: sander.vandemoortel@gmail.com
+License: GPLv3
+Project-URL: Documentation, https://github.com/bluppfisk/deepblu-tools/
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
+Description-Content-Type: text/x-md; charset=UTF-8
+Provides-Extra: develop
+License-File: LICENSE
+
 # deepblu-tools
 Deepblu API tools
 

@@ -8,7 +8,7 @@
 	<meta property="description" content="Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format.">
 	<meta property="og:title" content="Deepblu Backup Tool">
 	<meta property="og:description" content="Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format.">
-	<meta property="og:image" content="http://worldofnonging.com/deepblu-tools/images/imported_into_subsurface.jpg">
+	<meta property="og:image" content="http://worldofnonging.com/deepblu-tools/web/img/imported_into_subsurface.jpg">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="http://worldofnonging.com/deepblu-tools/">
 	<meta name="twitter:card" content="summary_large_image">
@@ -32,9 +32,9 @@
 							printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
 						} else {
 							$exec_string = '/usr/bin/python3 deepblu_backup.py '.$drafts.' '.$max_logs.' -u '.$user.' -p '.$password;
-							$result=explode(",", exec($exec_string));
+							$result=explode(",", exec($exec_string), 1);
 							if($result[0]!=='0') {
-								printf("Sometheeng ees wrong, officeur. Error message: %s", $result[1]);
+								printf("Wobble. Error message: %s", $result[1]);
 							} else {
 								printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='done/%s'>Download now</a>", $result[1]);
 							}
