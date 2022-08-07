@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/deepblu-tools.svg)](https://pypi.org/project/deepblu-tools/2.0.2/)
+[![PyPI version](https://badge.fury.io/py/deepblu-tools.svg)](https://pypi.org/project/deepblu-tools/)
 
 # deepblu-tools
 Deepblu API tools
