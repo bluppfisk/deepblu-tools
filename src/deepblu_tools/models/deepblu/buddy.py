@@ -8,4 +8,4 @@ class Buddy:
         self.name = diver.get("diveBuddyUserName")
 
     def to_uddf(self) -> um.PersonType:
-        return um.PersonType(id=self.id, personal=um.PersonalType(name=self.name))
+        return um.PersonType(id=self.id, personal=um.PersonalType(firstname=self.name))

@@ -56,7 +56,7 @@ class DeepbluLog:
                 greatestdepth=self.max_depth,
                 lowesttemperature=self.min_temp,
                 notes=um.NotesType(
-                    para=self.notes, link=[um.LinkType(id=m.id) for m in self.media]
+                    para=self.notes, link=[um.LinkType(ref=m.id) for m in self.media]
                 ),
                 visibility=self.visibility,
             ),

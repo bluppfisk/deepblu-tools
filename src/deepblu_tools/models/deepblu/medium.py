@@ -10,6 +10,7 @@ class Medium:
         self.id = "deepblu_medium_" + medium.get("_id")
         self.url = medium.get("url")
         self.caption = medium.get("caption", "")
+        self.datetime = None
         timestamp = medium.get("timestamp")
         if timestamp:
             self.datetime = datetime.fromtimestamp(timestamp).isoformat()
@@ -24,7 +25,9 @@ class Medium:
                 id=self.id,
                 objectname=self.url,
                 title=self.caption,
-                datetime=self.datetime,
+                imagedata=um.ImageType.Imagedata(
+                    datetime=self.datetime
+                )
             )
         elif self.type == "video":
             return um.MediaType(id=self.id, objectname=self.url, title=self.caption)
