@@ -22,20 +22,6 @@
 				<h1 class="display-4">Deepblu Backup Tool</h1>
 				<p class="lead">Backup your Deepblu and COSMIQ dive logs and keep a local copy in UDDF format</p>
 				<?php
-
-				function piped_exec($cmd, &$stdout = null, &$stderr = null)
-				{
-					$proc = proc_open($cmd, [
-						1 => ['pipe', 'w'],
-						2 => ['pipe', 'w'],
-					], $pipes);
-					$stdout = stream_get_contents($pipes[1]);
-					fclose($pipes[1]);
-					$stderr = stream_get_contents($pipes[2]);
-					fclose($pipes[2]);
-					return proc_close($proc);
-				}
-
 				if (isset($_POST['submit']) && !empty($_POST['user'])) {
 					$max_logs = null;
 					if (isset($_POST['max_logs']) && (int)$_POST['max_logs'] > 0) {
@@ -47,7 +33,8 @@
 					if ($drafts && $_POST['password'] === '') {
 						printf("<b>Womp womp.</b> You must enter email and password to include drafts!");
 					} else {
-						$outfile = "done/deepblu_backup_" . substr(hash("sha1", $user . $password), 0, 10) . ".uddf";
+						$userhash = substr(hash("sha1", $user . $password), 0, 10);
+						$outfile = "done/deepblu_backup_" . $userhash . ".uddf";
 
 						$exec_string =
 							'/opt/miniconda3/envs/deepblu_tools/bin/deepblu-backup '
@@ -57,18 +44,20 @@
 							. ' -p ' . $password
 							. ' -o ' . $outfile;
 
-						$exitCode = 0;
-						$output = "";
-						$stdout = "";
+						$stderr = "logs/" . $userhash . ".stderr";
 
-						$exitCode = piped_exec($exec_string, $stdout, $output);
+						$proc = proc_open($exec_string, [
+							2 => ['file', $stderr, 'a+'],
+						], $pipes);
+
+						$exitCode = proc_close($proc);
 
 						switch ($exitCode) {
 							case 0:
 								printf("<p>That worked! Here's your backup:</p><a role='button' class='btn btn-success' href='%s'>Download now</a>", $outfile);
 								break;
 							default:
-								printf("Wobble. %s", $output);
+								printf("<p>Oops. Something went wrong. Kindly contact me with your Deepblu ID so I can debug</p>");
 								break;
 						}
 					}
