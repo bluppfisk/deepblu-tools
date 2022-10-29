@@ -2,12 +2,15 @@ from deepblu_tools import utils
 from deepblu_tools.models import deepblu as dm
 from deepblu_tools.models import uddf as um
 
+from datetime import datetime, timezone
+
 
 class DeepbluLog:
     def __init__(self, json_log: dict, media: dict):
         self._start_epoch = None
         self.id = "deepblu_divelog_" + json_log.get("_id")
-        self.dive_date = json_log.get("diveDT")
+        dive_date = json_log.get("diveDTRawUTC")
+        self.dive_date = datetime.fromtimestamp(dive_date, tz=timezone.utc).isoformat()
         self.air_pressure = json_log.get("airPressure", 1000)
         self.water_type = json_log.get("waterType", 0)
         self.notes = json_log.get("notes")
