@@ -15,10 +15,11 @@ import sys
 
 import click
 import requests
-from deepblu_tools import deepblu_api as api
-from deepblu_tools.models import deepblu as dm
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
+
+from deepblu_tools import deepblu_api as api
+from deepblu_tools.models import deepblu as dm
 
 
 def load_posts_from_file(infile: str) -> dict:
@@ -70,7 +71,9 @@ def main(
     infile: str,
 ):
     if not user and not infile:
-        raise click.BadArgumentUsage("Specify at least a user id, an infile or an email and password combination")
+        raise click.BadArgumentUsage(
+            "Specify at least a user id, an infile or an email and password combination"
+        )
     try:
         deepblu_user = api.login(user, password)
     except requests.exceptions.HTTPError as e:
@@ -99,7 +102,8 @@ def main(
             raise click.ClickException("No posts found on this account")
         else:
             raise click.ClickException(
-                "Either this account has no posts or could not be retrieved anonymously with this user id"
+                "Either this account has no posts or could not"
+                "be retrieved anonymously with this user id"
             )
 
     logbook = dm.DeepbluLogBook(posts, deepblu_user, max_posts=max_logs)

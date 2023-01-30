@@ -17,7 +17,7 @@ class IdType:
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -44,21 +44,21 @@ class AddressType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     city: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     postcode: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     country: Optional[str] = field(
         default=None,
@@ -66,14 +66,14 @@ class AddressType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     province: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -99,35 +99,35 @@ class ApplicationdataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     hargikas: Optional["ApplicationdataType.Hargikas"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     heinrichsweikamp: Optional["ApplicationdataType.Heinrichsweikamp"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tausim: Optional["ApplicationdataType.Tausim"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tautabu: Optional["ApplicationdataType.Tautabu"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -137,7 +137,7 @@ class ApplicationdataType:
             metadata={
                 "type": "Wildcard",
                 "namespace": "##other",
-            }
+            },
         )
 
     @dataclass
@@ -147,7 +147,7 @@ class ApplicationdataType:
             metadata={
                 "type": "Wildcard",
                 "namespace": "##other",
-            }
+            },
         )
 
     @dataclass
@@ -157,7 +157,7 @@ class ApplicationdataType:
             metadata={
                 "type": "Wildcard",
                 "namespace": "##other",
-            }
+            },
         )
 
     @dataclass
@@ -167,7 +167,7 @@ class ApplicationdataType:
             metadata={
                 "type": "Wildcard",
                 "namespace": "##other",
-            }
+            },
         )
 
     @dataclass
@@ -177,7 +177,7 @@ class ApplicationdataType:
             metadata={
                 "type": "Wildcard",
                 "namespace": "##other",
-            }
+            },
         )
 
 
@@ -192,7 +192,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     divedepthend: Optional[float] = field(
         default=None,
@@ -200,7 +200,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     divedepthstep: Optional[float] = field(
         default=None,
@@ -208,7 +208,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     breathingconsumptionvolumebegin: Optional[float] = field(
         default=None,
@@ -216,7 +216,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     breathingconsumptionvolumeend: Optional[float] = field(
         default=None,
@@ -224,7 +224,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     breathingconsumptionvolumestep: Optional[float] = field(
         default=None,
@@ -232,7 +232,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankvolumebegin: Optional[float] = field(
         default=None,
@@ -240,7 +240,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankvolumeend: Optional[float] = field(
         default=None,
@@ -248,7 +248,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankvolumestep: Optional[float] = field(
         default=None,
@@ -256,7 +256,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankpressurebegin: Optional[float] = field(
         default=None,
@@ -264,7 +264,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankpressurereserve: Optional[float] = field(
         default=None,
@@ -272,7 +272,7 @@ class BottomtimetablescopeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -286,42 +286,42 @@ class ContactType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     phone: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     mobilephone: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     fax: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     email: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     homepage: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -336,14 +336,14 @@ class DcalarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     period: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     alarm_type: Optional[int] = field(
         default=None,
@@ -352,7 +352,7 @@ class DcalarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -367,14 +367,14 @@ class DcalarmtimeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     period: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     alarm_type: Optional[int] = field(
         default=None,
@@ -383,7 +383,7 @@ class DcalarmtimeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -397,7 +397,7 @@ class DcbuddydataType:
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -411,7 +411,7 @@ class DcdivesitedataType:
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -426,14 +426,14 @@ class DcgasdefinitionsdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     setdcgasdata: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -452,35 +452,35 @@ class DimensionType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     beam: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     draught: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     displacement: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tonnage: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -508,7 +508,7 @@ class EncapsulatedDateTimeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -542,7 +542,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcgeneratordata: Optional[str] = field(
         default=None,
@@ -550,7 +550,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcownerdata: Optional[str] = field(
         default=None,
@@ -558,7 +558,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcbuddydata: Optional[str] = field(
         default=None,
@@ -566,7 +566,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcgasdefinitionsdata: Optional[str] = field(
         default=None,
@@ -574,7 +574,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcdivesitedata: Optional[str] = field(
         default=None,
@@ -582,7 +582,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcdivetripdata: Optional[str] = field(
         default=None,
@@ -590,7 +590,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     getdcprofiledata: Optional[str] = field(
         default=None,
@@ -598,7 +598,7 @@ class GetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
 
 
@@ -754,7 +754,7 @@ class LinkType:
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -768,35 +768,35 @@ class OutputType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     fileformat: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     filename: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     headline: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     remark: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -818,14 +818,14 @@ class PriceType:
         default=None,
         metadata={
             "required": True,
-        }
+        },
     )
     currency: Optional[str] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "length": 3,
-        }
+        },
     )
 
 
@@ -839,7 +839,7 @@ class RatingType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     ratingvalue: Optional[int] = field(
         default=None,
@@ -849,7 +849,7 @@ class RatingType:
             "required": True,
             "min_inclusive": 1,
             "max_inclusive": 10,
-        }
+        },
     )
 
 
@@ -876,14 +876,14 @@ class SimpleNamedType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     aliasname: List[object] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -933,56 +933,56 @@ class TablescopeType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divedepthbegin: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divedepthend: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divedepthstep: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottomtimemaximum: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottomtimeminimum: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottomtimestepbegin: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottomtimestepend: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1007,14 +1007,14 @@ class WayaltitudeType:
         default=None,
         metadata={
             "required": True,
-        }
+        },
     )
     waytime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -1028,28 +1028,28 @@ class BottomtimetableType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: List[LinkType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     output: Optional[OutputType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     applicationdata: Optional[ApplicationdataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottomtimetablescope: Optional[BottomtimetablescopeType] = field(
         default=None,
@@ -1057,7 +1057,7 @@ class BottomtimetableType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1071,14 +1071,14 @@ class BuiltType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     launchingdate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1093,7 +1093,7 @@ class DcalarmWithDepthType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dcalarm: Optional[DcalarmType] = field(
         default=None,
@@ -1101,7 +1101,7 @@ class DcalarmWithDepthType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1116,7 +1116,7 @@ class DcalarmWithTimeType(EncapsulatedDateTimeType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1130,7 +1130,7 @@ class DcdecomodelType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1145,7 +1145,7 @@ class DcdivedepthalarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dcalarm: Optional[DcalarmType] = field(
         default=None,
@@ -1153,7 +1153,7 @@ class DcdivedepthalarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1168,7 +1168,7 @@ class Dcdivepo2AlarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dcalarm: Optional[DcalarmType] = field(
         default=None,
@@ -1176,7 +1176,7 @@ class Dcdivepo2AlarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1191,7 +1191,7 @@ class DcdivetimealarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dcalarm: Optional[DcalarmType] = field(
         default=None,
@@ -1199,7 +1199,7 @@ class DcdivetimealarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1214,7 +1214,7 @@ class DcendndtalarmType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1229,7 +1229,7 @@ class DivecomputerdumpType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     datetime: Optional[XmlDateTime] = field(
         default=None,
@@ -1237,7 +1237,7 @@ class DivecomputerdumpType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dcdump: Optional[bytes] = field(
         default=None,
@@ -1246,7 +1246,7 @@ class DivecomputerdumpType:
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
             "format": "base64",
-        }
+        },
     )
 
 
@@ -1260,7 +1260,7 @@ class ExposuretoaltitudeType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     transportation: Optional[ExposuretoaltitudeTypeTransportation] = field(
         default=None,
@@ -1268,28 +1268,28 @@ class ExposuretoaltitudeType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     dateofflight: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     altitudeofexposure: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     totallengthofexposure: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1304,42 +1304,42 @@ class GeographyType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     address: Optional[AddressType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     latitude: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     longitude: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     altitude: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     timezone: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1354,7 +1354,7 @@ class GuideType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1367,13 +1367,13 @@ class LightintensityType:
         default=None,
         metadata={
             "required": True,
-        }
+        },
     )
     lux: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
 
 
@@ -1387,7 +1387,7 @@ class MediaType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     objectname: Optional[str] = field(
         default=None,
@@ -1395,7 +1395,7 @@ class MediaType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -1410,14 +1410,14 @@ class NamedType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     aliasname: List[object] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1431,14 +1431,14 @@ class NotesType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: List[LinkType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1453,14 +1453,14 @@ class PersonalType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     middlename: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lastname: Optional[str] = field(
         default=None,
@@ -1468,84 +1468,84 @@ class PersonalType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     birthname: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     honorific: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     sex: Optional[SexType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     birthdate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     passport: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     membership: Optional["PersonalType.Membership"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     height: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     weight: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bloodgroup: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     smoking: Optional[PersonalTypeSmoking] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     numberofdives: Optional["PersonalType.Numberofdives"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -1555,13 +1555,13 @@ class PersonalType:
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         memberid: Optional[str] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1571,21 +1571,21 @@ class PersonalType:
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         enddate: Optional[XmlDateTime] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         dives: Optional[int] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
 
 
@@ -1598,7 +1598,7 @@ class PriceperdivepackageType(PriceType):
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
 
 
@@ -1612,14 +1612,14 @@ class TankdataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tankvolume: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tankpressurebegin: Optional[float] = field(
         default=None,
@@ -1627,21 +1627,21 @@ class TankdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankpressureend: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     breathingconsumptionvolume: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -1655,35 +1655,35 @@ class TissueType:
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
     number: Optional[int] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
     halflife: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
     a: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
     b: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
             "required": True,
-        }
+        },
     )
 
 
@@ -1697,154 +1697,154 @@ class WaypointType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     batterychargecondition: List["WaypointType.Batterychargecondition"] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     cns: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     decostop: List["WaypointType.Decostop"] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bodytemperature: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     calculatedpo2: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     depth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divetime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     heading: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     otu: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     pulserate: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     remainingbottomtime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     remainingo2time: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setmarker: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setpo2: Optional["WaypointType.Setpo2"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     switchmix: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tankpressure: List["WaypointType.Tankpressure"] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     temperature: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divemode: Optional["WaypointType.Divemode"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     gradientfactor: Optional["WaypointType.Gradientfactor"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     measuredpo2: List["WaypointType.Measuredpo2"] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     nodecotime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -1853,13 +1853,13 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         level: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1868,20 +1868,20 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         deviceref: Optional[str] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         tankref: Optional[str] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1891,21 +1891,21 @@ class WaypointType:
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         decodepth: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         duration: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
 
     @dataclass
@@ -1914,14 +1914,14 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         setby: Optional[Setpo2Setby] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
 
     @dataclass
@@ -1930,13 +1930,13 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         ref: Optional[str] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1945,7 +1945,7 @@ class WaypointType:
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1954,13 +1954,13 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         tissue: Optional[int] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
     @dataclass
@@ -1969,13 +1969,13 @@ class WaypointType:
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         ref: Optional[str] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
 
@@ -1989,35 +1989,35 @@ class AccommodationType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     address: Optional[AddressType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2032,21 +2032,21 @@ class BuehlmannType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
     gradientfactorhigh: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     gradientfactorlow: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2060,7 +2060,7 @@ class CaveType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2074,56 +2074,56 @@ class DivebaseType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     priceperdive: Optional[PriceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     pricedivepackage: Optional[PriceperdivepackageType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     guide: List[GuideType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2137,21 +2137,21 @@ class DrugType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     timespanbeforedive: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2166,14 +2166,14 @@ class EquipmentconfigurationType(NamedType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2187,25 +2187,25 @@ class ImageType(MediaType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     height: Optional[int] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
     width: Optional[int] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
     format: Optional[str] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
 
     @dataclass
@@ -2215,56 +2215,56 @@ class ImageType(MediaType):
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         datetime: Optional[XmlDateTime] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         exposurecompensation: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         filmspeed: Optional[int] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         focallength: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         focusingdistance: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         meteringmethod: Optional[ImagedataMeteringmethod] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         shutterspeed: Optional[float] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
 
 
@@ -2279,21 +2279,21 @@ class IndividualType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     address: Optional[AddressType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2307,21 +2307,21 @@ class IndoorType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2335,7 +2335,7 @@ class InputprofileType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     waypoint: List[WaypointType] = field(
         default_factory=list,
@@ -2343,7 +2343,7 @@ class InputprofileType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -2357,35 +2357,35 @@ class InsuranceType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     aliasname: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     issuedate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     validdate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2399,14 +2399,14 @@ class ManufacturerType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2420,63 +2420,63 @@ class MixType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     n2: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     he: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     ar: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     h2: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     priceperlitre: Optional[PriceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     maximumpo2: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     maximumoperationdepth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     equivalentairdepth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2490,14 +2490,14 @@ class MixchangeType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     descent: Optional["MixchangeType.Descent"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -2508,7 +2508,7 @@ class MixchangeType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -2519,7 +2519,7 @@ class MixchangeType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -2533,28 +2533,28 @@ class OperatorType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2568,42 +2568,42 @@ class PermitType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     aliasname: List[str] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     region: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     issuedate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     validdate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2617,7 +2617,7 @@ class PlaceType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2632,7 +2632,7 @@ class RgbmType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -2647,7 +2647,7 @@ class SamplesType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -2661,77 +2661,77 @@ class SetdcdataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcaltitude: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcbuddydata: Optional[DcbuddydataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdatetime: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdecomodel: Optional[DcdecomodelType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdivedepthalarm: List[DcalarmWithDepthType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdivepo2alarm: List[Dcdivepo2AlarmType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdivesitedata: Optional[DcdivesitedataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcdivetimealarm: List[DcdivetimealarmType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcendndtalarm: Optional[DcendndtalarmType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcgasdefinitionsdata: Optional[DcgasdefinitionsdataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcownerdata: Optional[str] = field(
         default=None,
@@ -2739,14 +2739,14 @@ class SetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     setdcpassword: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     setdcgeneratordata: Optional[str] = field(
         default=None,
@@ -2754,7 +2754,7 @@ class SetdcdataType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
 
 
@@ -2768,21 +2768,21 @@ class ShopType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2796,70 +2796,70 @@ class SpeciesType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     scientificname: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     abundance: Optional["SpeciesType.Abundance"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     sex: Optional[SexType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lifestage: Optional[SpeciesTypeLifestage] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lightintensity: Optional[LightintensityType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     age: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     dominance: Optional[SpeciesTypeDominance] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     size: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -2868,19 +2868,19 @@ class SpeciesType(IdType):
             default=None,
             metadata={
                 "required": True,
-            }
+            },
         )
         quality: Optional[AbundanceQuality] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
         occurence: Optional[AbundanceOccurence] = field(
             default=None,
             metadata={
                 "type": "Attribute",
-            }
+            },
         )
 
 
@@ -2895,28 +2895,28 @@ class SurfaceintervalType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     passedtime: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     wayaltitude: List[WayaltitudeType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     exposuretoaltitude: Optional[ExposuretoaltitudeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2930,49 +2930,49 @@ class VesselType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     marina: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     address: Optional[AddressType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     contact: Optional[ContactType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     shipdimension: Optional[DimensionType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -2986,14 +2986,14 @@ class VpmType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     gc: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lambda_value: Optional[float] = field(
         default=None,
@@ -3001,14 +3001,14 @@ class VpmType(IdType):
             "name": "lambda",
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     r0: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tissue: List[TissueType] = field(
         default_factory=list,
@@ -3016,7 +3016,7 @@ class VpmType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -3030,42 +3030,42 @@ class WreckType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     nationality: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     built: Optional[BuiltType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     shipdimension: Optional[DimensionType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     sunk: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3079,84 +3079,84 @@ class BaseCalculationType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: List[LinkType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     surfaceintervalafterdive: Optional[SurfaceintervalType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     surfaceintervalbeforedive: Optional[SurfaceintervalType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     density: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     maximumascendingrate: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     output: Optional[OutputType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     applicationdata: Optional[ApplicationdataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     decomodel: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     deepstoptime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     mixchange: Optional[MixchangeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     inputprofile: Optional[InputprofileType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3170,7 +3170,7 @@ class Business:
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -3184,19 +3184,19 @@ class Divecomputercontrol:
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     getdcdata: Optional[GetdcdataType] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     divecomputerdump: List[DivecomputerdumpType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -3210,49 +3210,49 @@ class ExaminationType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     doctor: Optional[IndividualType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     examinationresult: Optional[ExaminationTypeExaminationresult] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     totallungcapacity: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     vitalcapacity: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3267,7 +3267,7 @@ class Gasdefinitions:
         metadata={
             "type": "Element",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -3281,31 +3281,31 @@ class Generator(SimpleNamedType):
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     link: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     manufacturer: Optional[ManufacturerType] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     version: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     datetime: Optional[XmlDateTime] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -3319,28 +3319,28 @@ class InformationbeforediveType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divenumber: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divenumberofday: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     internaldivenumber: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     datetime: Optional[XmlDateTime] = field(
         default=None,
@@ -3348,84 +3348,86 @@ class InformationbeforediveType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     airtemperature: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     surfaceintervalbeforedive: Optional[SurfaceintervalType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     altitude: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     equipmentused: Optional["InformationbeforediveType.Equipmentused"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     apparatus: Optional[InformationbeforediveTypeApparatus] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     platform: Optional[InformationbeforediveTypePlatform] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     purpose: Optional[InformationbeforediveTypePurpose] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
-    stateofrestbeforedive: Optional[InformationbeforediveTypeStateofrestbeforedive] = field(
+    stateofrestbeforedive: Optional[
+        InformationbeforediveTypeStateofrestbeforedive
+    ] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tripmembership: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     alcoholbeforedive: Optional["InformationbeforediveType.Alcoholbeforedive"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     medicalbeforedive: Optional["InformationbeforediveType.Medicalbeforedive"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     nosuit: Optional[str] = field(
         default=None,
@@ -3433,35 +3435,35 @@ class InformationbeforediveType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "length": 0,
-        }
+        },
     )
     price: Optional[PriceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     inputprofile: Optional[InputprofileType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     plannedprofile: Optional[SamplesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     surfacepressure: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -3471,14 +3473,14 @@ class InformationbeforediveType:
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
         link: List[LinkType] = field(
             default_factory=list,
             metadata={
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
-            }
+            },
         )
 
     @dataclass
@@ -3489,7 +3491,7 @@ class InformationbeforediveType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -3500,7 +3502,7 @@ class InformationbeforediveType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -3514,7 +3516,7 @@ class InstructorType(IndividualType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3528,7 +3530,7 @@ class Maker:
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -3542,19 +3544,19 @@ class Mediadata:
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
     image: List[ImageType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
     video: List[MediaType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -3568,21 +3570,21 @@ class PurchaseType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     price: Optional[PriceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     shop: Optional[ShopType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3596,7 +3598,7 @@ class SingleLifeFormType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3610,35 +3612,35 @@ class SitedataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     areawidth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     averagevisibility: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bottom: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     density: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     difficulty: Optional[int] = field(
         default=None,
@@ -3647,91 +3649,91 @@ class SitedataType:
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_inclusive": 1,
             "max_inclusive": 10,
-        }
+        },
     )
     globallightintensity: Optional[GloballightintensityType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     maximumdepth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     maximumvisibility: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     minimumdepth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     minimumvisibility: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     terrain: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     wreck: List[WreckType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     cave: Optional[CaveType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     indoor: Optional[IndoorType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lake: Optional[PlaceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     river: Optional[PlaceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     shore: Optional[PlaceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3745,83 +3747,83 @@ class TrippartType(SimpleNamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     geography: Optional[GeographyType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     accomodation: Optional[AccommodationType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     operator: Optional[OperatorType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     vessel: Optional[VesselType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     link: Optional[LinkType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     relateddives: Optional["TrippartType.Relateddives"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     pricedivepackage: Optional[PriceperdivepackageType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     priceperdive: Optional[PriceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     type: Optional[str] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
 
     @dataclass
@@ -3831,14 +3833,14 @@ class TrippartType(SimpleNamedType):
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
         enddate: Optional[XmlDateTime] = field(
             default=None,
             metadata={
                 "type": "Attribute",
                 "required": True,
-            }
+            },
         )
 
     @dataclass
@@ -3849,7 +3851,7 @@ class TrippartType(SimpleNamedType):
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -3863,49 +3865,49 @@ class CertificationType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     specialty: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     certificatenumber: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     organization: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     instructor: Optional[InstructorType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     issuedate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     validdate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3919,56 +3921,56 @@ class EquipmentPieceType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     manufacturer: Optional[ManufacturerType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     model: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     serialnumber: Optional[str] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     purchase: Optional[PurchaseType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     serviceinterval: Optional[int] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     nextservicedate: Optional[EncapsulatedDateTimeType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -3982,42 +3984,42 @@ class FloraType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     phaeophyceae: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     chlorophyceae: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     spermatophyta: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     floravarious: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4031,84 +4033,84 @@ class InvertebrataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     coelenterata: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     cnidaria: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     ctenophora: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     plathelminthes: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     bryozoa: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     phoronidea: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     ascidiacea: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     echinodermata: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     mollusca: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     crustacea: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     invertebratavarious: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4123,7 +4125,7 @@ class TableType(BaseCalculationType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -4137,7 +4139,7 @@ class TripType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     trippart: List[TrippartType] = field(
         default_factory=list,
@@ -4145,7 +4147,7 @@ class TripType(NamedType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -4159,42 +4161,42 @@ class VertebrataType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     osteichthyes: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     mammalia: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     amphibia: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     reptilia: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     vertebratavarious: Optional[SingleLifeFormType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4208,28 +4210,28 @@ class CameraType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lens: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     housing: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     flash: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4244,7 +4246,7 @@ class Divetrip:
         metadata={
             "type": "Element",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -4258,21 +4260,21 @@ class FaunaType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     vertebrata: Optional[VertebrataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4286,7 +4288,7 @@ class RebreatherType(EquipmentPieceType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4300,7 +4302,7 @@ class SuitType(EquipmentPieceType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4314,19 +4316,21 @@ class Tablegeneration:
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     calculatetable: Optional["Tablegeneration.Calculatetable"] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
-    calculatebottomtimetable: Optional["Tablegeneration.Calculatebottomtimetable"] = field(
+    calculatebottomtimetable: Optional[
+        "Tablegeneration.Calculatebottomtimetable"
+    ] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
     @dataclass
@@ -4336,7 +4340,7 @@ class Tablegeneration:
             metadata={
                 "type": "Element",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4346,7 +4350,7 @@ class Tablegeneration:
             metadata={
                 "type": "Element",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4356,7 +4360,7 @@ class Tablegeneration:
             metadata={
                 "type": "Element",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -4370,14 +4374,14 @@ class TankType(EquipmentPieceType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tankvolume: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4391,28 +4395,28 @@ class VideocameraType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lens: Optional[EquipmentPieceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     housing: Optional[EquipmentPieceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     light: Optional[EquipmentPieceType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4426,14 +4430,14 @@ class EcologyType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     flora: Optional[FloraType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4447,147 +4451,147 @@ class EquipmentType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     buoyancycontroldevice: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     camera: List[CameraType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     compass: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     compressor: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divecomputer: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     equipmentconfiguration: List[EquipmentconfigurationType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     fins: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     gloves: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     knife: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lead: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     light: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     mask: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rebreather: List[RebreatherType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     regulator: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     scooter: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     suit: List[SuitType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     tank: List[TankType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     variouspieces: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     videocamera: List[VideocameraType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     watch: List[EquipmentPieceType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4601,7 +4605,7 @@ class ObservationsType(EcologyType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4615,42 +4619,42 @@ class PersonType(IndividualType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     medical: Optional["PersonType.Medical"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     education: Optional["PersonType.Education"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     divepermissions: Optional["PersonType.Divepermissions"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     diveinsurances: Optional["PersonType.Diveinsurances"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -4661,7 +4665,7 @@ class PersonType(IndividualType):
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4672,7 +4676,7 @@ class PersonType(IndividualType):
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4683,7 +4687,7 @@ class PersonType(IndividualType):
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4694,7 +4698,7 @@ class PersonType(IndividualType):
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -4708,42 +4712,42 @@ class SiteType(NamedType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     geography: Optional[GeographyType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     ecology: Optional[EcologyType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     sitedata: Optional[SitedataType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: List[RatingType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
 
@@ -4758,13 +4762,13 @@ class Diver:
         metadata={
             "type": "Element",
             "required": True,
-        }
+        },
     )
     buddy: List["Diver.Buddy"] = field(
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
     @dataclass
@@ -4773,7 +4777,7 @@ class Diver:
             default=None,
             metadata={
                 "type": "Element",
-            }
+            },
         )
 
 
@@ -4787,13 +4791,13 @@ class Divesite:
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
     site: List[SiteType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
-        }
+        },
     )
 
 
@@ -4807,14 +4811,14 @@ class InformationafterdiveType:
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     lowesttemperature: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     greatestdepth: Optional[float] = field(
         default=None,
@@ -4822,105 +4826,107 @@ class InformationafterdiveType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     visibility: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     current: Optional[InformationafterdiveTypeCurrent] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     diveplan: Optional[InformationafterdiveTypeDiveplan] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
-    equipmentmalfunction: Optional[InformationafterdiveTypeEquipmentmalfunction] = field(
+    equipmentmalfunction: Optional[
+        InformationafterdiveTypeEquipmentmalfunction
+    ] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     pressuredrop: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     problems: Optional[InformationafterdiveTypeProblems] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     program: Optional[InformationafterdiveTypeProgram] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     thermalcomfort: Optional[InformationafterdiveTypeThermalcomfort] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     workload: Optional[InformationafterdiveTypeWorkload] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     desaturationtime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     noflighttime: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     notes: Optional[NotesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     rating: Optional[RatingType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     anysymptoms: Optional["InformationafterdiveType.Anysymptoms"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     diveduration: Optional[float] = field(
         default=None,
@@ -4928,42 +4934,42 @@ class InformationafterdiveType:
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     divetable: Optional[InformationafterdiveTypeDivetable] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     globalalarmsgiven: Optional["InformationafterdiveType.Globalalarmsgiven"] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     highestpo2: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     observations: Optional[ObservationsType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     averagedepth: Optional[float] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
 
     @dataclass
@@ -4974,7 +4980,7 @@ class InformationafterdiveType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
     @dataclass
@@ -4985,7 +4991,7 @@ class InformationafterdiveType:
                 "type": "Element",
                 "namespace": "http://www.streit.cc/uddf/3.2/",
                 "min_occurs": 1,
-            }
+            },
         )
 
 
@@ -4999,7 +5005,7 @@ class DiveType(IdType):
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     informationbeforedive: Optional[InformationbeforediveType] = field(
         default=None,
@@ -5007,21 +5013,21 @@ class DiveType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
     tankdata: List[TankdataType] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     samples: Optional[SamplesType] = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
-        }
+        },
     )
     informationafterdive: Optional[InformationafterdiveType] = field(
         default=None,
@@ -5029,7 +5035,7 @@ class DiveType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "required": True,
-        }
+        },
     )
 
 
@@ -5044,7 +5050,7 @@ class RepetitiongroupType(IdType):
             "type": "Element",
             "namespace": "http://www.streit.cc/uddf/3.2/",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -5059,7 +5065,7 @@ class Profiledata:
         metadata={
             "type": "Element",
             "min_occurs": 1,
-        }
+        },
     )
 
 
@@ -5074,79 +5080,79 @@ class Uddf:
         metadata={
             "type": "Element",
             "required": True,
-        }
+        },
     )
     mediadata: Optional[Mediadata] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     maker: Optional[Maker] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     business: Optional[Business] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     diver: Optional[Diver] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     divesite: Optional[Divesite] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     divetrip: Optional[Divetrip] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     gasdefinitions: Optional[Gasdefinitions] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     decomodel: Optional["Uddf.Decomodel"] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     profiledata: Optional[Profiledata] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     tablegeneration: Optional[Tablegeneration] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     divecomputercontrol: Optional[Divecomputercontrol] = field(
         default=None,
         metadata={
             "type": "Element",
-        }
+        },
     )
     version: Optional[str] = field(
         default=None,
         metadata={
             "type": "Attribute",
-        }
+        },
     )
 
     @dataclass
@@ -5156,19 +5162,19 @@ class Uddf:
             metadata={
                 "type": "Element",
                 "required": True,
-            }
+            },
         )
         rgbm: Optional[RgbmType] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "required": True,
-            }
+            },
         )
         vpm: Optional[VpmType] = field(
             default=None,
             metadata={
                 "type": "Element",
                 "required": True,
-            }
+            },
         )

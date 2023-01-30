@@ -4,7 +4,6 @@ import requests
 
 from deepblu_tools.models import deepblu as dm
 
-
 CHUNKSIZE = 100  # Don't load everything at once
 DEEPBLU_API = "https://prodcdn.tritondive.co/apis/"
 DEEPBLU_LOGIN_API = DEEPBLU_API + "user/v0/login"

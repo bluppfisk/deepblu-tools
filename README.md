@@ -32,7 +32,7 @@ Options:
   -d, --with-drafts       Also pull draft logs. Requires valid
                           credentials
   -o, --outfile TEXT      Write results to this file
-  -f, --infile TEXT       For debugging purposes: load data 
+  -f, --infile TEXT       For debugging purposes: load data
                           from JSON file instead of API
   --help                  Show this message and exit.
 ```

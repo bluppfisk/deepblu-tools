@@ -1,5 +1,6 @@
-from deepblu_tools.models import uddf as um
 from datetime import datetime
+
+from deepblu_tools.models import uddf as um
 
 
 # Singular of media, i.c. videos and photos
@@ -25,9 +26,7 @@ class Medium:
                 id=self.id,
                 objectname=self.url,
                 title=self.caption,
-                imagedata=um.ImageType.Imagedata(
-                    datetime=self.datetime
-                )
+                imagedata=um.ImageType.Imagedata(datetime=self.datetime),
             )
         elif self.type == "video":
             return um.MediaType(id=self.id, objectname=self.url, title=self.caption)

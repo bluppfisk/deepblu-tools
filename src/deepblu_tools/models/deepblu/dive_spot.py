@@ -1,5 +1,5 @@
-from deepblu_tools.models import uddf as um
 from deepblu_tools.models import deepblu as dm
+from deepblu_tools.models import uddf as um
 
 
 # A dive location
@@ -20,5 +20,4 @@ class DiveSpot:
             latitude=self.lat, longitude=self.lon, location=self.name
         )
 
-        return um.SiteType(
-            id=self.id, name=self.name, geography=geog)
+        return um.SiteType(id=self.id, name=self.name, geography=geog)

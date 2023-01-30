@@ -1,5 +1,6 @@
 from datetime import datetime
-from deepblu_tools.models import uddf as um 
+
+from deepblu_tools.models import uddf as um
 
 
 # Deepblu User
@@ -35,7 +36,7 @@ class DeepbluUser:
                 firstname=self.first_name,
                 lastname=self.last_name,
                 sex=getattr(um.SexType, self.gender.upper()),
-                birthdate=um.EncapsulatedDateTimeType(self.birthday.isoformat())
+                birthdate=um.EncapsulatedDateTimeType(self.birthday.isoformat()),
             ),
-            contact=um.ContactType(email=self.email)
+            contact=um.ContactType(email=self.email),
         )

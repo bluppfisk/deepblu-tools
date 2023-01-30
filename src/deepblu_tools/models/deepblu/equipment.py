@@ -1,5 +1,6 @@
-from deepblu_tools.models import uddf as um
 import hashlib
+
+from deepblu_tools.models import uddf as um
 
 
 # Every piece of equipment is of a certain type, and has a manufacturer and model
@@ -12,7 +13,9 @@ class Equipment:
         try:
             self.id = (
                 "eq_"
-                + hashlib.sha1((self.brand + self.model).encode("UTF-8")).hexdigest()[0:8]
+                + hashlib.sha1((self.brand + self.model).encode("UTF-8")).hexdigest()[
+                    0:8
+                ]
             )
         except TypeError:
             self.id = None

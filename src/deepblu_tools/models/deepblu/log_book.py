@@ -1,12 +1,14 @@
-from distutils.log import Log
-from deepblu_tools.models import uddf as um
-from deepblu_tools.models import deepblu as dm
 import datetime
+from distutils.log import Log
+
+from deepblu_tools.models import deepblu as dm
+from deepblu_tools.models import uddf as um
 
 
-# Logbook (contains multiple logs, media, divespots, gas definitions, buddies, equipment)
+# Logbook (contains multiple logs, media, divespots,
+# gas definitions, buddies, equipment)
 class DeepbluLogBook:
-    def __init__(self, posts: list, deepblu_user: 'dm.DeepbluUser', max_posts: int):
+    def __init__(self, posts: list, deepblu_user: "dm.DeepbluUser", max_posts: int):
         self.logs = []
 
         for post in posts:
@@ -64,7 +66,9 @@ class DeepbluLogBook:
         for log in self.logs:
             if hasattr(log.dive_gear, "gas_definition"):
                 if hasattr(log.dive_gear.gas_definition, "id"):
-                    if not self.find_attr_by_id("gas_definitions", log.dive_gear.gas_definition.id):
+                    if not self.find_attr_by_id(
+                        "gas_definitions", log.dive_gear.gas_definition.id
+                    ):
                         self.gas_definitions.append(log.dive_gear.gas_definition)
 
     def get_unique_media(self):
@@ -96,7 +100,10 @@ class DeepbluLogBook:
             ),
             datetime=datetime.datetime.now().isoformat(),
         )
-        uddf.divesite = um.Divesite(site=[s.to_uddf() for s in self.dive_spots], divebase=[b.to_uddf() for b in self.dive_bases])
+        uddf.divesite = um.Divesite(
+            site=[s.to_uddf() for s in self.dive_spots],
+            divebase=[b.to_uddf() for b in self.dive_bases],
+        )
         uddf.profiledata = um.Profiledata(
             repetitiongroup=um.RepetitiongroupType(
                 id="rep", dive=[d.to_uddf() for d in self.logs]

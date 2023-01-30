@@ -1,8 +1,8 @@
+from datetime import datetime, timezone
+
 from deepblu_tools import utils
 from deepblu_tools.models import deepblu as dm
 from deepblu_tools.models import uddf as um
-
-from datetime import datetime, timezone
 
 
 class DeepbluLog:
@@ -20,9 +20,11 @@ class DeepbluLog:
             json_log.get("diveMaxDepth", None), self.air_pressure, self.water_type
         )
         self.dive_gear = dm.DiveGear(json_log.get("_DiveGear", {}))
-        # UDDF scheme prescribes for dive mode (i.e. apnea or scuba) to be included at waypoint level
-        # as it is technically possible to change diving mode while diving
-        # 'apnoe' is the German keyword used in UDDF < 3.2.2; using this for compatibility reasons
+        # UDDF scheme prescribes for dive mode (i.e. apnea or scuba) to be
+        # included at waypoint level as it is technically possible to change
+        # diving mode while diving
+        # 'apnoe' is the German keyword used in UDDF < 3.2.2;
+        # using this for compatibility reasons
         self.dive_mode = (
             "apnoe" if json_log.get("diveType") == "Free" else "opencircuit"
         )
@@ -74,6 +76,6 @@ class DeepbluLog:
             informationbeforedive=um.InformationbeforediveType(
                 airtemperature=self.air_temperature,
                 datetime=self.dive_date,
-                link=[um.LinkType(l.id) for l in self.buddies + [self.dive_spot]],
+                link=[um.LinkType(link.id) for link in self.buddies + [self.dive_spot]],
             ),
         )

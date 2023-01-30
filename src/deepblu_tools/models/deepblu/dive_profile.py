@@ -1,5 +1,5 @@
-from deepblu_tools.models import uddf as um
 from deepblu_tools.models import deepblu as dm
+from deepblu_tools.models import uddf as um
 
 
 # The dive profile consists of wayPoints
