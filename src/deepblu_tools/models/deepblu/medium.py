@@ -1,5 +1,5 @@
 from deepblu_tools.models import uddf as um
-import datetime
+from datetime import datetime
 
 
 # Singular of media, i.c. videos and photos
