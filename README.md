@@ -17,7 +17,7 @@ Make sure you have Python 3 and pip3 installed
 
 ### Installation
 
-`pip3 install deepblu-backup`
+`pip3 install deepblu-tools`
 
 ### Usage
 
