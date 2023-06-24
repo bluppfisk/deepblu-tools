@@ -16,13 +16,13 @@ class DeepbluUser:
         self.last_name = user_data.get("lastName")
         self.email = user_data.get("email")
         self.gender = user_data.get("gender")
-        birthday = user_data.get("Birthday", {})
-        if birthday:
+        birthday = user_data.get("Birthday", None)
+        if birthday is not None:
             self.birthday = datetime(
                 int(birthday.get("Year")),
                 int(birthday.get("Month")),
                 int(birthday.get("Day")),
-            )
+            ).isoformat()
 
         return self
 
@@ -41,7 +41,7 @@ class DeepbluUser:
                 firstname=self.first_name,
                 lastname=self.last_name,
                 sex=sex_type,
-                birthdate=um.EncapsulatedDateTimeType(self.birthday.isoformat()),
+                birthdate=um.EncapsulatedDateTimeType(self.birthday),
             ),
             contact=um.ContactType(email=self.email),
         )
