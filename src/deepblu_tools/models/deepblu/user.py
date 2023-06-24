@@ -30,12 +30,17 @@ class DeepbluUser:
         if not self.logged_in:
             return None
 
+        if hasattr(um.SexType, self.gender.upper()):
+            sex_type = getattr(um.SexType, self.gender.upper())
+        else:
+            sex_type = um.SexType.UNDETERMINED
+
         return um.PersonType(
             id=f"deepblu_user_{ self.user_id }",
             personal=um.PersonalType(
                 firstname=self.first_name,
                 lastname=self.last_name,
-                sex=getattr(um.SexType, self.gender.upper()),
+                sex=sex_type,
                 birthdate=um.EncapsulatedDateTimeType(self.birthday.isoformat()),
             ),
             contact=um.ContactType(email=self.email),
